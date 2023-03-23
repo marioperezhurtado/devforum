@@ -24,9 +24,7 @@ export default function Layout({ title, description, children }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main
-        className={`${fontBody.className} min-h-screen bg-zinc-100 text-zinc-700`}
-      >
+      <main className={`${fontBody.className} min-h-screen text-zinc-700`}>
         {children}
       </main>
     </>

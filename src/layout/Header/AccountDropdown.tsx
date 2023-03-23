@@ -46,57 +46,81 @@ export default function AccountDropdown() {
         </button>
         {isOpen && (
           <div
-            className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white text-sm shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
+            className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white text-sm shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="menu-button"
             tabIndex={-1}
           >
-            <div className="py-1 " role="none">
+            <div className="py-1" role="none">
               <p className="px-4 py-2">
                 Logged in as{" "}
                 <span className="font-semibold">{session?.user.name}</span>
               </p>
             </div>
 
-            <div className="py-1" role="none">
+            <div role="none">
               <a
                 href="#"
-                className="block px-4 py-2 text-gray-700"
+                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
                 role="menuitem"
                 tabIndex={-1}
-                id="menu-item-2"
+                id="menu-item-1"
               >
+                <Image
+                  src="/icons/settings.svg"
+                  alt="Account settings"
+                  width={16}
+                  height={16}
+                />
                 Account settings
               </a>
               <a
                 href="#"
-                className="block px-4 py-2 text-gray-700"
+                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
                 role="menuitem"
                 tabIndex={-1}
-                id="menu-item-4"
+                id="menu-item-2"
               >
+                <Image
+                  src="/icons/support.svg"
+                  alt="Support"
+                  width={16}
+                  height={16}
+                />
                 Support
               </a>
               <a
                 href="#"
-                className="block px-4 py-2 text-gray-700"
-                role="menuitem"
-                tabIndex={-1}
-                id="menu-item-4"
-              >
-                Terms and conditions
-              </a>
-            </div>
-
-            <div className="py-1" role="none">
-              <button
-                onClick={() => void signOut()}
-                className="block w-full px-4 py-2 text-left font-bold text-gray-700"
+                className="transiton flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-zinc-50"
                 role="menuitem"
                 tabIndex={-1}
                 id="menu-item-3"
               >
+                <Image
+                  src="/icons/terms-conditions.svg"
+                  alt="Terms and conditions"
+                  width={16}
+                  height={16}
+                />
+                Terms and conditions
+              </a>
+            </div>
+
+            <div role="none">
+              <button
+                onClick={() => void signOut()}
+                className="flex w-full items-center gap-2 px-4 py-3 text-left font-bold text-gray-700 transition hover:bg-zinc-50"
+                role="menuitem"
+                tabIndex={-1}
+                id="menu-item-4"
+              >
+                <Image
+                  src="/icons/signout.svg"
+                  alt="Sign out"
+                  width={16}
+                  height={16}
+                />
                 Sign out
               </button>
             </div>

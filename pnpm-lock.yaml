@@ -35,7 +35,6 @@ specifiers:
   tailwindcss: ^3.2.0
   typescript: ^4.9.5
   vitest: ^0.29.7
-  vitest-mock-extended: ^1.1.3
   zod: ^3.20.6
 
 dependencies:
@@ -76,7 +75,6 @@ devDependencies:
   tailwindcss: 3.2.7_postcss@8.4.21
   typescript: 4.9.5
   vitest: 0.29.7_jsdom@21.1.1
-  vitest-mock-extended: 1.1.3_3ez2tea2v4enhdxebxs5ahhg5y
 
 packages:
 
@@ -4069,14 +4067,6 @@ packages:
       punycode: 2.3.0
     dev: true
 
-  /ts-essentials/9.3.1_typescript@4.9.5:
-    resolution: {integrity: sha512-9CChSvQMyVRo29Vb1A2jbs+LKo3d/bAf+ndSaX0T8cEiy/HChVaRN/HY5DqUryZ8hZ6uol9bEgCnGmnDbwBR9Q==}
-    peerDependencies:
-      typescript: '>=4.1.0'
-    dependencies:
-      typescript: 4.9.5
-    dev: true
-
   /tsconfig-paths/3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -4262,17 +4252,6 @@ packages:
       rollup: 3.20.1
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
-
-  /vitest-mock-extended/1.1.3_3ez2tea2v4enhdxebxs5ahhg5y:
-    resolution: {integrity: sha512-MiaKYZbTg+fjozKnCpoTTva0BnlSNYyk4jiPuM2xVhg4aou112QIrALdH3/ZKK6qfXWh0A17gFIjWJjylOlXxg==}
-    peerDependencies:
-      typescript: 3.x || 4.x || 5.x
-      vitest: '>=0.29.2'
-    dependencies:
-      ts-essentials: 9.3.1_typescript@4.9.5
-      typescript: 4.9.5
-      vitest: 0.29.7_jsdom@21.1.1
     dev: true
 
   /vitest/0.29.7_jsdom@21.1.1:

@@ -18,6 +18,7 @@ describe("Header", async () => {
 
   test("Renders create account and sign in buttons if user IS NOT logged in", () => {
     expect(screen.getByText("Create account")).toBeTruthy()
+    expect(screen.getByText("Sign In")).toBeTruthy()
   })
 
   test("Renders account dropdown if user IS logged in", () => {
@@ -25,6 +26,8 @@ describe("Header", async () => {
 
     render(<Header />)
 
+    expect(screen.getAllByText("Create account")).toHaveLength(1)
+    expect(screen.getAllByText("Sign In")).toHaveLength(1)
     expect(screen.getByAltText("Your profile")).toBeTruthy()
   })
 })
