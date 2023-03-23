@@ -1,13 +1,12 @@
-import { test, describe, expect, vi } from "vitest"
+import { test, describe, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 
 import Header from "./Header"
+import mockUseSession from "@/test/mocks/mockUseSession"
 
-vi.mock("next-auth/react")
-
-describe("Header", async () => {
-  const { useSession } = await import("next-auth/react")
-  useSession.mockReturnValue({ data: false })
+describe("Header", () => {
+  const mockedUseSession = mockUseSession()
+  mockedUseSession.mockReturnValue({ data: false })
 
   test("Renders", () => {
     render(<Header />)
@@ -22,7 +21,7 @@ describe("Header", async () => {
   })
 
   test("Renders account dropdown if user IS logged in", () => {
-    useSession.mockReturnValueOnce({ data: true })
+    mockedUseSession.mockReturnValueOnce({ data: true })
 
     render(<Header />)
 

@@ -1,9 +1,23 @@
 import { useSession } from "next-auth/react"
+import { api } from "@/utils/api"
 
 import Image from "next/image"
 
-export default function Communities() {
+import type { RouterOutputs } from "@/utils/api"
+
+type Communities = RouterOutputs["community"]["getAllByMember"]
+
+export default function Sidebar() {
   const { data: session } = useSession()
+
+  const { data: myCommunities } = api.community.getAllByMember.useQuery(
+    session?.user.id ?? "",
+    {
+      enabled: !!session,
+    }
+  )
+
+  const { data: topCommunities } = api.community.getTop.useQuery()
 
   return (
     <aside className="flex w-96 flex-col gap-10 border-r border-zinc-200 bg-white px-4 py-5">
@@ -14,27 +28,11 @@ export default function Communities() {
             <Image
               src="/icons/community.svg"
               alt="Your communities"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
             />
           </div>
-          <ul className="flex w-56 flex-col gap-2 pt-5">
-            <li>
-              <p>React Developers</p>
-            </li>
-            <li>
-              <p>T3 Stack</p>
-            </li>
-            <li>
-              <p>SvelteKit</p>
-            </li>
-            <li>
-              <p>tRPC</p>
-            </li>
-            <li>
-              <p>Spain Devs</p>
-            </li>
-          </ul>
+          {myCommunities && <Communities communities={myCommunities} />}
         </section>
       )}
       <section>
@@ -43,27 +41,11 @@ export default function Communities() {
           <Image
             src="/icons/top.svg"
             alt="Top communities"
-            width={22}
-            height={22}
+            width={20}
+            height={20}
           />
         </div>
-        <ul className="flex w-56 flex-col gap-2 pt-5">
-          <li>
-            <p>React Developers</p>
-          </li>
-          <li>
-            <p>T3 Stack</p>
-          </li>
-          <li>
-            <p>SvelteKit</p>
-          </li>
-          <li>
-            <p>tRPC</p>
-          </li>
-          <li>
-            <p>Spain Devs</p>
-          </li>
-        </ul>
+        {topCommunities && <Communities communities={topCommunities} />}
       </section>
       <section>
         <div className="flex items-center gap-2">
@@ -71,8 +53,8 @@ export default function Communities() {
           <Image
             src="/icons/discover.svg"
             alt="Discover"
-            width={22}
-            height={22}
+            width={20}
+            height={20}
           />
         </div>
         <ul className="flex w-56 flex-col gap-2 pt-5">
@@ -91,5 +73,17 @@ export default function Communities() {
         </ul>
       </section>
     </aside>
+  )
+}
+
+function Communities({ communities }: { communities: Communities }) {
+  return (
+    <ul className="flex w-56 flex-col gap-2 pt-5">
+      {communities.map((c) => (
+        <li key={c.id}>
+          <p>{c.name}</p>
+        </li>
+      ))}
+    </ul>
   )
 }

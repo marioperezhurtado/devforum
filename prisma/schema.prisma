@@ -14,10 +14,36 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
+model Community {
+    id          String   @id @default(cuid())
+    name        String
+    description String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    creatorId   String
+    creator     User     @relation(fields: [creatorId], references: [id])
+    members     User[]   @relation("CommunityMembers")
+    posts       Post[]
+}
+
+model Topic {
+    name      String   @id
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    posts     Post[]   @relation("PostTopics")
+}
+
+model Post {
+    id          String    @id @default(cuid())
+    title       String
+    content     String
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    creatorId   String
+    communityId String
+    creator     User      @relation(fields: [creatorId], references: [id])
+    community   Community @relation(fields: [communityId], references: [id])
+    topics      Topic[]   @relation("PostTopics")
 }
 
 // Necessary for Next auth
@@ -48,13 +74,18 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+    id                 String      @id @default(cuid())
+    name               String?
+    email              String?     @unique
+    emailVerified      DateTime?
+    image              String?
+    createdAt          DateTime    @default(now())
+    updatedAt          DateTime?   @updatedAt
+    accounts           Account[]
+    sessions           Session[]
+    communities        Community[] @relation("CommunityMembers")
+    createdCommunities Community[]
+    posts              Post[]
 }
 
 model VerificationToken {

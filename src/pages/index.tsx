@@ -1,6 +1,6 @@
 import Layout from "@/layout/Layout/Layout"
 import Header from "@/layout/Header/Header"
-import Communities from "@/components/Communities/Communities"
+import Sidebar from "@/components/Sidebar/Sidebar"
 import Categories from "@/components/Categories/Categories"
 import Topics from "@/components/Topics/Topics"
 
@@ -12,7 +12,7 @@ export default function Home() {
     >
       <Header />
       <div className="flex h-screen">
-        <Communities />
+        <Sidebar />
         <div className="mx-auto w-full max-w-screen-md overflow-hidden p-10">
           <Categories />
           <Topics />

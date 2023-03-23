@@ -1,19 +1,19 @@
-import { describe, test, expect, vi } from "vitest"
+import { describe, test, expect } from "vitest"
 import { render, screen, fireEvent } from "@testing-library/react"
 
 import AccountDropdown from "./AccountDropdown"
+import mockUseSession from "@/test/mocks/mockUseSession"
 
-vi.mock("next-auth/react", () => ({
-  useSession: () => ({
+describe("AccountDropdown", () => {
+  const mockedUseSession = mockUseSession()
+  mockedUseSession.mockReturnValue({
     data: {
       user: {
         name: "Test User",
       },
     },
-  }),
-}))
+  })
 
-describe("AccountDropdown", () => {
   test("Renders", () => {
     render(<AccountDropdown />)
 
