@@ -14,7 +14,7 @@ export default function Header() {
       </h1>
       <form name="searchForm" className="relative">
         <label htmlFor="search" className="sr-only">
-          Search topics, posts, and users
+          Search topics, posts, users and more
         </label>
         <input
           name="search"
