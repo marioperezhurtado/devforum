@@ -1,10 +1,11 @@
 import { useSession } from "next-auth/react"
-import { signIn } from "next-auth/react"
+import { useRouter } from "next/router"
 
 import Image from "next/image"
 import AccountDropdown from "./AccountDropdown"
 
 export default function Header() {
+  const router = useRouter()
   const { data: session } = useSession()
 
   return (
@@ -33,7 +34,7 @@ export default function Header() {
             Create account
           </button>
           <button
-            onClick={() => void signIn("discord")}
+            onClick={() => void router.push("/signIn")}
             className="rounded-full border-2 border-sky-600 bg-sky-600 px-4 py-1.5 text-sm font-semibold text-sky-100 transition hover:border-sky-500 hover:bg-sky-500"
           >
             Sign In

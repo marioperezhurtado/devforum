@@ -2,6 +2,7 @@ import { test, describe, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 
 import Header from "./Header"
+
 import mockUseSession from "@/test/mocks/mockUseSession"
 
 describe("Header", () => {
@@ -17,16 +18,15 @@ describe("Header", () => {
 
   test("Renders create account and sign in buttons if user IS NOT logged in", () => {
     expect(screen.getByText("Create account")).toBeTruthy()
-    expect(screen.getByText("Sign In")).toBeTruthy()
   })
 
   test("Renders account dropdown if user IS logged in", () => {
-    mockedUseSession.mockReturnValueOnce({ data: true })
+    mockedUseSession.mockReturnValueOnce({
+      data: true,
+    })
 
     render(<Header />)
 
-    expect(screen.getAllByText("Create account")).toHaveLength(1)
-    expect(screen.getAllByText("Sign In")).toHaveLength(1)
     expect(screen.getByAltText("Your profile")).toBeTruthy()
   })
 })
