@@ -6,14 +6,16 @@ export const postRouter = createTRPCRouter({
     return ctx.prisma.post.findMany({
       include: {
         creator: true,
+        community: true,
+        topics: true,
       },
     })
   }),
   create: publicProcedure
     .input(
       z.object({
-        title: z.string(),
-        content: z.string(),
+        title: z.string().min(10).max(120),
+        content: z.string().min(100).max(1000),
         communityId: z.string(),
         creatorId: z.string(),
       })

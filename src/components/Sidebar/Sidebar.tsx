@@ -17,11 +17,33 @@ export default function Sidebar() {
     }
   )
 
-  const { data: topCommunities } = api.community.getTop.useQuery()
+  const { data: topCommunities, isLoading: topLoading } =
+    api.community.getTop.useQuery()
 
   return (
-    <aside className="flex w-96 flex-col gap-10 border-r border-zinc-200 bg-white px-4 py-5">
-      {session && (
+    <aside className="flex w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-4 py-5">
+      <section>
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold">Trending</h2>
+          <Image src="/icons/top.svg" alt="Trending" width={20} height={20} />
+        </div>
+        {topLoading && <CommunitiesSkeleton />}
+        {topCommunities && <Communities communities={topCommunities} />}
+      </section>
+      <section>
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold">Discover</h2>
+          <Image
+            src="/icons/discover.svg"
+            alt="Discover"
+            width={20}
+            height={20}
+          />
+        </div>
+        {topLoading && <CommunitiesSkeleton />}
+        {topCommunities && <Communities communities={topCommunities} />}
+      </section>
+      {session && myCommunities && (
         <section>
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-semibold">Your communities</h2>
@@ -35,43 +57,6 @@ export default function Sidebar() {
           {myCommunities && <Communities communities={myCommunities} />}
         </section>
       )}
-      <section>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">Top communities</h2>
-          <Image
-            src="/icons/top.svg"
-            alt="Top communities"
-            width={20}
-            height={20}
-          />
-        </div>
-        {topCommunities && <Communities communities={topCommunities} />}
-      </section>
-      <section>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">Discover</h2>
-          <Image
-            src="/icons/discover.svg"
-            alt="Discover"
-            width={20}
-            height={20}
-          />
-        </div>
-        <ul className="flex w-56 flex-col gap-2 pt-5">
-          <li>
-            <p>Mobile Devs</p>
-          </li>
-          <li>
-            <p>Web3</p>
-          </li>
-          <li>
-            <p>Game Devs</p>
-          </li>
-          <li>
-            <p>Rustaceans</p>
-          </li>
-        </ul>
-      </section>
     </aside>
   )
 }
@@ -85,5 +70,16 @@ function Communities({ communities }: { communities: Communities }) {
         </li>
       ))}
     </ul>
+  )
+}
+
+function CommunitiesSkeleton() {
+  return (
+    <div className="flex w-56 animate-pulse flex-col gap-2 pt-5">
+      <div className="my-[2px] h-5 w-40 rounded-full bg-zinc-100" />
+      <div className="my-[2px] h-5 w-48 rounded-full bg-zinc-100" />
+      <div className="my-[2px] h-5 w-32 rounded-full bg-zinc-100" />
+      <div className="my-[2px] h-5 w-36 rounded-full bg-zinc-100" />
+    </div>
   )
 }

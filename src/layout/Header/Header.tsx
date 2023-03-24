@@ -1,15 +1,14 @@
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
 
-import Image from "next/image"
 import AccountDropdown from "./AccountDropdown"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function Header() {
-  const router = useRouter()
   const { data: session } = useSession()
 
   return (
-    <header className="mx-auto flex items-center justify-between border-b border-zinc-200 bg-white px-10 py-3 text-zinc-700">
+    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-10 py-3 text-zinc-700">
       <h1 className="text-xl font-bold">
         <span className="text-sky-600">Dev</span>Forum
       </h1>
@@ -33,12 +32,12 @@ export default function Header() {
           <button className="rounded-full border-2 border-sky-600 px-4 py-1.5 text-sm font-semibold text-sky-600 transition hover:border-sky-500 hover:text-sky-500">
             Create account
           </button>
-          <button
-            onClick={() => void router.push("/signIn")}
+          <Link
+            href="/signIn"
             className="rounded-full border-2 border-sky-600 bg-sky-600 px-4 py-1.5 text-sm font-semibold text-sky-100 transition hover:border-sky-500 hover:bg-sky-500"
           >
             Sign In
-          </button>
+          </Link>
         </div>
       )}
       {session && <AccountDropdown />}
