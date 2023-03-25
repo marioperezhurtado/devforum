@@ -12,8 +12,7 @@ datasource db {
 }
 
 model Community {
-    id          String   @id @default(cuid())
-    name        String   @unique
+    name        String   @id
     description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
@@ -33,18 +32,18 @@ model Topic {
 }
 
 model Post {
-    id          String    @id @default(cuid())
-    title       String
-    content     String    @db.VarChar(1000)
-    createdAt   DateTime  @default(now())
-    creatorId   String
-    communityId String
-    creator     User      @relation(fields: [creatorId], references: [id])
-    community   Community @relation(fields: [communityId], references: [id])
-    topics      Topic[]   @relation("PostTopics")
+    id            String    @id @default(cuid())
+    title         String
+    content       String    @db.VarChar(1000)
+    createdAt     DateTime  @default(now())
+    creatorId     String
+    communityName String
+    creator       User      @relation(fields: [creatorId], references: [id])
+    community     Community @relation(fields: [communityName], references: [name])
+    topics        Topic[]   @relation("PostTopics")
 
     @@index([creatorId])
-    @@index([communityId])
+    @@index([communityName])
 }
 
 // Necessary for Next auth

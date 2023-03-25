@@ -1,17 +1,20 @@
 import { useSession } from "next-auth/react"
 
-import AccountDropdown from "./AccountDropdown"
 import Image from "next/image"
 import Link from "next/link"
+import AccountDropdown from "./AccountDropdown"
+import Button from "@/ui/Button"
 
 export default function Header() {
   const { data: session } = useSession()
 
   return (
     <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-10 py-3 text-zinc-700">
-      <h1 className="text-xl font-bold">
-        <span className="text-sky-600">Dev</span>Forum
-      </h1>
+      <Link href="/">
+        <h1 className="text-xl font-bold">
+          <span className="text-sky-600">Dev</span>Forum
+        </h1>
+      </Link>
       <form name="searchForm" className="relative">
         <label htmlFor="search" className="sr-only">
           Search topics, posts, users and more
@@ -29,14 +32,9 @@ export default function Header() {
       </form>
       {!session && (
         <div className="flex items-center gap-4">
-          <button className="rounded-full border-2 border-sky-600 px-4 py-1 text-sm font-semibold text-sky-600 transition hover:border-sky-500 hover:text-sky-500">
-            Create account
-          </button>
-          <Link
-            href="/signIn"
-            className="rounded-full border-2 border-sky-600 bg-sky-600 px-4 py-1 text-sm font-semibold text-sky-100 transition hover:border-sky-500 hover:bg-sky-500"
-          >
-            Sign In
+          <Button intent="secondary">Create account</Button>
+          <Link href="/signIn">
+            <Button intent="primary">Sign In</Button>
           </Link>
         </div>
       )}

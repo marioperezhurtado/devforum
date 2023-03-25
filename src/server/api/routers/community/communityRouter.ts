@@ -18,18 +18,7 @@ export const getCommunityByName = ({
 }
 
 export const communityRouter = createTRPCRouter({
-  getAllByMember: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.community.findMany({
-      where: {
-        members: {
-          some: {
-            id: input,
-          },
-        },
-      },
-    })
-  }),
-  getTop: publicProcedure.query(({ ctx }) => {
+  getTrending: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.community.findMany({
       orderBy: {
         members: {
@@ -39,17 +28,21 @@ export const communityRouter = createTRPCRouter({
       take: 10,
     })
   }),
-  getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.community.findUnique({
-      where: {
-        id: input,
-      },
-    })
-  }),
   getByName: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return getCommunityByName({
       prisma: ctx.prisma,
       name: input,
+    })
+  }),
+  getAllByMember: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.community.findMany({
+      where: {
+        members: {
+          some: {
+            id: input,
+          },
+        },
+      },
     })
   }),
 })

@@ -20,6 +20,7 @@ specifiers:
   '@vitejs/plugin-react': ^3.1.0
   '@vitest/coverage-c8': ^0.29.7
   autoprefixer: ^10.4.7
+  class-variance-authority: ^0.4.0
   eslint: ^8.34.0
   eslint-config-next: ^13.2.1
   jsdom: ^21.1.1
@@ -45,6 +46,7 @@ dependencies:
   '@trpc/next': 10.17.0_odcsobxw7udv3234yskut3r4vy
   '@trpc/react-query': 10.17.0_nln23i7o54o7cjzbabmwtrulee
   '@trpc/server': 10.17.0
+  class-variance-authority: 0.4.0_typescript@4.9.5
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.20.1_ld2jel3hspngo3u5lti2kgl2sq
   react: 18.2.0
@@ -1527,6 +1529,17 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /class-variance-authority/0.4.0_typescript@4.9.5:
+    resolution: {integrity: sha512-74enNN8O9ZNieycac/y8FxqgyzZhZbxmCitAtAeUrLPlxjSd5zA7LfpprmxEcOmQBnaGs5hYhiSGnJ0mqrtBLQ==}
+    peerDependencies:
+      typescript: '>= 4.5.5 < 5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+    dev: false
 
   /cli-truncate/3.1.0:
     resolution: {integrity: sha512-wfOBkjXteqSnI59oPcJkcPl/ZmwvMMOj340qUIY1SKZCv0B9Cf4D4fAucRkIKQmsIuYK3x1rrgU7MeGRruiuiA==}
@@ -4129,7 +4142,6 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /ufo/1.1.1:
     resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}

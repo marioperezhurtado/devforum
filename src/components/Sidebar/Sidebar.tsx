@@ -18,8 +18,8 @@ export default function Sidebar() {
     }
   )
 
-  const { data: topCommunities, isLoading: topLoading } =
-    api.community.getTop.useQuery()
+  const { data: trendingCommunities, isLoading: trendingLoading } =
+    api.community.getTrending.useQuery()
 
   return (
     <aside className="flex w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-4 py-5">
@@ -33,8 +33,10 @@ export default function Sidebar() {
             height={20}
           />
         </div>
-        {topLoading && <CommunitiesSkeleton />}
-        {topCommunities && <Communities communities={topCommunities} />}
+        {trendingLoading && <CommunitiesSkeleton />}
+        {trendingCommunities && (
+          <Communities communities={trendingCommunities} />
+        )}
       </section>
       <section>
         <div className="flex items-center gap-2">
@@ -46,8 +48,10 @@ export default function Sidebar() {
             height={20}
           />
         </div>
-        {topLoading && <CommunitiesSkeleton />}
-        {topCommunities && <Communities communities={topCommunities} />}
+        {trendingLoading && <CommunitiesSkeleton />}
+        {trendingCommunities && (
+          <Communities communities={trendingCommunities} />
+        )}
       </section>
       {session && myCommunities && (
         <section>
