@@ -18,7 +18,7 @@ function Topic({ name }: { name: string }) {
     <li className="min-w-fit">
       <a
         href="#"
-        className="z-10 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
+        className="z-10 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 shadow-md transition hover:bg-sky-500"
       >
         {name}
       </a>

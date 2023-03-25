@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 
 import Sidebar from "@/components/Sidebar/Sidebar"
 
@@ -16,7 +16,7 @@ describe("Sidebar", () => {
     expect(screen.getByRole("complementary")).toBeTruthy()
   })
 
-  test("Renders own list of communities only if IS logged in", () => {
+  test("Renders own list of communities only if IS logged in", async () => {
     expect(screen.queryByText("Your communities")).toBeFalsy()
 
     mockedUseSession.mockReturnValue({
@@ -28,6 +28,8 @@ describe("Sidebar", () => {
     })
     render(<Sidebar />, { wrapper: withNextTRPC })
 
-    expect(screen.getByText("Your communities")).toBeTruthy()
+    await waitFor(() =>
+      expect(screen.getAllByText("Your communities")).toBeTruthy()
+    )
   })
 })

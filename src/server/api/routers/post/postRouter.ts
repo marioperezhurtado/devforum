@@ -11,30 +11,19 @@ export const postRouter = createTRPCRouter({
       },
     })
   }),
-  create: publicProcedure
-    .input(
-      z.object({
-        title: z.string().min(10).max(120),
-        content: z.string().min(100).max(1000),
-        communityId: z.string(),
-        creatorId: z.string(),
-      })
-    )
-    .mutation(({ input, ctx }) => {
-      return ctx.prisma.post.create({
-        data: {
-          title: input.title,
-          content: input.content,
+  getLatestByCommunityName: publicProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findMany({
+        where: {
           community: {
-            connect: {
-              id: input.communityId,
-            },
+            name: input,
           },
-          creator: {
-            connect: {
-              id: input.creatorId,
-            },
-          },
+        },
+        include: {
+          creator: true,
+          community: true,
+          topics: true,
         },
       })
     }),

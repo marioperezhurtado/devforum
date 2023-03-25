@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 import type { RouterOutputs } from "@/utils/api"
 
@@ -17,9 +18,12 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <div className="flex items-start gap-6 ">
               <h2 className="text-lg font-semibold">{post.title}</h2>
-              <button className="mt-0.5 min-w-fit rounded-full bg-green-500 px-2 py-0.5 text-sm font-bold text-green-50">
+              <Link
+                href={`/community/${post.community.name}`}
+                className="mt-0.5 min-w-fit rounded-full bg-green-500 px-2 py-0.5 text-sm font-bold text-green-50"
+              >
                 {post.community.name}
-              </button>
+              </Link>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <span>{post.creator.name}</span>

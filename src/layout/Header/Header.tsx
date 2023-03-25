@@ -28,13 +28,13 @@ export default function Header() {
         </button>
       </form>
       {!session && (
-        <div className="flex gap-4">
-          <button className="rounded-full border-2 border-sky-600 px-4 py-1.5 text-sm font-semibold text-sky-600 transition hover:border-sky-500 hover:text-sky-500">
+        <div className="flex items-center gap-4">
+          <button className="rounded-full border-2 border-sky-600 px-4 py-1 text-sm font-semibold text-sky-600 transition hover:border-sky-500 hover:text-sky-500">
             Create account
           </button>
           <Link
             href="/signIn"
-            className="rounded-full border-2 border-sky-600 bg-sky-600 px-4 py-1.5 text-sm font-semibold text-sky-100 transition hover:border-sky-500 hover:bg-sky-500"
+            className="rounded-full border-2 border-sky-600 bg-sky-600 px-4 py-1 text-sm font-semibold text-sky-100 transition hover:border-sky-500 hover:bg-sky-500"
           >
             Sign In
           </Link>

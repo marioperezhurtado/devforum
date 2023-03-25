@@ -7,7 +7,16 @@ import type { PropsWithChildren } from "react"
 import type { AppRouter } from "@/server/api/root"
 
 export const trpcReact = createTRPCReact<AppRouter>({})
-const queryClient = new QueryClient({})
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+})
 
 const url = `http://localhost:${process.env.PORT ?? 3000}/api/trpc`
 

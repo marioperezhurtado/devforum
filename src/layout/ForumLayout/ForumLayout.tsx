@@ -15,7 +15,7 @@ export default function ForumLayout({ title, description, children }: Props) {
         <Header />
         <div className="flex flex-grow overflow-hidden">
           <Sidebar />
-          <div className="w-full overflow-y-scroll ">
+          <div className="w-full overflow-x-hidden overflow-y-scroll">
             <div className="mx-auto min-h-screen max-w-screen-md p-10">
               {children}
             </div>

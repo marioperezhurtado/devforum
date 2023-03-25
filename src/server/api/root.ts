@@ -13,3 +13,14 @@ export const appRouter = createTRPCRouter({
 
 // export type definition of API
 export type AppRouter = typeof appRouter
+
+import { createProxySSGHelpers } from "@trpc/react-query/ssg"
+import { createInnerTRPCContext } from "@/server/api/trpc"
+import superjson from "superjson"
+
+// SSG SSR helpers
+export const ssg = createProxySSGHelpers({
+  router: appRouter,
+  ctx: createInnerTRPCContext({ session: null }),
+  transformer: superjson,
+})

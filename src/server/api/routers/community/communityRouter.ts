@@ -1,6 +1,22 @@
 import { z } from "zod"
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc"
 
+import type { PrismaClient } from "@prisma/client"
+
+export const getCommunityByName = ({
+  prisma,
+  name,
+}: {
+  prisma: PrismaClient
+  name: string
+}) => {
+  return prisma.community.findUnique({
+    where: {
+      name,
+    },
+  })
+}
+
 export const communityRouter = createTRPCRouter({
   getAllByMember: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.community.findMany({
@@ -21,6 +37,19 @@ export const communityRouter = createTRPCRouter({
         },
       },
       take: 10,
+    })
+  }),
+  getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.community.findUnique({
+      where: {
+        id: input,
+      },
+    })
+  }),
+  getByName: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return getCommunityByName({
+      prisma: ctx.prisma,
+      name: input,
     })
   }),
 })

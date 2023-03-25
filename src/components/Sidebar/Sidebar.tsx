@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
 
 import Image from "next/image"
+import Link from "next/link"
 
 import type { RouterOutputs } from "@/utils/api"
 
@@ -25,7 +26,12 @@ export default function Sidebar() {
       <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Trending</h2>
-          <Image src="/icons/top.svg" alt="Trending" width={20} height={20} />
+          <Image
+            src="/icons/trending.svg"
+            alt="Trending"
+            width={20}
+            height={20}
+          />
         </div>
         {topLoading && <CommunitiesSkeleton />}
         {topCommunities && <Communities communities={topCommunities} />}
@@ -66,7 +72,7 @@ function Communities({ communities }: { communities: Communities }) {
     <ul className="flex w-56 flex-col gap-2 pt-5">
       {communities.map((c) => (
         <li key={c.id}>
-          <p>{c.name}</p>
+          <Link href={`/community/${c.name}`}>{c.name}</Link>
         </li>
       ))}
     </ul>
