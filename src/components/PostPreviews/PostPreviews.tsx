@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
-import Image from "next/image"
+import Avatar from "@/ui/Avatar"
 import Link from "next/link"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -33,16 +33,10 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <span>{post.creator.name}</span>
-              <Image
-                src={post.creator.image ?? ""}
-                alt={
-                  post.creator.name
-                    ? `${post.creator.name}'s profile picture`
-                    : ""
-                }
-                width={24}
-                height={24}
-                className="aspect-square h-6 w-6 min-w-fit rounded-full object-cover"
+              <Avatar
+                name={post.creator.name ?? ""}
+                imgUrl={post.creator.image}
+                size="small"
               />
             </div>
           </div>
