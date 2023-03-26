@@ -21,6 +21,7 @@ specifiers:
   '@vitest/coverage-c8': ^0.29.7
   autoprefixer: ^10.4.7
   class-variance-authority: ^0.4.0
+  dayjs: ^1.11.7
   eslint: ^8.34.0
   eslint-config-next: ^13.2.1
   jsdom: ^21.1.1
@@ -47,6 +48,7 @@ dependencies:
   '@trpc/react-query': 10.17.0_nln23i7o54o7cjzbabmwtrulee
   '@trpc/server': 10.17.0
   class-variance-authority: 0.4.0_typescript@4.9.5
+  dayjs: 1.11.7
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.20.1_ld2jel3hspngo3u5lti2kgl2sq
   react: 18.2.0
@@ -1647,6 +1649,10 @@ packages:
       whatwg-mimetype: 3.0.0
       whatwg-url: 12.0.1
     dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
 
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}

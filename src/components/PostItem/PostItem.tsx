@@ -1,9 +1,14 @@
-import { type RouterOutputs } from "@/utils/api"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
 
 import Image from "next/image"
 import Link from "next/link"
 
+import type { RouterOutputs } from "@/utils/api"
+
 type Post = RouterOutputs["post"]["getFeatured"][0]
+
+dayjs.extend(relativeTime)
 
 export default function PostItem({ post }: { post: Post }) {
   return (
@@ -14,7 +19,9 @@ export default function PostItem({ post }: { post: Post }) {
           <span>{post.creator.name}</span>
           <Image
             src={post.creator.image ?? ""}
-            alt={post.creator.name ?? ""}
+            alt={
+              post.creator.name ? `${post.creator.name}'s profile picture` : ""
+            }
             width={24}
             height={24}
             className="aspect-square h-6 w-6 min-w-fit rounded-full object-cover"
@@ -40,7 +47,7 @@ export default function PostItem({ post }: { post: Post }) {
             ))}
           </ul>
         )}
-        <span className="ml-auto">{post.createdAt.toLocaleDateString()}</span>
+        <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
       </div>
     </div>
   )

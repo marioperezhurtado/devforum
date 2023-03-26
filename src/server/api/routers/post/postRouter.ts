@@ -37,6 +37,9 @@ export const postRouter = createTRPCRouter({
           community: true,
           topics: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       })
     }),
   getLatestByTopic: publicProcedure

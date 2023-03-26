@@ -1,8 +1,12 @@
-import type { RouterOutputs } from "@/utils/api"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
 
 import Image from "next/image"
 
+import type { RouterOutputs } from "@/utils/api"
 type Comment = RouterOutputs["comment"]["getByPostId"][0]
+
+dayjs.extend(relativeTime)
 
 export default function CommentItem({
   comment,
@@ -19,14 +23,18 @@ export default function CommentItem({
         <div className="mb-5 flex items-center gap-2">
           <Image
             src={comment.creator.image ?? ""}
-            alt={comment.creator.name ?? ""}
+            alt={
+              comment.creator.name
+                ? `${comment.creator.name}'s profile picture`
+                : ""
+            }
             width={24}
             height={24}
             className="rounded-full"
           />
           <span className="text-sm">{comment.creator.name}</span>
           <span className="text-xs text-gray-500">
-            - {comment.createdAt.toLocaleDateString()}
+            · {dayjs(comment.createdAt).fromNow()}
           </span>
         </div>
         <p>{comment.content}</p>
