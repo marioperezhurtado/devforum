@@ -15,7 +15,6 @@ model Community {
     name        String   @id
     description String
     createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
     creatorId   String
     creator     User     @relation(fields: [creatorId], references: [id])
     members     User[]   @relation("CommunityMembers")
@@ -27,7 +26,6 @@ model Community {
 model Topic {
     name      String   @id
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
     posts     Post[]   @relation("PostTopics")
 }
 
@@ -41,9 +39,27 @@ model Post {
     creator       User      @relation(fields: [creatorId], references: [id])
     community     Community @relation(fields: [communityName], references: [name])
     topics        Topic[]   @relation("PostTopics")
+    comments      Comment[]
 
     @@index([creatorId])
     @@index([communityName])
+}
+
+model Comment {
+    id        String    @id @default(cuid())
+    content   String    @db.VarChar(500)
+    createdAt DateTime  @default(now())
+    creatorId String
+    postId    String
+    replyToId String?
+    creator   User      @relation(fields: [creatorId], references: [id])
+    post      Post      @relation(fields: [postId], references: [id])
+    replyTo   Comment?  @relation("CommentReplies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    replies   Comment[] @relation("CommentReplies")
+
+    @@index([creatorId])
+    @@index([postId])
+    @@index([replyToId])
 }
 
 // Necessary for Next auth
@@ -89,6 +105,7 @@ model User {
     communities        Community[] @relation("CommunityMembers")
     createdCommunities Community[]
     posts              Post[]
+    comments           Comment[]
 }
 
 model VerificationToken {

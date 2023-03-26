@@ -75,7 +75,7 @@ function Communities({ communities }: { communities: Communities }) {
   return (
     <ul className="flex w-56 flex-col gap-2 pt-5">
       {communities.map((c) => (
-        <li key={c.id}>
+        <li key={c.name}>
           <Link href={`/community/${c.name}`}>{c.name}</Link>
         </li>
       ))}

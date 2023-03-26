@@ -7,7 +7,7 @@ type Post = RouterOutputs["post"]["getFeatured"][0]
 
 export default function PostItem({ post }: { post: Post }) {
   return (
-    <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+    <div className="mb-10 rounded-md border bg-white px-6 py-4 shadow-md">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <h2 className="text-2xl font-semibold">{post.title}</h2>
         <div className="flex items-center gap-2 text-sm">
