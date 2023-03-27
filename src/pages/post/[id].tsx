@@ -1,7 +1,7 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useCommentStore } from "./store"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/PostItem/PostItem"
@@ -29,7 +29,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 export default function PostPage() {
-  const [isAddingComment, setIsAddingComment] = useState(false)
+  const { isOpen, open, close } = useCommentStore()
+
   const router = useRouter()
   const id = router.query.id as string
 
@@ -46,9 +47,7 @@ export default function PostPage() {
        at DevForum.dev - ${topics ? `#${topics}` : ""}`}
     >
       {post && <PostItem post={post} />}
-      {isAddingComment && post && (
-        <AddComment postId={id} onClose={() => setIsAddingComment(false)} />
-      )}
+      {isOpen && post && <AddComment postId={id} onClose={() => close()} />}
       {!comments?.length && (
         <div>
           <p className="mb-2 text-center text-xl font-semibold">
@@ -60,7 +59,7 @@ export default function PostPage() {
           </p>
           <Button
             type="button"
-            onClick={() => setIsAddingComment(true)}
+            onClick={() => open()}
             className="mx-auto mt-5 block w-fit"
           >
             Leave a comment
@@ -76,11 +75,7 @@ export default function PostPage() {
                 {comments.length} comment{comments.length === 1 ? "" : "s"}
               </p>
             </div>
-            {!isAddingComment && (
-              <Button onClick={() => setIsAddingComment(true)}>
-                Leave a comment
-              </Button>
-            )}
+            {!isOpen && <Button onClick={() => open()}>Leave a comment</Button>}
           </div>
           <Comments comments={comments} />
         </>

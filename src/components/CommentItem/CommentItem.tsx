@@ -1,5 +1,6 @@
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import { useCommentStore } from "@/pages/post/store"
 
 import Image from "next/image"
 
@@ -15,6 +16,8 @@ export default function CommentItem({
   comment: Comment
   allComments: Comment[]
 }) {
+  const { reply } = useCommentStore()
+
   const replies = allComments.filter((c) => c.replyToId === comment.id)
 
   return (
@@ -55,7 +58,10 @@ export default function CommentItem({
               height={14}
             />
           </button>
-          <button className="ml-auto flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
+          <button
+            onClick={() => reply(comment)}
+            className="ml-auto flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
+          >
             <Image
               src="/icons/comment.svg"
               alt="Reply"
