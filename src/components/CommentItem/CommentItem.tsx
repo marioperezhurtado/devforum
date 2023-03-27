@@ -19,7 +19,7 @@ export default function CommentItem({
 
   return (
     <>
-      <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+      <div className="relative rounded-md border bg-white px-6 py-4 shadow-md">
         <div className="mb-5 flex items-center gap-2">
           <Image
             src={comment.creator.image ?? ""}
@@ -40,7 +40,8 @@ export default function CommentItem({
         <p>{comment.content}</p>
       </div>
       {!!replies?.length && (
-        <ul className="ml-8 mt-2 flex flex-col gap-4">
+        <ul className="relative ml-8 mt-2 flex flex-col gap-4">
+          <NestedLine />
           {replies.map((reply) => (
             <li key={reply.id}>
               <CommentItem comment={reply} allComments={allComments} />
@@ -49,5 +50,11 @@ export default function CommentItem({
         </ul>
       )}
     </>
+  )
+}
+
+function NestedLine() {
+  return (
+    <span className="absolute -left-4 top-0 h-full w-0.5 rounded-full bg-zinc-300" />
   )
 }

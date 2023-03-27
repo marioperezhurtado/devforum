@@ -11,6 +11,11 @@ export const postRouter = createTRPCRouter({
         creator: true,
         community: true,
         topics: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     })
   }),
@@ -20,6 +25,11 @@ export const postRouter = createTRPCRouter({
         creator: true,
         community: true,
         topics: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     })
   }),
@@ -36,6 +46,11 @@ export const postRouter = createTRPCRouter({
           creator: true,
           community: true,
           topics: true,
+          _count: {
+            select: {
+              comments: true,
+            },
+          },
         },
         orderBy: {
           createdAt: "desc",
@@ -57,6 +72,11 @@ export const postRouter = createTRPCRouter({
           creator: true,
           community: true,
           topics: true,
+          _count: {
+            select: {
+              comments: true,
+            },
+          },
         },
       })
     }),

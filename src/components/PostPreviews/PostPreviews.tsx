@@ -3,10 +3,11 @@ import relativeTime from "dayjs/plugin/relativeTime"
 
 import Avatar from "@/ui/Avatar"
 import Link from "next/link"
+import Image from "next/image"
 
 import type { RouterOutputs } from "@/utils/api"
 
-type Posts = RouterOutputs["post"]["getFeatured"]
+type Posts = RouterOutputs["post"]["getLatestByCommunityName"]
 
 const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
@@ -53,9 +54,9 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
               Read more...
             </Link>
           )}
-          <div className="mt-10 flex justify-between text-xs">
+          <div className="mt-5">
             {post.topics.length > 0 && (
-              <ul className="flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-2 text-sm">
                 {post.topics.map((t) => (
                   <li key={t.name}>
                     <Link href={`/topic/${t.name}`} className="font-semibold">
@@ -65,7 +66,21 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
                 ))}
               </ul>
             )}
-            <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
+            <div className="mt-5 flex items-center justify-between text-xs">
+              <Link
+                href={`/post/${post.id}`}
+                className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
+              >
+                <Image
+                  src="/icons/comment.svg"
+                  alt="Comments"
+                  width={16}
+                  height={16}
+                />
+                {post._count.comments}
+              </Link>
+              <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
+            </div>
           </div>
         </li>
       ))}

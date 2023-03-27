@@ -41,6 +41,8 @@ export default function CommunityPage() {
       enabled: !!name,
     })
 
+  console.log(latestPosts)
+
   return (
     <ForumLayout
       title={`${community?.name ?? ""} Community - DevForum.dev`}
