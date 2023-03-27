@@ -41,8 +41,6 @@ export default function CommunityPage() {
       enabled: !!name,
     })
 
-  console.log(latestPosts)
-
   return (
     <ForumLayout
       title={`${community?.name ?? ""} Community - DevForum.dev`}
@@ -96,7 +94,7 @@ export default function CommunityPage() {
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
           >
             <Image
-              src="/icons/upvote.svg"
+              src="/icons/upvote-light.svg"
               alt="Most Upvoted Posts"
               width={18}
               height={18}

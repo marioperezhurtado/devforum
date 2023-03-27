@@ -19,8 +19,8 @@ export default function CommentItem({
 
   return (
     <>
-      <div className="relative rounded-md border bg-white px-6 py-4 shadow-md">
-        <div className="mb-5 flex items-center gap-2">
+      <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
+        <div className="flex items-center gap-2 px-2 py-4">
           <Image
             src={comment.creator.image ?? ""}
             alt={
@@ -37,7 +37,34 @@ export default function CommentItem({
             · {dayjs(comment.createdAt).fromNow()}
           </span>
         </div>
-        <p>{comment.content}</p>
+        <p className="px-2">{comment.content}</p>
+        <div className="mt-2 flex items-center gap-1 border-t  bg-zinc-50 p-1">
+          <button className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
+            <Image
+              src="/icons/upvote.svg"
+              alt="Upvote"
+              width={14}
+              height={14}
+            />
+          </button>
+          <button className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
+            <Image
+              src="/icons/downvote.svg"
+              alt="Downvote"
+              width={14}
+              height={14}
+            />
+          </button>
+          <button className="ml-auto flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
+            <Image
+              src="/icons/comment.svg"
+              alt="Reply"
+              width={14}
+              height={14}
+            />
+            Reply
+          </button>
+        </div>
       </div>
       {!!replies?.length && (
         <ul className="relative ml-8 mt-2 flex flex-col gap-4">

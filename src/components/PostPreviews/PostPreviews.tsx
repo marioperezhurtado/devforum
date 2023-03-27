@@ -49,7 +49,7 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
           {post.content.length > MAX_PREVIEW_LENGTH && (
             <Link
               href={`/post/${post.id}`}
-              className="mt-2 block text-sm text-sky-600 underline"
+              className="mt-2 block w-fit py-1.5 text-sm text-sky-600 underline"
             >
               Read more...
             </Link>
@@ -59,7 +59,10 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
               <ul className="flex flex-wrap gap-2 text-sm">
                 {post.topics.map((t) => (
                   <li key={t.name}>
-                    <Link href={`/topic/${t.name}`} className="font-semibold">
+                    <Link
+                      href={`/topic/${t.name}`}
+                      className="py-1.5 font-semibold"
+                    >
                       #{t.name}
                     </Link>
                   </li>

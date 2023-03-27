@@ -36,7 +36,10 @@ export default function PostItem({ post }: { post: Post }) {
           <ul className="flex flex-wrap gap-2">
             {post.topics.map((t) => (
               <li key={t.name}>
-                <Link href={`/topic/${t.name}`} className="font-semibold">
+                <Link
+                  href={`/topic/${t.name}`}
+                  className="py-1.5 font-semibold"
+                >
                   #{t.name}
                 </Link>
               </li>

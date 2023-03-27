@@ -94,7 +94,9 @@ function Communities({ communities }: { communities: Communities }) {
     <ul className="flex w-56 flex-col gap-2 pt-5">
       {communities.map((c) => (
         <li key={c.name}>
-          <Link href={`/community/${c.name}`}>{c.name}</Link>
+          <Link href={`/community/${c.name}`} className="py-1.5">
+            {c.name}
+          </Link>
         </li>
       ))}
     </ul>
