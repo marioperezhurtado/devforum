@@ -1,11 +1,13 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
+import { useState } from "react"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/PostItem/PostItem"
 import Button from "@/ui/Button"
 import Comments from "@/components/Comments/Comments"
+import AddComment from "@/components/AddComent/AddComent"
 
 import type { GetServerSideProps } from "next"
 
@@ -27,6 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 export default function PostPage() {
+  const [isAddingComment, setIsAddingComment] = useState(false)
   const router = useRouter()
   const id = router.query.id as string
 
@@ -43,6 +46,9 @@ export default function PostPage() {
        at DevForum.dev - ${topics ? `#${topics}` : ""}`}
     >
       {post && <PostItem post={post} />}
+      {isAddingComment && post && (
+        <AddComment postId={id} onClose={() => setIsAddingComment(false)} />
+      )}
       {!comments?.length && (
         <div>
           <p className="mb-2 text-center text-xl font-semibold">
@@ -52,10 +58,33 @@ export default function PostPage() {
             {`You can make your voice heard. Share your thoughts, ask questions, and get
            involved in the conversation.`}
           </p>
-          <Button className="mx-auto mt-5 block w-fit">Leave a comment</Button>
+          <Button
+            type="button"
+            onClick={() => setIsAddingComment(true)}
+            className="mx-auto mt-5 block w-fit"
+          >
+            Leave a comment
+          </Button>
         </div>
       )}
-      {!!comments?.length && <Comments comments={comments} />}
+      {!!comments?.length && (
+        <>
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold">Comments</h2>
+              <p className="text-sm text-gray-500">
+                {comments.length} comment{comments.length === 1 ? "" : "s"}
+              </p>
+            </div>
+            {!isAddingComment && (
+              <Button onClick={() => setIsAddingComment(true)}>
+                Leave a comment
+              </Button>
+            )}
+          </div>
+          <Comments comments={comments} />
+        </>
+      )}
     </ForumLayout>
   )
 }
