@@ -1,7 +1,8 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { z } from "zod"
 import { api } from "@/utils/api"
 import { useCommentStore } from "@/pages/post/store"
+import toast from "react-hot-toast"
 
 import Image from "next/image"
 import Button from "@/ui/Button"
@@ -17,7 +18,7 @@ export default function AddComment({ postId, onClose }: Props) {
 
   const utils = api.useContext()
 
-  const { mutate } = api.comment.create.useMutation({
+  const { mutateAsync: addComment } = api.comment.create.useMutation({
     onSuccess: async () => {
       await utils.comment.getByPostId.invalidate(postId)
       onClose()
@@ -25,7 +26,7 @@ export default function AddComment({ postId, onClose }: Props) {
     },
   })
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const schema = z.object({
@@ -39,17 +40,25 @@ export default function AddComment({ postId, onClose }: Props) {
         comment: commentInput.value,
         replyToId: replyTo?.id,
       })
-      mutate({ postId, content: comment, replyToId })
-    } catch (e) {
-      console.log(e) // TODO: handle errors
-    }
+      await toast.promise(addComment({ postId, content: comment, replyToId }), {
+        loading: "Adding comment...",
+        success: "Comment added!",
+        error: "Failed to add comment",
+      })
+    } catch (e) {}
   }
+
+  useEffect(() => {
+    if (!replyTo) return
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+  }, [replyTo])
 
   return (
     <form
       ref={formRef}
-      onSubmit={handleSubmit}
+      onSubmit={(e) => void handleSubmit(e)}
       name="addComent"
+      id="addComment"
       className="mb-10 rounded-md border bg-white p-4 shadow-md"
     >
       {replyTo && (

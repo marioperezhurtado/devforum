@@ -3,6 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
 import { useCommentStore } from "@/pages/post/store"
+import { toast } from "react-hot-toast"
 
 import Image from "next/image"
 
@@ -23,12 +24,20 @@ export default function CommentItem({
 
   const utils = api.useContext()
 
-  const { mutate: handleDelete, isLoading: isDeleting } =
+  const { mutateAsync: deleteComment, isLoading: isDeleting } =
     api.comment.delete.useMutation({
       onSuccess: async () => {
         await utils.comment.getByPostId.invalidate(comment.postId)
       },
     })
+
+  const handleDelete = async () => {
+    await toast.promise(deleteComment(comment.id), {
+      loading: "Deleting comment...",
+      success: "Comment deleted!",
+      error: "Failed to delete comment",
+    })
+  }
 
   const replies = allComments.filter((c) => c.replyToId === comment.id)
   const isOwn = comment.creator.id === session?.user.id
@@ -75,7 +84,7 @@ export default function CommentItem({
             {isOwn && (
               <button
                 disabled={isDeleting}
-                onClick={() => handleDelete(comment.id)}
+                onClick={() => void handleDelete()}
                 className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
               >
                 <Image
