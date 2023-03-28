@@ -6,7 +6,7 @@ import { useCommentStore } from "./store"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/PostItem/PostItem"
 import Button from "@/ui/Button"
-import Comments from "@/components/Comments/Comments"
+import Comments, { CommentsSkeleton } from "@/components/Comments/Comments"
 import AddComment from "@/components/AddComent/AddComent"
 
 import type { GetServerSideProps } from "next"
@@ -14,7 +14,6 @@ import type { GetServerSideProps } from "next"
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const id = ctx.params?.id
   const post = await ssg.post.getById.fetch(id as string)
-  await ssg.comment.getByPostId.prefetch(id as string)
 
   if (!post)
     return {
@@ -35,7 +34,8 @@ export default function PostPage() {
   const id = router.query.id as string
 
   const { data: post } = api.post.getById.useQuery(id)
-  const { data: comments } = api.comment.getByPostId.useQuery(id)
+  const { data: comments, isLoading: commentsLoading } =
+    api.comment.getByPostId.useQuery(id)
 
   const topics = post?.topics?.map((t) => t.name).join(", #")
 
@@ -48,7 +48,8 @@ export default function PostPage() {
     >
       {post && <PostItem post={post} />}
       {isOpen && post && <AddComment postId={id} onClose={() => close()} />}
-      {!comments?.length && (
+      {commentsLoading && <CommentsSkeleton />}
+      {!commentsLoading && !comments?.length && (
         <div>
           <p className="mb-2 text-center text-xl font-semibold">
             Be the first to comment

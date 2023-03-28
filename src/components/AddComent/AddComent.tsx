@@ -3,6 +3,7 @@ import { z } from "zod"
 import { api } from "@/utils/api"
 import { useCommentStore } from "@/pages/post/store"
 
+import Image from "next/image"
 import Button from "@/ui/Button"
 
 type Props = {
@@ -52,7 +53,13 @@ export default function AddComment({ postId, onClose }: Props) {
       className="mb-10 rounded-md border bg-white p-4 shadow-md"
     >
       {replyTo && (
-        <div className="mb-2">
+        <div className="mb-2 flex items-center gap-1">
+          <Image
+            src="/icons/reply.svg"
+            alt="Add a reply"
+            width={16}
+            height={16}
+          />
           <p className="text-sm text-gray-500">
             Replying to
             <span className="mr-1.5 font-semibold text-gray-700">
