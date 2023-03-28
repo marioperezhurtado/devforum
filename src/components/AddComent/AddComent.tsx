@@ -42,7 +42,7 @@ export default function AddComment({ postId, onClose }: Props) {
       })
       await toast.promise(addComment({ postId, content: comment, replyToId }), {
         loading: "Adding comment...",
-        success: "Comment added!",
+        success: "Comment added! ✨",
         error: "Failed to add comment",
       })
     } catch (e) {}

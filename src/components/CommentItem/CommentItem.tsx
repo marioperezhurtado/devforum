@@ -34,7 +34,7 @@ export default function CommentItem({
   const handleDelete = async () => {
     await toast.promise(deleteComment(comment.id), {
       loading: "Deleting comment...",
-      success: "Comment deleted!",
+      success: "Comment deleted! 🗑️",
       error: "Failed to delete comment",
     })
   }

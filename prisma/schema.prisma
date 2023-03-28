@@ -30,16 +30,17 @@ model Topic {
 }
 
 model Post {
-    id            String    @id @default(cuid())
+    id            String         @id @default(cuid())
     title         String
-    content       String    @db.VarChar(1000)
-    createdAt     DateTime  @default(now())
+    content       String         @db.VarChar(1000)
+    createdAt     DateTime       @default(now())
     creatorId     String
     communityName String
-    creator       User      @relation(fields: [creatorId], references: [id])
-    community     Community @relation(fields: [communityName], references: [name])
-    topics        Topic[]   @relation("PostTopics")
+    creator       User           @relation(fields: [creatorId], references: [id])
+    community     Community      @relation(fields: [communityName], references: [name])
+    topics        Topic[]        @relation("PostTopics")
     comments      Comment[]
+    reactions     PostReaction[]
 
     @@index([creatorId])
     @@index([communityName])
@@ -60,6 +61,20 @@ model Comment {
     @@index([creatorId])
     @@index([postId])
     @@index([replyToId])
+}
+
+model PostReaction {
+    id        String   @id @default(cuid())
+    vote      Boolean
+    createdAt DateTime @default(now())
+    creatorId String
+    postId    String
+    creator   User     @relation(fields: [creatorId], references: [id])
+    post      Post     @relation(fields: [postId], references: [id])
+
+    @@unique([creatorId, postId], name: "postReactionCreatorIdPostId")
+    @@index([creatorId])
+    @@index([postId])
 }
 
 // Necessary for Next auth
@@ -93,19 +108,20 @@ model Session {
 }
 
 model User {
-    id                 String      @id @default(cuid())
+    id                 String         @id @default(cuid())
     name               String?
-    email              String?     @unique
+    email              String?        @unique
     emailVerified      DateTime?
     image              String?
-    createdAt          DateTime    @default(now())
-    updatedAt          DateTime?   @updatedAt
+    createdAt          DateTime       @default(now())
+    updatedAt          DateTime?      @updatedAt
     accounts           Account[]
     sessions           Session[]
-    communities        Community[] @relation("CommunityMembers")
+    communities        Community[]    @relation("CommunityMembers")
     createdCommunities Community[]
     posts              Post[]
     comments           Comment[]
+    postReactions      PostReaction[]
 }
 
 model VerificationToken {

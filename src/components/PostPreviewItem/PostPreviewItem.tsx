@@ -1,0 +1,188 @@
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { api } from "@/utils/api"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+
+import Link from "next/link"
+import Image from "next/image"
+import Avatar from "@/ui/Avatar"
+
+import type { RouterOutputs } from "@/utils/api"
+
+type Post = RouterOutputs["post"]["getLatestByCommunityName"][0]
+
+const MAX_PREVIEW_LENGTH = 200
+dayjs.extend(relativeTime)
+
+export default function PostPreviewItem({ post }: { post: Post }) {
+  const { data: session } = useSession()
+  const [upvotes, setUpvotes] = useState(
+    post.reactions.filter((r) => r.vote).length
+  )
+  const [downvotes, setDownvotes] = useState(post.reactions.length - upvotes)
+  const [myVote, setMyVote] = useState<boolean | null>(null)
+
+  const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
+  const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
+
+  const handleUpvote = () => {
+    if (myVote === true) {
+      setUpvotes((u) => u - 1)
+      setMyVote(null)
+      handleRemoveVote(post.id)
+      return
+    }
+    if (myVote === false) {
+      setDownvotes((d) => d - 1)
+    }
+    setUpvotes((u) => u + 1)
+    setMyVote(true)
+    handleVote({
+      postId: post.id,
+      vote: true,
+    })
+  }
+
+  const handleDownvote = () => {
+    if (myVote === false) {
+      setDownvotes((d) => d - 1)
+      setMyVote(null)
+      handleRemoveVote(post.id)
+      return
+    }
+    if (myVote === true) {
+      setUpvotes((u) => u - 1)
+    }
+    setDownvotes((d) => d + 1)
+    setMyVote(false)
+    handleVote({
+      postId: post.id,
+      vote: false,
+    })
+  }
+
+  useEffect(() => {
+    if (session) {
+      const myVote = post.reactions.find((r) => r.creatorId === session.user.id)
+      setMyVote(myVote?.vote ?? null)
+    }
+  }, [session, post.reactions])
+
+  return (
+    <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <div className="flex items-start gap-6 ">
+          <h2 className="text-lg font-semibold">
+            <Link href={`/post/${post.id}`}>{post.title}</Link>
+          </h2>
+          <Link
+            href={`/community/${post.community.name}`}
+            className="mt-0.5 min-w-fit rounded-full bg-green-500 px-2 py-0.5 text-sm font-bold text-green-50"
+          >
+            {post.community.name}
+          </Link>
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <span>{post.creator.name}</span>
+          <Avatar
+            name={post.creator.name ?? ""}
+            imgUrl={post.creator.image}
+            size="small"
+          />
+        </div>
+      </div>
+      <p>
+        {post.content.length <= MAX_PREVIEW_LENGTH && post.content}
+        {post.content.length > MAX_PREVIEW_LENGTH &&
+          post.content.slice(0, MAX_PREVIEW_LENGTH) + "..."}
+      </p>
+      {post.content.length > MAX_PREVIEW_LENGTH && (
+        <Link
+          href={`/post/${post.id}`}
+          className="mt-2 block w-fit py-1.5 text-sm text-sky-600 underline"
+        >
+          Read more...
+        </Link>
+      )}
+      <div className="mt-5">
+        {post.topics.length > 0 && (
+          <ul className="flex flex-wrap gap-2 text-sm">
+            {post.topics.map((t) => (
+              <li key={t.name}>
+                <Link
+                  href={`/topic/${t.name}`}
+                  className="py-1.5 font-semibold"
+                >
+                  #{t.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="mt-5 flex items-center justify-between text-xs">
+          <div className="flex gap-2">
+            <Link
+              href={`/post/${post.id}`}
+              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
+            >
+              <Image
+                src="/icons/comment.svg"
+                alt="Comments"
+                width={16}
+                height={16}
+              />
+              {post._count?.comments > 0 && post._count?.comments}
+            </Link>
+            <button
+              onClick={handleUpvote}
+              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
+            >
+              <Image
+                src="/icons/upvote.svg"
+                alt="Upvote"
+                width={16}
+                height={16}
+              />
+              {upvotes > 0 && upvotes}
+            </button>
+            <button
+              onClick={handleDownvote}
+              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
+            >
+              <Image
+                src="/icons/downvote.svg"
+                alt="Downvote"
+                width={16}
+                height={16}
+              />
+              {downvotes > 0 && downvotes}
+            </button>
+          </div>
+          <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function PostPreviewSkeleton() {
+  return (
+    <div className="animate-pulse rounded-md border bg-white px-6 py-4 shadow-md">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <div className="flex items-start gap-6 ">
+          <div className="h-5 w-64 rounded-full bg-zinc-100" />
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="h-5 w-36 rounded-full bg-zinc-100" />
+          <span className="aspect-square h-6 w-6 min-w-fit rounded-full bg-zinc-100 object-cover" />
+        </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <div className="h-4 w-full rounded-full bg-zinc-100" />
+        <div className="h-4 w-full rounded-full bg-zinc-100" />
+        <div className="h-4 w-3/4 rounded-full bg-zinc-100" />
+      </div>
+    </div>
+  )
+}
