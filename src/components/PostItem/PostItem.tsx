@@ -37,15 +37,15 @@ export default function PostItem({ post }: { post: Post }) {
   })
 
   return (
-    <div className="mb-10 rounded-md border bg-white px-6 py-4 shadow-md">
+    <div className="mb-5 rounded-md border bg-white px-3 py-2 shadow-md md:mb-10 md:py-4 md:px-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <h2 className="text-2xl font-semibold">{post.title}</h2>
+        <h2 className="text-lg font-semibold md:text-2xl">{post.title}</h2>
         <div className="flex items-center gap-2 text-sm">
-          <span>{post.creator.name}</span>
+          <span className="font-semibold">{post.creator.name}</span>
           <Avatar
             name={post.creator.name ?? ""}
             imgUrl={post.creator.image}
-            size="small"
+            size="medium"
           />
         </div>
       </div>

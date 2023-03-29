@@ -24,7 +24,7 @@ export default function Sidebar() {
     })
 
   return (
-    <aside className="flex w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5">
+    <aside className="hidden w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5 lg:flex">
       <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Trending</h2>

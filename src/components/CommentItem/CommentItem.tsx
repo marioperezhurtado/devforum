@@ -66,13 +66,13 @@ export default function CommentItem({
   return (
     <>
       <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
-        <div className="flex items-center gap-2 px-2 py-4">
+        <div className="flex flex-wrap items-center gap-2 px-2 py-4">
           <Avatar
             imgUrl={comment.creator.image}
             name={comment.creator.name ?? ""}
             size="small"
           />
-          <span className="text-sm">{comment.creator.name}</span>
+          <span className="text-sm font-semibold">{comment.creator.name}</span>
           <span className="text-xs text-gray-500">
             · {dayjs(comment.createdAt).fromNow()}
           </span>
@@ -125,7 +125,7 @@ export default function CommentItem({
         </div>
       </div>
       {!!replies?.length && (
-        <ul className="relative ml-8 mt-2 flex flex-col gap-4">
+        <ul className="relative ml-4 mt-2 flex flex-col gap-4 md:ml-8">
           <NestedLine />
           {replies.map((reply) => (
             <li key={reply.id}>
@@ -140,7 +140,7 @@ export default function CommentItem({
 
 function NestedLine() {
   return (
-    <div className="group absolute -left-6 top-0 h-full w-fit px-2">
+    <div className="group absolute -left-4 top-0 h-full w-fit px-2 md:-left-6">
       <span className="block h-full w-0.5 rounded-full bg-zinc-300 transition group-hover:bg-sky-500" />
     </div>
   )

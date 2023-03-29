@@ -4,6 +4,9 @@ const config = {
   theme: {
     extend: {
       fontFamily: {},
+      screens: {
+        xs: "480px",
+      },
     },
   },
   plugins: [],

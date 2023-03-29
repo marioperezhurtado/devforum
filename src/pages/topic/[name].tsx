@@ -46,18 +46,18 @@ export default function TopicPage() {
       description={`#${topic?.name ?? ""} 
       Topic at DevForum.dev, the place for all programmers to learn, share, and connect with your community.  `}
     >
-      <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+      <div className="rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
         <p className="mb-2 text-sm">Topic</p>
-        <div className="flex flex-wrap items-center gap-6">
-          <h1 className="text-3xl font-semibold">#{topic?.name}</h1>
+        <div className="mb-3 flex flex-wrap items-center gap-6">
+          <h1 className="text-xl font-semibold md:text-2xl">#{topic?.name}</h1>
           <Button>Follow</Button>
         </div>
         <p className="text-right text-sm">
           Created on {topic?.createdAt.toLocaleDateString()}
         </p>
       </div>
-      <ul className="scrollbar-hide my-10 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5">
-        <li>
+      <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
+        <li className="min-w-fit">
           <Link
             href={`/topic/${topic?.name ?? ""}/trending`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -71,7 +71,7 @@ export default function TopicPage() {
             Trending
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/topic/${topic?.name ?? ""}/latest`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -85,7 +85,7 @@ export default function TopicPage() {
             Latest
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/topic/${topic?.name ?? ""}/most-upvoted`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -99,7 +99,7 @@ export default function TopicPage() {
             Most upvoted
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/topic/${topic?.name ?? ""}/controversial`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"

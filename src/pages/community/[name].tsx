@@ -1,6 +1,8 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -11,6 +13,8 @@ import PostPreviews, {
 } from "@/components/PostPreviews/PostPreviews"
 
 import type { GetServerSideProps } from "next"
+
+dayjs.extend(relativeTime)
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const name = ctx.params?.name
@@ -45,21 +49,23 @@ export default function CommunityPage() {
       title={`${community?.name ?? ""} Community - DevForum.dev`}
       description={community?.description ?? ""}
     >
-      <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+      <div className="rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
         <p className="mb-2 text-sm">Community</p>
         <div className="flex flex-wrap items-center gap-6">
-          <h1 className="break-words text-3xl font-semibold">
+          <h1 className="break-words text-xl font-semibold md:text-2xl">
             {community?.name}
           </h1>
           <Button>Join</Button>
         </div>
-        <h2 className="mt-5 mb-2 text-xl">{community?.description}</h2>
+        <h2 className="mb-2 mt-3 md:mt-5 md:text-xl">
+          {community?.description}
+        </h2>
         <p className="text-right text-sm">
-          Created on {community?.createdAt.toLocaleDateString()}
+          Created on {dayjs(community?.createdAt).format("MM-DD-YYYY")}
         </p>
       </div>
-      <ul className="scrollbar-hide my-10 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5">
-        <li>
+      <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
+        <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/trending`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -73,7 +79,7 @@ export default function CommunityPage() {
             Trending
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/latest`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -87,7 +93,7 @@ export default function CommunityPage() {
             Latest
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/most-upvoted`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
@@ -101,7 +107,7 @@ export default function CommunityPage() {
             Most upvoted
           </Link>
         </li>
-        <li>
+        <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/controversial`}
             className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"

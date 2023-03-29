@@ -3,6 +3,8 @@ import { render, screen, fireEvent } from "@testing-library/react"
 
 import AddComment from "./AddComent"
 import { withNextTRPC } from "@/test/withNextTRPC"
+import mockUseSession from "@/test/mocks/mockUseSession"
+import mockNextRouter from "@/test/mocks/mockNextRouter"
 import { Comment } from "@/test/data/Comment"
 
 import { api } from "@/utils/api"
@@ -33,6 +35,12 @@ vi.mock("@/pages/post/store", () => ({
 describe("AddComment", () => {
   window.HTMLElement.prototype.scrollIntoView = () => vi.fn()
 
+  const mockedUseSession = mockUseSession()
+  mockedUseSession.mockReturnValue({})
+  const mockedNextRouter = mockNextRouter()
+  mockedNextRouter.mockReturnValue({
+    push: () => vi.fn(),
+  })
   const mockedCreate = vi.spyOn(api.comment.create, "useMutation") as Mock
   mockedCreate.mockReturnValue({
     mutate: () => vi.fn(),

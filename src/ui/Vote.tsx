@@ -27,12 +27,14 @@ const vote = cva("button", {
     {
       voteType: "upvote",
       voted: true,
-      className: "bg-sky-600 border-sky-600 text-sky-50",
+      className:
+        "bg-sky-600 border-sky-600 text-sky-50 hover:bg-sky-500 hover:border-sky-500",
     },
     {
       voteType: "downvote",
       voted: true,
-      className: "bg-sky-200 border-sky-300 text-sky-700",
+      className:
+        "bg-sky-200 border-sky-300 text-sky-700 hover:bg-sky-300 hover:border-sky-400",
     },
     {
       size: "small",
@@ -60,9 +62,14 @@ export default function Vote({
   className,
   ...props
 }: ButtonProps) {
+  let voteText = voteType === "upvote" ? "Upvote" : "Downvote"
+
+  if (voted) {
+    voteText = voteType === "upvote" ? "Remove upvote" : "Remove downvote"
+  }
   return (
     <button
-      title={voteType === "upvote" ? "Upvote" : "Downvote"}
+      title={voteText}
       className={`${vote({
         voteType,
         voted,

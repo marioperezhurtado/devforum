@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react"
 import { z } from "zod"
 import { api } from "@/utils/api"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
 import { useCommentStore } from "@/pages/post/store"
 import toast from "react-hot-toast"
 
@@ -13,6 +15,8 @@ type Props = {
 }
 
 export default function AddComment({ postId, onClose }: Props) {
+  const router = useRouter()
+  const { data: session } = useSession()
   const formRef = useRef<HTMLFormElement>(null)
   const { replyTo } = useCommentStore()
 
@@ -33,6 +37,8 @@ export default function AddComment({ postId, onClose }: Props) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (!session) await router.push("/signIn")
 
     const schema = z.object({
       comment: z.string().min(1).max(500),
@@ -72,10 +78,10 @@ export default function AddComment({ postId, onClose }: Props) {
       onSubmit={(e) => void handleSubmit(e)}
       name="addComent"
       id="addComment"
-      className="mb-10 rounded-md border bg-white p-4 shadow-md"
+      className="mb-5 rounded-md border bg-white p-2 shadow-md md:mb-10 md:p-4"
     >
       {replyTo && (
-        <div className="mb-2 flex items-center gap-1">
+        <div className="mb-1 flex items-center gap-1 md:mb-2">
           <Image
             src="/icons/reply.svg"
             alt="Add a reply"
@@ -105,9 +111,9 @@ export default function AddComment({ postId, onClose }: Props) {
         id="comment"
         name="comment"
         placeholder="Leave a comment, answer a question or share your thoughts..."
-        className="h-44 w-full rounded-md border bg-zinc-50 px-4 py-2 focus:outline-sky-600"
+        className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1 text-sm focus:outline-sky-600 md:py-2 md:px-4 md:text-base"
       />
-      <div className="mt-2 flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={onClose} type="button" intent="secondary">
           Cancel
         </Button>

@@ -12,7 +12,7 @@ import type { RouterOutputs } from "@/utils/api"
 
 type Post = RouterOutputs["post"]["getLatestByCommunityName"][0]
 
-const MAX_PREVIEW_LENGTH = 250
+const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
@@ -35,9 +35,9 @@ export default function PostPreviewItem({ post }: { post: Post }) {
   })
 
   return (
-    <div className="rounded-md border bg-white px-6 py-4 shadow-md">
+    <div className="rounded-md border bg-white py-2 px-3 shadow-md md:px-6 md:py-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <div className="flex items-start gap-6 ">
+        <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
           <h2 className="text-lg font-semibold">
             <Link href={`/post/${post.id}`}>{post.title}</Link>
           </h2>
@@ -49,7 +49,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           </Link>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <span>{post.creator.name}</span>
+          <span className="font-semibold">{post.creator.name}</span>
           <Avatar
             name={post.creator.name ?? ""}
             imgUrl={post.creator.image}
@@ -124,7 +124,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
 
 export function PostPreviewSkeleton() {
   return (
-    <div className="animate-pulse rounded-md border bg-white px-6 py-4 shadow-md">
+    <div className="animate-pulse rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex items-start gap-6 ">
           <div className="h-5 w-64 rounded-full bg-zinc-100" />
