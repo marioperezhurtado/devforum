@@ -1,6 +1,6 @@
-import Layout from "../Layout/Layout"
-import Header from "../Header/Header"
-import Sidebar from "@/components/Sidebar/Sidebar"
+import Layout from "@/layout/Layout/Layout"
+import Header from "@/layout/Header/Header"
+import Sidebar from "@/layout/Sidebar/Sidebar"
 
 type Props = {
   title: string

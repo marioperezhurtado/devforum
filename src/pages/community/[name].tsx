@@ -15,7 +15,6 @@ import type { GetServerSideProps } from "next"
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const name = ctx.params?.name
   const community = await ssg.community.getByName.fetch(name as string)
-  await ssg.post.getLatestByCommunityName.prefetch(name as string)
 
   if (!community) {
     return {

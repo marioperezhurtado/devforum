@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, type Mock } from "vitest"
 import { render, screen, waitFor } from "@testing-library/react"
 
-import Sidebar from "@/components/Sidebar/Sidebar"
+import Sidebar from "@/layout/Sidebar/Sidebar"
 
 import mockUseSession from "@/test/mocks/mockUseSession"
 import { withNextTRPC } from "@/test/withNextTRPC"

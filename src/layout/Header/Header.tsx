@@ -9,7 +9,7 @@ export default function Header() {
   const { data: session } = useSession()
 
   return (
-    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-10 py-3 text-zinc-700">
+    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-6 py-3 text-zinc-700">
       <Link href="/">
         <h1 className="text-xl font-bold">
           <span className="text-sky-600">Dev</span>Forum

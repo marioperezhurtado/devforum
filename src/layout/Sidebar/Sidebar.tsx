@@ -13,15 +13,18 @@ export default function Sidebar() {
   const { data: session } = useSession()
 
   const { data: trendingCommunities, isLoading: trendingLoading } =
-    api.community.getTrending.useQuery()
+    api.community.getTrending.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    })
 
   const { data: myCommunities, isLoading: myLoading } =
     api.community.getAllByMember.useQuery(session?.user.id ?? "", {
       enabled: !!session,
+      refetchOnWindowFocus: false,
     })
 
   return (
-    <aside className="flex w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-4 py-5">
+    <aside className="flex w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5">
       <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Trending</h2>
