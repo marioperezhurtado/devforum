@@ -30,11 +30,11 @@ export default function SignIn() {
       title="Sign In - DevForum.dev"
       description="Sign in to your DevForum.dev account and connect with other developers"
     >
-      <div className="relative mx-auto my-20 max-w-sm rounded-xl border bg-white py-10 px-6 text-center shadow-md">
+      <div className="relative mx-auto mb-14 mt-20 max-w-sm rounded-xl border bg-white py-10 px-6 text-center shadow-md">
         <h1 className="mb-5 text-3xl font-semibold">Sign In</h1>
         <Link
           href="/"
-          className="absolute top-4 left-4 rounded-md border shadow-md"
+          className="absolute top-4 left-4 rounded-md border shadow-sm transition hover:shadow-md"
         >
           <Image
             src="/icons/back.svg"

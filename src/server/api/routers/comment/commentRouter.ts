@@ -14,6 +14,7 @@ export const commentRouter = createTRPCRouter({
       },
       include: {
         creator: true,
+        reactions: true,
       },
     })
   }),
@@ -22,16 +23,52 @@ export const commentRouter = createTRPCRouter({
       z.object({
         content: z.string().min(5).max(500),
         postId: z.string(),
-        replyToId: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.comment.create({
         data: {
           content: input.content,
-          postId: input.postId,
-          replyToId: input.replyToId,
-          creatorId: ctx.session.user.id,
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
+          creator: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      })
+    }),
+  reply: protectedProcedure
+    .input(
+      z.object({
+        content: z.string().min(5).max(500),
+        postId: z.string(),
+        replyToId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.comment.create({
+        data: {
+          content: input.content,
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
+          creator: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+          replyTo: {
+            connect: {
+              id: input.replyToId,
+            },
+          },
         },
       })
     }),

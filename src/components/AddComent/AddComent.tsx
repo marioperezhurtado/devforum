@@ -18,12 +18,17 @@ export default function AddComment({ postId, onClose }: Props) {
 
   const utils = api.useContext()
 
+  const success = async () => {
+    await utils.comment.getByPostId.invalidate(postId)
+    onClose()
+    formRef.current?.reset()
+  }
+
   const { mutateAsync: addComment } = api.comment.create.useMutation({
-    onSuccess: async () => {
-      await utils.comment.getByPostId.invalidate(postId)
-      onClose()
-      formRef.current?.reset()
-    },
+    onSuccess: async () => success(),
+  })
+  const { mutateAsync: addReply } = api.comment.reply.useMutation({
+    onSuccess: async () => success(),
   })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,9 +45,17 @@ export default function AddComment({ postId, onClose }: Props) {
         comment: commentInput.value,
         replyToId: replyTo?.id,
       })
-      await toast.promise(addComment({ postId, content: comment, replyToId }), {
+      if (replyToId) {
+        await toast.promise(addReply({ postId, content: comment, replyToId }), {
+          loading: "Adding reply...",
+          success: "Reply added! 🗣️",
+          error: "Failed to add reply",
+        })
+        return
+      }
+      await toast.promise(addComment({ postId, content: comment }), {
         loading: "Adding comment...",
-        success: "Comment added! ✨",
+        success: "Comment added! 💬",
         error: "Failed to add comment",
       })
     } catch (e) {}

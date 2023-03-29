@@ -2,10 +2,12 @@ import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
+import useVote from "@/hooks/useVote"
 import { useCommentStore } from "@/pages/post/store"
 import { toast } from "react-hot-toast"
 
 import Image from "next/image"
+import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
 type Comment = RouterOutputs["comment"]["getByPostId"][0]
@@ -24,6 +26,24 @@ export default function CommentItem({
 
   const utils = api.useContext()
 
+  const { mutate: handleVote } = api.commentReaction.addOrUpdate.useMutation()
+  const { mutate: handleRemoveVote } = api.commentReaction.delete.useMutation()
+
+  const { upvotes, downvotes, handleUpvote, handleDownvote, myVote } = useVote({
+    onUpvote: () =>
+      handleVote({
+        commentId: comment.id,
+        vote: true,
+      }),
+    onDownvote: () =>
+      handleVote({
+        commentId: comment.id,
+        vote: false,
+      }),
+    onRemoveVote: () => handleRemoveVote(comment.id),
+    votes: comment.reactions,
+  })
+
   const { mutateAsync: deleteComment, isLoading: isDeleting } =
     api.comment.delete.useMutation({
       onSuccess: async () => {
@@ -34,7 +54,7 @@ export default function CommentItem({
   const handleDelete = async () => {
     await toast.promise(deleteComment(comment.id), {
       loading: "Deleting comment...",
-      success: "Comment deleted! 🗑️",
+      success: "Comment deleted! 🚮",
       error: "Failed to delete comment",
     })
   }
@@ -64,22 +84,20 @@ export default function CommentItem({
         </div>
         <p className="px-2">{comment.content}</p>
         <div className="mt-2 flex items-center gap-1 border-t  bg-zinc-50 p-1">
-          <button className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
-            <Image
-              src="/icons/upvote.svg"
-              alt="Upvote"
-              width={14}
-              height={14}
-            />
-          </button>
-          <button className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200">
-            <Image
-              src="/icons/downvote.svg"
-              alt="Downvote"
-              width={14}
-              height={14}
-            />
-          </button>
+          <Vote
+            onClick={() => void handleUpvote()}
+            voteType="upvote"
+            voted={myVote === true}
+            votes={upvotes}
+            size="small"
+          />
+          <Vote
+            onClick={() => void handleDownvote()}
+            voteType="downvote"
+            voted={myVote === false}
+            votes={downvotes}
+            size="small"
+          />
           <div className="ml-auto flex gap-1">
             {isOwn && (
               <button

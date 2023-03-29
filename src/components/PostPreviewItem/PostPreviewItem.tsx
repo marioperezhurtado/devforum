@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
+import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
 import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
+import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
 
@@ -16,58 +16,23 @@ const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
-  const { data: session } = useSession()
-  const [upvotes, setUpvotes] = useState(
-    post.reactions.filter((r) => r.vote).length
-  )
-  const [downvotes, setDownvotes] = useState(post.reactions.length - upvotes)
-  const [myVote, setMyVote] = useState<boolean | null>(null)
-
   const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
   const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
 
-  const handleUpvote = () => {
-    if (myVote === true) {
-      setUpvotes((u) => u - 1)
-      setMyVote(null)
-      handleRemoveVote(post.id)
-      return
-    }
-    if (myVote === false) {
-      setDownvotes((d) => d - 1)
-    }
-    setUpvotes((u) => u + 1)
-    setMyVote(true)
-    handleVote({
-      postId: post.id,
-      vote: true,
-    })
-  }
-
-  const handleDownvote = () => {
-    if (myVote === false) {
-      setDownvotes((d) => d - 1)
-      setMyVote(null)
-      handleRemoveVote(post.id)
-      return
-    }
-    if (myVote === true) {
-      setUpvotes((u) => u - 1)
-    }
-    setDownvotes((d) => d + 1)
-    setMyVote(false)
-    handleVote({
-      postId: post.id,
-      vote: false,
-    })
-  }
-
-  useEffect(() => {
-    if (session) {
-      const myVote = post.reactions.find((r) => r.creatorId === session.user.id)
-      setMyVote(myVote?.vote ?? null)
-    }
-  }, [session, post.reactions])
+  const { upvotes, downvotes, handleUpvote, handleDownvote, myVote } = useVote({
+    onUpvote: () =>
+      handleVote({
+        postId: post.id,
+        vote: true,
+      }),
+    onDownvote: () =>
+      handleVote({
+        postId: post.id,
+        vote: false,
+      }),
+    onRemoveVote: () => handleRemoveVote(post.id),
+    votes: post.reactions,
+  })
 
   return (
     <div className="rounded-md border bg-white px-6 py-4 shadow-md">
@@ -134,30 +99,20 @@ export default function PostPreviewItem({ post }: { post: Post }) {
               />
               {post._count?.comments > 0 && post._count?.comments}
             </Link>
-            <button
+            <Vote
               onClick={handleUpvote}
-              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
-            >
-              <Image
-                src="/icons/upvote.svg"
-                alt="Upvote"
-                width={16}
-                height={16}
-              />
-              {upvotes > 0 && upvotes}
-            </button>
-            <button
+              voteType="upvote"
+              voted={myVote === true}
+              votes={upvotes}
+              size="medium"
+            />
+            <Vote
               onClick={handleDownvote}
-              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
-            >
-              <Image
-                src="/icons/downvote.svg"
-                alt="Downvote"
-                width={16}
-                height={16}
-              />
-              {downvotes > 0 && downvotes}
-            </button>
+              voteType="downvote"
+              voted={myVote === false}
+              votes={downvotes}
+              size="medium"
+            />
           </div>
           <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
         </div>
