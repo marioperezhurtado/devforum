@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast"
 
 import Image from "next/image"
 import Vote from "@/ui/Vote"
+import Avatar from "@/ui/Avatar"
 
 import type { RouterOutputs } from "@/utils/api"
 type Comment = RouterOutputs["comment"]["getByPostId"][0]
@@ -66,16 +67,10 @@ export default function CommentItem({
     <>
       <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
         <div className="flex items-center gap-2 px-2 py-4">
-          <Image
-            src={comment.creator.image ?? ""}
-            alt={
-              comment.creator.name
-                ? `${comment.creator.name}'s profile picture`
-                : ""
-            }
-            width={24}
-            height={24}
-            className="rounded-full"
+          <Avatar
+            imgUrl={comment.creator.image}
+            name={comment.creator.name ?? ""}
+            size="small"
           />
           <span className="text-sm">{comment.creator.name}</span>
           <span className="text-xs text-gray-500">
@@ -145,7 +140,9 @@ export default function CommentItem({
 
 function NestedLine() {
   return (
-    <span className="absolute -left-4 top-0 h-full w-0.5 rounded-full bg-zinc-300" />
+    <div className="group absolute -left-6 top-0 h-full w-fit px-2">
+      <span className="block h-full w-0.5 rounded-full bg-zinc-300 transition group-hover:bg-sky-500" />
+    </div>
   )
 }
 

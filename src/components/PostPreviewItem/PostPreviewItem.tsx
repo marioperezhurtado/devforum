@@ -12,7 +12,7 @@ import type { RouterOutputs } from "@/utils/api"
 
 type Post = RouterOutputs["post"]["getLatestByCommunityName"][0]
 
-const MAX_PREVIEW_LENGTH = 200
+const MAX_PREVIEW_LENGTH = 250
 dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
@@ -60,7 +60,8 @@ export default function PostPreviewItem({ post }: { post: Post }) {
       <p>
         {post.content.length <= MAX_PREVIEW_LENGTH && post.content}
         {post.content.length > MAX_PREVIEW_LENGTH &&
-          post.content.slice(0, MAX_PREVIEW_LENGTH) + "..."}
+          post.content.slice(0, MAX_PREVIEW_LENGTH)}
+        {post.content.length > MAX_PREVIEW_LENGTH && <span>...</span>}
       </p>
       {post.content.length > MAX_PREVIEW_LENGTH && (
         <Link
@@ -100,14 +101,14 @@ export default function PostPreviewItem({ post }: { post: Post }) {
               {post._count?.comments > 0 && post._count?.comments}
             </Link>
             <Vote
-              onClick={handleUpvote}
+              onClick={() => void handleUpvote()}
               voteType="upvote"
               voted={myVote === true}
               votes={upvotes}
               size="medium"
             />
             <Vote
-              onClick={handleDownvote}
+              onClick={() => void handleDownvote()}
               voteType="downvote"
               voted={myVote === false}
               votes={downvotes}

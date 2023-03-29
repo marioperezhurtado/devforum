@@ -62,6 +62,7 @@ export default function Vote({
 }: ButtonProps) {
   return (
     <button
+      title={voteType === "upvote" ? "Upvote" : "Downvote"}
       className={`${vote({
         voteType,
         voted,
