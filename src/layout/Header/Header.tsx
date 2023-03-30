@@ -8,12 +8,12 @@ import Button from "@/ui/Button"
 
 export default function Header() {
   const { data: session } = useSession()
-  const { isOpen, open, close } = useSidebarStore()
+  const { open } = useSidebarStore()
 
   return (
     <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white py-2 px-3 text-zinc-700 xs:px-4 sm:py-3 sm:px-6">
       <div className="flex items-center gap-6">
-        <button onClick={isOpen ? close : open} className="lg:hidden">
+        <button onClick={open} className="lg:hidden">
           <Image
             src="/icons/menu.svg"
             alt="Toggle Menu"

@@ -32,14 +32,36 @@ function Topic({ name }: { name: string }) {
 function TopicsSkeleton() {
   return (
     <div className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
-      <div className="h-6 w-20 rounded-full bg-sky-600" />
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-20 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-14 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-20 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
+      <div>
+        <div className="h-6 w-16 min-w-fit rounded-full bg-sky-600" />
+      </div>
     </div>
   )
 }

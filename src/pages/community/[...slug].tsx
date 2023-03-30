@@ -42,25 +42,25 @@ export default function CommunityPage() {
   const { data: community } = api.community.getByName.useQuery(name as string)
 
   const { data: trendingPosts, isFetching: trendingLoading } =
-    api.post.getTrendingByCommunityName.useQuery(name as string, {
+    api.post.community.getTrending.useQuery(name as string, {
       enabled: filter === "trending",
       refetchOnWindowFocus: false,
     })
 
   const { data: latestPosts, isFetching: latestLoading } =
-    api.post.getLatestByCommunityName.useQuery(name as string, {
+    api.post.community.getLatest.useQuery(name as string, {
       enabled: filter === "latest",
       refetchOnWindowFocus: false,
     })
 
   const { data: mostUpvotedPosts, isFetching: mostUpvotedLoading } =
-    api.post.getMostUpvotedByCommunityName.useQuery(name as string, {
+    api.post.community.getMostUpvoted.useQuery(name as string, {
       enabled: filter === "most-upvoted",
       refetchOnWindowFocus: false,
     })
 
   const { data: controversialPosts, isFetching: controversialLoading } =
-    api.post.getControversialByCommunityName.useQuery(name as string, {
+    api.post.community.getControversial.useQuery(name as string, {
       enabled: filter === "controversial",
       refetchOnWindowFocus: false,
     })

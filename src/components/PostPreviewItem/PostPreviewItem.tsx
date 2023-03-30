@@ -10,7 +10,7 @@ import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
 
-type Post = RouterOutputs["post"]["getLatestByCommunityName"][0]
+type Post = RouterOutputs["post"]["getLatestByCommunity"][0]
 
 const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
@@ -86,7 +86,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
             ))}
           </ul>
         )}
-        <div className="mt-5 flex items-center justify-between text-xs">
+        <div className="mt-5 flex items-center justify-between text-sm">
           <div className="flex gap-2">
             <Link
               href={`/post/${post.id}`}

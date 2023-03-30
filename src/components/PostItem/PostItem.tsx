@@ -71,7 +71,7 @@ export default function PostItem({ post }: { post: Post }) {
             ))}
           </ul>
         )}
-        <div className="mt-5 flex items-center justify-between text-xs">
+        <div className="mt-5 flex items-center justify-between text-sm">
           <div className="flex gap-2">
             <button
               onClick={open}
