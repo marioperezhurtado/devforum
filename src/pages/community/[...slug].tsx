@@ -17,7 +17,7 @@ import type { GetServerSideProps } from "next"
 dayjs.extend(relativeTime)
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const name = ctx.params?.name
+  const name = ctx.params?.slug?.[0]
   const community = await ssg.community.getByName.fetch(name as string)
 
   if (!community) {
@@ -35,14 +35,50 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export default function CommunityPage() {
   const router = useRouter()
-  const { name } = router.query
+  const { slug } = router.query
+  const name = slug?.[0]
+  const filter = slug?.[1] ?? "trending"
 
   const { data: community } = api.community.getByName.useQuery(name as string)
 
-  const { data: latestPosts, isLoading: latestLoading } =
-    api.post.getLatestByCommunityName.useQuery(name as string, {
-      enabled: !!name,
+  const { data: trendingPosts, isFetching: trendingLoading } =
+    api.post.getTrendingByCommunityName.useQuery(name as string, {
+      enabled: filter === "trending",
+      refetchOnWindowFocus: false,
     })
+
+  const { data: latestPosts, isFetching: latestLoading } =
+    api.post.getLatestByCommunityName.useQuery(name as string, {
+      enabled: filter === "latest",
+      refetchOnWindowFocus: false,
+    })
+
+  const { data: mostUpvotedPosts, isFetching: mostUpvotedLoading } =
+    api.post.getMostUpvotedByCommunityName.useQuery(name as string, {
+      enabled: filter === "most-upvoted",
+      refetchOnWindowFocus: false,
+    })
+
+  const { data: controversialPosts, isFetching: controversialLoading } =
+    api.post.getControversialByCommunityName.useQuery(name as string, {
+      enabled: filter === "controversial",
+      refetchOnWindowFocus: false,
+    })
+
+  const isLoading =
+    trendingLoading ||
+    latestLoading ||
+    mostUpvotedLoading ||
+    controversialLoading
+
+  const posts =
+    filter === "trending"
+      ? trendingPosts
+      : filter === "latest"
+      ? latestPosts
+      : filter === "most-upvoted"
+      ? mostUpvotedPosts
+      : controversialPosts
 
   return (
     <ForumLayout
@@ -68,7 +104,12 @@ export default function CommunityPage() {
         <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/trending`}
-            className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
+            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
+            ${
+              filter === "trending"
+                ? "bg-purple-500"
+                : "bg-sky-600 hover:bg-sky-500"
+            }`}
           >
             <Image
               src="/icons/trending-light.svg"
@@ -82,7 +123,12 @@ export default function CommunityPage() {
         <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/latest`}
-            className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
+            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
+             ${
+               filter === "latest"
+                 ? "bg-purple-500"
+                 : "bg-sky-600 hover:bg-sky-500"
+             }`}
           >
             <Image
               src="/icons/latest.svg"
@@ -96,7 +142,12 @@ export default function CommunityPage() {
         <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/most-upvoted`}
-            className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
+            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
+            ${
+              filter === "most-upvoted"
+                ? "bg-purple-500"
+                : "bg-sky-600 hover:bg-sky-500"
+            }`}
           >
             <Image
               src="/icons/upvote-light.svg"
@@ -110,7 +161,12 @@ export default function CommunityPage() {
         <li className="min-w-fit">
           <Link
             href={`/community/${community?.name ?? ""}/controversial`}
-            className="z-10 flex items-center gap-1 rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 transition hover:bg-sky-500"
+            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
+            ${
+              filter === "controversial"
+                ? "bg-purple-500"
+                : "bg-sky-600 hover:bg-sky-500"
+            }`}
           >
             <Image
               src="/icons/controversial.svg"
@@ -122,20 +178,26 @@ export default function CommunityPage() {
           </Link>
         </li>
       </ul>
-      {latestLoading && <PostPreviewsSkeleton />}
-      {!!latestPosts?.length && <PostPreviews posts={latestPosts} />}
-      {!latestPosts?.length && !latestLoading && (
-        <div>
-          <p className="mb-2 text-center text-xl font-semibold">
-            No posts yet? No problem!
-          </p>
-          <p className="mx-auto max-w-md text-center">
-            {`We're excited to have you here. Take the first step and leave your
-            mark on this community.`}
-          </p>
-          <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
-        </div>
+      {isLoading && <PostPreviewsSkeleton />}
+      {posts && posts.length > 0 && !isLoading && (
+        <PostPreviews posts={posts} />
       )}
+      {!posts?.length && !isLoading && <NoPostsFound />}
     </ForumLayout>
+  )
+}
+
+function NoPostsFound() {
+  return (
+    <div>
+      <p className="mb-2 text-center text-xl font-semibold">
+        No posts yet? No problem!
+      </p>
+      <p className="mx-auto max-w-md text-center">
+        {`We're excited to have you here. Take the first step and leave your
+            mark on this community.`}
+      </p>
+      <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
+    </div>
   )
 }

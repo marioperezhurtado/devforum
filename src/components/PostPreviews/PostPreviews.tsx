@@ -20,7 +20,7 @@ export default function PostPreviews({ posts }: { posts: Posts }) {
 
 export function PostPreviewsSkeleton() {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="mb-2 flex flex-col gap-4">
       <PostPreviewSkeleton />
       <PostPreviewSkeleton />
       <PostPreviewSkeleton />

@@ -1,5 +1,7 @@
 import { api } from "@/utils/api"
 
+import Link from "next/link"
+
 export default function Topics() {
   const { data: topics, isLoading } = api.topic.getPopular.useQuery()
 
@@ -18,12 +20,12 @@ export default function Topics() {
 
 function Topic({ name }: { name: string }) {
   return (
-    <a
-      href="#"
+    <Link
+      href={`/topic/${name}`}
       className="z-10 min-w-fit rounded-full bg-sky-600 px-2 py-1 text-sm font-semibold text-sky-50 shadow-md transition hover:bg-sky-500"
     >
       #{name}
-    </a>
+    </Link>
   )
 }
 

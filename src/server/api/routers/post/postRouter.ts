@@ -60,6 +60,87 @@ export const postRouter = createTRPCRouter({
         },
       })
     }),
+  getControversialByCommunityName: publicProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findMany({
+        where: {
+          community: {
+            name: input,
+          },
+        },
+        include: {
+          creator: true,
+          community: true,
+          topics: true,
+          reactions: true,
+          _count: {
+            select: {
+              comments: true,
+            },
+          },
+        },
+        orderBy: {
+          reactions: {
+            _count: "desc",
+          },
+        },
+      })
+    }),
+  getTrendingByCommunityName: publicProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findMany({
+        where: {
+          community: {
+            name: input,
+          },
+        },
+        include: {
+          creator: true,
+          community: true,
+          topics: true,
+          reactions: true,
+          _count: {
+            select: {
+              comments: true,
+            },
+          },
+        },
+        orderBy: {
+          reactions: {
+            _count: "desc",
+          },
+        },
+      })
+    }),
+  getMostUpvotedByCommunityName: publicProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.prisma.post.findMany({
+        where: {
+          community: {
+            name: input,
+          },
+        },
+        include: {
+          creator: true,
+          community: true,
+          topics: true,
+          reactions: true,
+          _count: {
+            select: {
+              comments: true,
+            },
+          },
+        },
+        orderBy: {
+          reactions: {
+            _count: "desc",
+          },
+        },
+      })
+    }),
   getLatestByTopic: publicProcedure
     .input(z.string())
     .query(({ ctx, input }) => {
