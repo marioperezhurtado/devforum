@@ -1,22 +1,15 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { signOut, useSession } from "next-auth/react"
-import useOnClickOutside from "@/hooks/useOnClickOutside"
 
 import Image from "next/image"
 
 export default function AccountDropdown() {
-  const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
 
-  useOnClickOutside({
-    ref,
-    handler: () => setIsOpen(false),
-  })
-
   return (
     <>
-      <div ref={ref} className="relative inline-block text-left">
+      <div className="relative inline-block text-left">
         <button
           onClick={() => setIsOpen((o) => !o)}
           type="button"

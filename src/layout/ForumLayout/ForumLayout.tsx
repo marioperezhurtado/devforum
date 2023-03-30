@@ -13,7 +13,7 @@ export default function ForumLayout({ title, description, children }: Props) {
     <Layout title={title} description={description}>
       <div className="flex h-screen flex-col">
         <Header />
-        <div className="flex flex-grow overflow-hidden">
+        <div className="relative flex flex-grow overflow-hidden">
           <Sidebar />
           <div className="w-full overflow-x-hidden overflow-y-scroll">
             <div className="mx-auto min-h-screen max-w-screen-md p-3 xs:p-5 sm:p-10">

@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react"
+import { useSidebarStore } from "@/layout/Sidebar/store"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -7,14 +8,25 @@ import Button from "@/ui/Button"
 
 export default function Header() {
   const { data: session } = useSession()
+  const { isOpen, open, close } = useSidebarStore()
 
   return (
     <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white py-2 px-3 text-zinc-700 xs:px-4 sm:py-3 sm:px-6">
-      <Link href="/">
-        <h1 className="text-xl font-bold">
-          <span className="text-sky-600">Dev</span>Forum
-        </h1>
-      </Link>
+      <div className="flex items-center gap-6">
+        <button onClick={isOpen ? close : open} className="lg:hidden">
+          <Image
+            src="/icons/menu.svg"
+            alt="Toggle Menu"
+            width={30}
+            height={30}
+          />
+        </button>
+        <Link href="/">
+          <h1 className="text-xl font-bold">
+            <span className="text-sky-600">Dev</span>Forum
+          </h1>
+        </Link>
+      </div>
       <form
         name="searchForm"
         className="relative hidden md:block md:w-80 lg:max-w-screen-xs lg:flex-grow"

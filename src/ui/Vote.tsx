@@ -18,8 +18,8 @@ const vote = cva("button", {
       downvote: [],
     },
     size: {
-      small: ["h-6", "w-8", "text-xs", "gap-0.5"],
-      medium: ["h-7", "w-9", "text-sm", "gap-1"],
+      small: ["px-2", "py-0.5", "text-xs", "gap-0.5"],
+      medium: ["px-2.5", "py-1", "text-sm", "gap-1"],
     },
   },
   defaultVariants: { size: "medium", voted: false },
@@ -27,24 +27,12 @@ const vote = cva("button", {
     {
       voteType: "upvote",
       voted: true,
-      className:
-        "bg-sky-600 border-sky-600 text-sky-50 hover:bg-sky-500 hover:border-sky-500",
+      className: "bg-sky-600 border-sky-600 text-sky-50",
     },
     {
       voteType: "downvote",
       voted: true,
-      className:
-        "bg-sky-200 border-sky-300 text-sky-700 hover:bg-sky-300 hover:border-sky-400",
-    },
-    {
-      size: "small",
-      voted: true,
-      className: "w-9",
-    },
-    {
-      size: "medium",
-      voted: true,
-      className: "w-[46px]",
+      className: "bg-sky-200 border-sky-300 text-sky-700",
     },
   ],
 })
@@ -80,11 +68,12 @@ export default function Vote({
     >
       {voteType === "upvote" && (
         <svg
-          width="16px"
-          height="16px"
+          width="22px"
+          height="22px"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="py-0.5"
         >
           <g id="Upvote">
             <path
@@ -100,11 +89,12 @@ export default function Vote({
       )}
       {voteType === "downvote" && (
         <svg
-          width="16px"
-          height="16px"
+          width="22px"
+          height="22px"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="py-0.5"
         >
           <g id="Downvote">
             <path

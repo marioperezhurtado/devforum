@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
+import { useSidebarStore } from "./store"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -11,6 +12,7 @@ type Communities = RouterOutputs["community"]["getAllByMember"]
 
 export default function Sidebar() {
   const { data: session } = useSession()
+  const { isOpen } = useSidebarStore()
 
   const { data: trendingCommunities, isLoading: trendingLoading } =
     api.community.getTrending.useQuery(undefined, {
@@ -24,7 +26,11 @@ export default function Sidebar() {
     })
 
   return (
-    <aside className="hidden w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5 lg:flex">
+    <aside
+      className={`z-10 w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5 lg:flex ${
+        isOpen ? "absolute top-0 flex h-full lg:relative" : "hidden"
+      }`}
+    >
       <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Trending</h2>
