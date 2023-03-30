@@ -24,4 +24,13 @@ export const topicRouter = createTRPCRouter({
       name: input,
     })
   }),
+  getPopular: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.topic.findMany({
+      orderBy: {
+        posts: {
+          _count: "desc",
+        },
+      },
+    })
+  }),
 })
