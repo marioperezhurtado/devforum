@@ -55,7 +55,23 @@ export default function Header() {
           </Link>
         </div>
       )}
-      {session && <AccountDropdown />}
+
+      {session && (
+        <div className="flex items-center gap-2">
+          <Link
+            href="/create/post"
+            className="flex w-fit items-center justify-center rounded-full border bg-white px-3 py-1.5 transition-all hover:shadow-sm"
+          >
+            <Image
+              src="/icons/create.svg"
+              alt="Create Post"
+              width={22}
+              height={22}
+            />
+          </Link>
+          <AccountDropdown />
+        </div>
+      )}
     </header>
   )
 }

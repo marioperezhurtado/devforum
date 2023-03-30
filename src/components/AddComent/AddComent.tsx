@@ -41,7 +41,7 @@ export default function AddComment({ postId, onClose }: Props) {
     if (!session) await router.push("/signIn")
 
     const schema = z.object({
-      comment: z.string().min(1).max(500),
+      comment: z.string().min(10).max(100),
       replyToId: z.string().optional(),
     })
 
@@ -111,7 +111,7 @@ export default function AddComment({ postId, onClose }: Props) {
         id="comment"
         name="comment"
         placeholder="Leave a comment, answer a question or share your thoughts..."
-        className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1 text-sm focus:outline-sky-600 md:py-2 md:px-4 md:text-base"
+        className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"
       />
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={onClose} type="button" intent="secondary">
