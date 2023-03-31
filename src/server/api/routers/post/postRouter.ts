@@ -8,6 +8,8 @@ import { communityRouter } from "./communityRouter"
 import { topicRouter } from "./topicRouter"
 import { TRPCError } from "@trpc/server"
 
+import { postSchema } from "@/utils/zod"
+
 export const postRouter = createTRPCRouter({
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.post.findUnique({
@@ -45,14 +47,7 @@ export const postRouter = createTRPCRouter({
   community: communityRouter,
   topic: topicRouter,
   create: protectedProcedure
-    .input(
-      z.object({
-        title: z.string(),
-        content: z.string(),
-        community: z.string(),
-        topics: z.array(z.string()).max(8).optional(),
-      })
-    )
+    .input(postSchema)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: {

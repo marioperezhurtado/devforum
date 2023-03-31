@@ -1,13 +1,18 @@
 import { useRef, useEffect } from "react"
-import { z } from "zod"
 import { api } from "@/utils/api"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useCommentStore } from "@/pages/post/store"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { commentSchema } from "@/utils/zod"
 import toast from "react-hot-toast"
 
 import Image from "next/image"
 import Button from "@/ui/Button"
+import FormError from "@/ui/FormError"
+
+import type { z } from "zod"
 
 type Props = {
   postId: string
@@ -22,10 +27,14 @@ export default function AddComment({ postId, onClose }: Props) {
 
   const utils = api.useContext()
 
+  const handleClose = () => {
+    onClose()
+    reset()
+  }
+
   const success = async () => {
     await utils.comment.getByPostId.invalidate(postId)
-    onClose()
-    formRef.current?.reset()
+    handleClose()
   }
 
   const { mutateAsync: addComment } = api.comment.create.useMutation({
@@ -35,37 +44,41 @@ export default function AddComment({ postId, onClose }: Props) {
     onSuccess: async () => success(),
   })
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<z.infer<typeof commentSchema>>({
+    resolver: zodResolver(commentSchema),
+  })
 
+  const onSubmit = handleSubmit(async (data) => {
     if (!session) await router.push("/signIn")
 
-    const schema = z.object({
-      comment: z.string().min(10).max(100),
-      replyToId: z.string().optional(),
-    })
-
     try {
-      const commentInput = e.currentTarget.comment as HTMLInputElement
-      const { comment, replyToId } = schema.parse({
-        comment: commentInput.value,
-        replyToId: replyTo?.id,
-      })
-      if (replyToId) {
-        await toast.promise(addReply({ postId, content: comment, replyToId }), {
-          loading: "Adding reply...",
-          success: "Reply added! 🗣️",
-          error: "Failed to add reply",
-        })
+      if (replyTo) {
+        await toast.promise(
+          addReply({
+            postId: data.postId,
+            content: data.content,
+            replyToId: replyTo.id,
+          }),
+          {
+            loading: "Adding reply...",
+            success: "Reply added! 🗣️",
+            error: "Failed to add reply",
+          }
+        )
         return
       }
-      await toast.promise(addComment({ postId, content: comment }), {
+      await toast.promise(addComment({ postId, content: data.content }), {
         loading: "Adding comment...",
         success: "Comment added! 💬",
         error: "Failed to add comment",
       })
     } catch (e) {}
-  }
+  })
 
   useEffect(() => {
     if (!replyTo) return
@@ -75,7 +88,7 @@ export default function AddComment({ postId, onClose }: Props) {
   return (
     <form
       ref={formRef}
-      onSubmit={(e) => void handleSubmit(e)}
+      onSubmit={(e) => void onSubmit(e)}
       name="addComent"
       id="addComment"
       className="mb-5 rounded-md border bg-white p-2 shadow-md md:mb-10 md:p-4"
@@ -108,13 +121,16 @@ export default function AddComment({ postId, onClose }: Props) {
         Leave a comment, answer a question or share your thoughts...
       </label>
       <textarea
-        id="comment"
-        name="comment"
+        {...register("content")}
         placeholder="Leave a comment, answer a question or share your thoughts..."
         className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"
       />
+      {errors.content?.message && (
+        <FormError message={errors.content.message} />
+      )}
+      <input className="sr-only" value={postId} {...register("postId")} />
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
-        <Button onClick={onClose} type="button" intent="secondary">
+        <Button onClick={handleClose} type="button" intent="secondary">
           Cancel
         </Button>
         <Button type="submit">Add comment</Button>

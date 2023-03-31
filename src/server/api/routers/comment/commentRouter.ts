@@ -6,6 +6,8 @@ import {
 } from "@/server/api/trpc"
 import { TRPCError } from "@trpc/server"
 
+import { commentSchema } from "@/utils/zod"
+
 export const commentRouter = createTRPCRouter({
   getByPostId: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.comment.findMany({
@@ -19,12 +21,7 @@ export const commentRouter = createTRPCRouter({
     })
   }),
   create: protectedProcedure
-    .input(
-      z.object({
-        content: z.string().min(5).max(500),
-        postId: z.string(),
-      })
-    )
+    .input(commentSchema)
     .mutation(async ({ ctx, input }) => {
       return ctx.prisma.comment.create({
         data: {
@@ -44,9 +41,7 @@ export const commentRouter = createTRPCRouter({
     }),
   reply: protectedProcedure
     .input(
-      z.object({
-        content: z.string().min(5).max(500),
-        postId: z.string(),
+      commentSchema.extend({
         replyToId: z.string(),
       })
     )
