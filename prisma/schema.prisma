@@ -13,7 +13,7 @@ datasource db {
 
 model Community {
     name        String   @id
-    description String
+    description String   @db.VarChar(120)
     createdAt   DateTime @default(now())
     creatorId   String
     creator     User     @relation(fields: [creatorId], references: [id])

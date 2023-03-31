@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <ForumLayout
       title="DevForum.dev - Let's build together"
-      description="DevForum is the place for all programmers to learn, share, and connect with your community. Wether you are a newbie or a seasoned developer, you can find a place to chat about your passion."
+      description="DevForum is the place for all developers to learn, share, and connect with your community. Wether you are a newbie or a seasoned dev, you can find a place to chat about your passion."
     >
       <Categories />
       <Topics />

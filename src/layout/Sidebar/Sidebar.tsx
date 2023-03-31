@@ -100,9 +100,14 @@ export default function Sidebar() {
           )}
         </section>
       )}
-      <Button intent="secondary" className="mt-auto">
-        Create a community
-      </Button>
+      <Link
+        href={session ? "/create/community" : "/signIn"}
+        className="mt-auto"
+      >
+        <Button intent="secondary" className="w-full">
+          Create a community
+        </Button>
+      </Link>
     </aside>
   )
 }

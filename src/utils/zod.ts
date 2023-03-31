@@ -39,3 +39,22 @@ export const commentSchema = z.object({
     }),
   postId: z.string(),
 })
+
+export const communitySchema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      message: "Name is too short. (At least 2 characters).",
+    })
+    .max(20, {
+      message: "Name is too long. Please keep it under 20 characters.",
+    }),
+  description: z
+    .string()
+    .min(10, {
+      message: "Description is too short. (At least 10 characters).",
+    })
+    .max(120, {
+      message: "Description is too long. Please keep it under 120 characters.",
+    }),
+})
