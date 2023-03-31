@@ -190,7 +190,9 @@ function NoPostsFound({ name }: { name: string }) {
       <p className="mx-auto max-w-md text-center">
         {`Don't be shy - if there's something related to ${name} that you want to share, start now.`}
       </p>
-      <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
+      <Link href="/create/post">
+        <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
+      </Link>
     </div>
   )
 }

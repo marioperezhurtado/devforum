@@ -71,4 +71,32 @@ export const communityRouter = createTRPCRouter({
         },
       })
     }),
+  join: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.community.update({
+      where: {
+        name: input,
+      },
+      data: {
+        members: {
+          connect: {
+            id: ctx.session.user.id,
+          },
+        },
+      },
+    })
+  }),
+  leave: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.community.update({
+      where: {
+        name: input,
+      },
+      data: {
+        members: {
+          disconnect: {
+            id: ctx.session.user.id,
+          },
+        },
+      },
+    })
+  }),
 })
