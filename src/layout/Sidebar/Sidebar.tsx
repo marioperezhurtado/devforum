@@ -101,7 +101,9 @@ export default function Sidebar() {
         </section>
       )}
       <Link
-        href={session ? "/create/community" : "/signIn"}
+        href={
+          session ? "/create/community" : "/signIn?redirectTo=/create/community"
+        }
         className="mt-auto"
       >
         <Button intent="secondary" className="w-full">

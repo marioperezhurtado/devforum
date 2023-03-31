@@ -1,7 +1,5 @@
 import { useRef, useEffect } from "react"
 import { api } from "@/utils/api"
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
 import { useCommentStore } from "@/pages/post/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -20,8 +18,6 @@ type Props = {
 }
 
 export default function AddComment({ postId, onClose }: Props) {
-  const router = useRouter()
-  const { data: session } = useSession()
   const formRef = useRef<HTMLFormElement>(null)
   const { replyTo } = useCommentStore()
 
@@ -54,8 +50,6 @@ export default function AddComment({ postId, onClose }: Props) {
   })
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!session) await router.push("/signIn")
-
     try {
       if (replyTo) {
         await toast.promise(
@@ -133,7 +127,9 @@ export default function AddComment({ postId, onClose }: Props) {
         <Button onClick={handleClose} type="button" intent="secondary">
           Cancel
         </Button>
-        <Button type="submit">Add comment</Button>
+        <Button type="submit" authRequired>
+          Add comment
+        </Button>
       </div>
     </form>
   )

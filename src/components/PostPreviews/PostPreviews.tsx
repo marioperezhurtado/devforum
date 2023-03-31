@@ -4,7 +4,7 @@ import PostPreviewItem, {
 
 import type { RouterOutputs } from "@/utils/api"
 
-type Posts = RouterOutputs["post"]["getLatestByCommunityName"]
+type Posts = RouterOutputs["post"]["community"]["getLatest"]
 
 export default function PostPreviews({ posts }: { posts: Posts }) {
   return (

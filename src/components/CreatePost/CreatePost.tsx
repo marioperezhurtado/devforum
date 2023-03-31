@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
 
-import Link from "next/link"
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
 
@@ -46,8 +45,6 @@ export default function CreatePost() {
     content.match(/#\w+/g)?.map((t) => t.slice(1)) ?? []
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!session) await router.push("/signIn")
-
     try {
       const createdPost = await toast.promise(
         createPost({
@@ -127,12 +124,9 @@ export default function CreatePost() {
         <Button onClick={() => void reset()} type="button" intent="secondary">
           Reset
         </Button>
-        {session && <Button type="submit">Create post</Button>}
-        {!session && (
-          <Link href="/signIn">
-            <Button type="button">Create post</Button>
-          </Link>
-        )}
+        <Button type="submit" authRequired>
+          Create post
+        </Button>
       </div>
     </form>
   )

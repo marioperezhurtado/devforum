@@ -36,7 +36,9 @@ export default function CommunityPage() {
   const name = slug?.[0]
   const filter = slug?.[1] ?? "trending"
 
-  const { data: community } = api.community.getByName.useQuery(name as string)
+  const { data: community } = api.community.getByName.useQuery(name as string, {
+    refetchOnWindowFocus: false,
+  })
 
   const { data: trendingPosts, isFetching: trendingLoading } =
     api.post.community.getTrending.useQuery(name as string, {

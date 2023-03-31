@@ -35,7 +35,9 @@ export default function TopicPage() {
   const name = slug?.[0]
   const filter = slug?.[1] ?? "trending"
 
-  const { data: topic } = api.topic.getByName.useQuery(name as string)
+  const { data: topic } = api.topic.getByName.useQuery(name as string, {
+    refetchOnWindowFocus: false,
+  })
 
   const { data: trendingPosts, isFetching: trendingLoading } =
     api.post.topic.getTrending.useQuery(name as string, {

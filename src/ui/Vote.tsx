@@ -1,4 +1,8 @@
 import { cva } from "class-variance-authority"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
+
+import Link from "next/link"
 
 import type { VariantProps } from "class-variance-authority"
 
@@ -50,11 +54,51 @@ export default function Vote({
   className,
   ...props
 }: ButtonProps) {
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  if (!session) {
+    return (
+      <Link href={`/signIn?redirectTo=${router.asPath}`}>
+        <VoteItem
+          voteType={voteType}
+          voted={voted}
+          size={size}
+          votes={votes}
+          className={className}
+          disabled
+          {...props}
+        />
+      </Link>
+    )
+  }
+
+  return (
+    <VoteItem
+      voteType={voteType}
+      voted={voted}
+      size={size}
+      votes={votes}
+      className={className}
+      {...props}
+    />
+  )
+}
+
+function VoteItem({
+  voteType,
+  voted,
+  size,
+  votes,
+  className,
+  ...props
+}: ButtonProps) {
   let voteText = voteType === "upvote" ? "Upvote" : "Downvote"
 
   if (voted) {
     voteText = voteType === "upvote" ? "Remove upvote" : "Remove downvote"
   }
+
   return (
     <button
       title={voteText}
@@ -112,7 +156,3 @@ export default function Vote({
     </button>
   )
 }
-
-/*
-className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
-            */

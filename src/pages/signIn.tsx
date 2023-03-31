@@ -1,5 +1,6 @@
 import { getServerAuthSession } from "@/server/auth"
 import { signIn } from "next-auth/react"
+import { useRouter } from "next/router"
 
 import Layout from "@/layout/Layout/Layout"
 import Image from "next/image"
@@ -9,6 +10,16 @@ import type { GetServerSideProps } from "next"
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getServerAuthSession(ctx)
+  const redirectTo = ctx.query.redirectTo as string
+
+  if (session?.user && redirectTo) {
+    return {
+      redirect: {
+        destination: redirectTo,
+        permanent: false,
+      },
+    }
+  }
 
   if (session?.user) {
     return {
@@ -25,6 +36,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 export default function SignIn() {
+  const router = useRouter()
+  const redirectTo = router.query.redirectTo as string
+
   return (
     <Layout
       title="Sign In - DevForum.dev"
@@ -33,8 +47,8 @@ export default function SignIn() {
       <section className="mx-auto mt-5 mb-10 w-fit p-2 sm:mt-10 md:mt-20">
         <div className="relative max-w-sm rounded-xl border bg-white py-5 px-6 text-center shadow-md md:py-10">
           <h1 className="mb-5 text-3xl font-semibold">Sign In</h1>
-          <Link
-            href="/"
+          <button
+            onClick={() => void router.push(redirectTo || "/")}
             className="absolute top-4 left-4 rounded-md border transition"
           >
             <Image
@@ -43,7 +57,7 @@ export default function SignIn() {
               width={32}
               height={32}
             />
-          </Link>
+          </button>
           <p>
             Continue to your{" "}
             <span className="font-bold text-sky-600">DevForum.dev</span> account

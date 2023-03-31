@@ -33,9 +33,13 @@ export default function PostPage() {
   const router = useRouter()
   const id = router.query.id as string
 
-  const { data: post } = api.post.getById.useQuery(id)
+  const { data: post } = api.post.getById.useQuery(id, {
+    refetchOnWindowFocus: false,
+  })
   const { data: comments, isLoading: commentsLoading } =
-    api.comment.getByPostId.useQuery(id)
+    api.comment.getByPostId.useQuery(id, {
+      refetchOnWindowFocus: false,
+    })
 
   const topics = post?.topics?.map((t) => t.name).join(", #")
 

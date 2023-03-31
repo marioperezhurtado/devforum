@@ -1,12 +1,10 @@
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
-import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { communitySchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
 
-import Link from "next/link"
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
 
@@ -14,7 +12,6 @@ import type { z } from "zod"
 
 export default function CreateCommunity() {
   const router = useRouter()
-  const { data: session } = useSession()
 
   const { mutateAsync: createPost } = api.community.create.useMutation({
     onSuccess: () => reset(),
@@ -30,8 +27,6 @@ export default function CreateCommunity() {
   })
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!session) await router.push("/signIn")
-
     try {
       const createdCommunity = await toast.promise(
         createPost({
@@ -83,12 +78,9 @@ export default function CreateCommunity() {
         <Button onClick={() => void reset()} type="button" intent="secondary">
           Reset
         </Button>
-        {session && <Button type="submit">Create Community</Button>}
-        {!session && (
-          <Link href="/signIn">
-            <Button type="button">Create Community</Button>
-          </Link>
-        )}
+        <Button type="submit" authRequired>
+          Create Community
+        </Button>
       </div>
     </form>
   )

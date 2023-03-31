@@ -10,7 +10,7 @@ import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
 
-type Post = RouterOutputs["post"]["getLatestByCommunity"][0]
+type Post = RouterOutputs["post"]["community"]["getLatest"][0]
 
 const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)

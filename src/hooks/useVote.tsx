@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router"
 
 type Votes = {
   vote: boolean
@@ -21,7 +20,6 @@ export default function useVote({
   votes,
 }: Props) {
   const { data: session } = useSession()
-  const router = useRouter()
 
   const [upvotes, setUpvotes] = useState(votes.filter((v) => v.vote).length)
   const [downvotes, setDownvotes] = useState(
@@ -29,9 +27,7 @@ export default function useVote({
   )
   const [myVote, setMyVote] = useState<boolean | null>(null)
 
-  const handleUpvote = async () => {
-    if (!session) await router.push("/signIn")
-
+  const handleUpvote = () => {
     if (myVote === true) {
       setUpvotes((u) => u - 1)
       setMyVote(null)
@@ -46,9 +42,7 @@ export default function useVote({
     onUpvote()
   }
 
-  const handleDownvote = async () => {
-    if (!session) await router.push("/signIn")
-
+  const handleDownvote = () => {
     if (myVote === false) {
       setDownvotes((d) => d - 1)
       setMyVote(null)
@@ -67,7 +61,7 @@ export default function useVote({
     if (!session) return
     const myVote = votes.find((v) => v.creatorId === session.user.id)?.vote
     setMyVote(myVote ?? null)
-  }, [session])
+  }, [session, votes])
 
   return { handleUpvote, handleDownvote, upvotes, downvotes, myVote }
 }

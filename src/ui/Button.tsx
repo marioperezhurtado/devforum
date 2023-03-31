@@ -1,4 +1,8 @@
 import { cva } from "class-variance-authority"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
+
+import Link from "next/link"
 
 import type { VariantProps } from "class-variance-authority"
 
@@ -28,14 +32,35 @@ const button = cva("button", {
 })
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof button>
+  VariantProps<typeof button> & {
+    authRequired?: boolean
+  }
 
 export default function Button({
   intent,
   size,
   className,
+  authRequired,
   ...props
 }: ButtonProps) {
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  if (authRequired && !session) {
+    return (
+      <Link href={`/signIn?redirectTo=${router.asPath}`}>
+        <button
+          className={`${button({
+            intent,
+            size,
+            className,
+          })} rounded-full border-2 font-semibold transition`}
+          {...props}
+        ></button>
+      </Link>
+    )
+  }
+
   return (
     <button
       className={`${button({

@@ -8,7 +8,10 @@ import PostPreviews, {
 } from "@/components/PostPreviews/PostPreviews"
 
 export default function Home() {
-  const { data: featuredPosts, isLoading } = api.post.getFeatured.useQuery()
+  const { data: featuredPosts, isLoading } = api.post.getFeatured.useQuery(
+    undefined,
+    { refetchOnWindowFocus: false }
+  )
 
   return (
     <ForumLayout

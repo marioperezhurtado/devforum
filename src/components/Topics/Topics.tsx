@@ -3,7 +3,9 @@ import { api } from "@/utils/api"
 import Link from "next/link"
 
 export default function Topics() {
-  const { data: topics, isLoading } = api.topic.getPopular.useQuery()
+  const { data: topics, isLoading } = api.topic.getPopular.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  })
 
   if (isLoading) return <TopicsSkeleton />
 
