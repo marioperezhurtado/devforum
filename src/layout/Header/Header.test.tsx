@@ -1,13 +1,18 @@
-import { test, describe, expect } from "vitest"
+import { test, describe, expect, vi } from "vitest"
 import { render, screen } from "@testing-library/react"
 
 import Header from "./Header"
 
 import mockUseSession from "@/test/mocks/mockUseSession"
+import mockNextRouter from "@/test/mocks/mockNextRouter"
 
 describe("Header", () => {
   const mockedUseSession = mockUseSession()
   mockedUseSession.mockReturnValue({ data: false })
+  const mockedNextRouter = mockNextRouter()
+  mockedNextRouter.mockReturnValue({
+    push: () => vi.fn(),
+  })
 
   test("Renders", () => {
     render(<Header />)

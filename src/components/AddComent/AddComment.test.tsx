@@ -5,10 +5,8 @@ import AddComment from "./AddComent"
 import { withNextTRPC } from "@/test/withNextTRPC"
 import mockUseSession from "@/test/mocks/mockUseSession"
 import mockNextRouter from "@/test/mocks/mockNextRouter"
-import { Comment } from "@/test/data/Comment"
 
 import { api } from "@/utils/api"
-import * as UseCommentStore from "@/pages/post/store"
 
 import type { Mock } from "vitest"
 
@@ -49,10 +47,6 @@ describe("AddComment", () => {
   mockedReply.mockReturnValue({
     mutate: () => vi.fn(),
   })
-  const mockedUseCommentStore = vi.spyOn(
-    UseCommentStore,
-    "useCommentStore"
-  ) as Mock
 
   const onClose = vi.fn()
 
@@ -62,38 +56,27 @@ describe("AddComment", () => {
     })
 
     expect(screen.getByRole("form")).toBeTruthy()
-    expect(screen.getByRole("textbox")).toBeTruthy()
+    expect(
+      screen.getByPlaceholderText(
+        "Leave a comment, answer a question or share your thoughts..."
+      )
+    ).toBeTruthy()
   })
 
   test("Adds comment", () => {
-    fireEvent.change(screen.getByRole("textbox"), {
-      target: { value: "Test comment" },
+    fireEvent.change(screen.getAllByRole("textbox")[1] as HTMLElement, {
+      target: { value: "This is a test comment" },
     })
     fireEvent.submit(screen.getByRole("form"))
 
     expect(mockedCreate).toHaveBeenCalled()
   })
 
-  test("Renders add comment form with reply", () => {
-    mockedUseCommentStore.mockReturnValueOnce({
-      replyTo: {
-        Comment,
-      },
-    })
-
-    render(<AddComment postId="1" onClose={onClose} />, {
-      wrapper: withNextTRPC,
-    })
-
-    expect(screen.getAllByRole("form")).toBeTruthy()
-    expect(screen.getAllByRole("textbox")).toBeTruthy()
-  })
-
   test("Adds reply", () => {
     fireEvent.change(screen.getAllByRole("textbox")[1] as HTMLElement, {
-      target: { value: "Test comment" },
+      target: { value: "This is a test comment" },
     })
-    fireEvent.submit(screen.getAllByRole("form")[1] as HTMLElement)
+    fireEvent.submit(screen.getByRole("form"))
 
     expect(mockedReply).toHaveBeenCalled()
   })

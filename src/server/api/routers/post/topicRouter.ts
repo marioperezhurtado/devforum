@@ -8,11 +8,11 @@ export const topicRouter = createTRPCRouter({
         topics: {
           some: {
             name: input,
-            createdAt: {
-              gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-              // last 7 days
-            },
           },
+        },
+        createdAt: {
+          gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
+          // last 7 days
         },
       },
       include: {

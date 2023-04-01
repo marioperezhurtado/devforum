@@ -5,6 +5,7 @@ import Sidebar from "@/layout/Sidebar/Sidebar"
 
 import mockUseSession from "@/test/mocks/mockUseSession"
 import { withNextTRPC } from "@/test/withNextTRPC"
+import mockNextRouter from "@/test/mocks/mockNextRouter"
 
 import { api } from "@/utils/api"
 
@@ -30,6 +31,10 @@ vi.mock("@/utils/api", () => ({
 describe("Sidebar", () => {
   const mockedUseSession = mockUseSession()
   mockedUseSession.mockReturnValue({})
+  const mockedNextRouter = mockNextRouter()
+  mockedNextRouter.mockReturnValue({
+    push: () => vi.fn(),
+  })
 
   const mockGetTrending = vi.spyOn(
     api.community.getTrending,

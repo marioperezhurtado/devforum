@@ -111,10 +111,11 @@ export default function AddComment({ postId, onClose }: Props) {
           </p>
         </div>
       )}
-      <label htmlFor="comment" className="sr-only">
+      <label htmlFor="content" className="sr-only">
         Leave a comment, answer a question or share your thoughts...
       </label>
       <textarea
+        id="content"
         {...register("content")}
         placeholder="Leave a comment, answer a question or share your thoughts..."
         className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"
@@ -127,8 +128,9 @@ export default function AddComment({ postId, onClose }: Props) {
         <Button onClick={handleClose} type="button" intent="secondary">
           Cancel
         </Button>
+
         <Button type="submit" authRequired>
-          Add comment
+          {replyTo ? "Add reply" : "Add comment"}
         </Button>
       </div>
     </form>
