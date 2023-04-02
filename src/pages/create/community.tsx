@@ -1,6 +1,6 @@
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import Link from "next/link"
-import CreateCommunity from "@/components/CreateCommunity/CreateCommunity"
+import CreateCommunity from "@/components/Community/CreateCommunity/CreateCommunity"
 
 export default function CreatePostPage() {
   return (

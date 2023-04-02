@@ -5,7 +5,7 @@ import Categories from "@/components/Categories/Categories"
 import Topics from "@/components/Topics/Topics"
 import PostPreviews, {
   PostPreviewsSkeleton,
-} from "@/components/PostPreviews/PostPreviews"
+} from "@/components/Post/PostPreviews/PostPreviews"
 
 export default function Home() {
   const { data: featuredPosts, isLoading } = api.post.getFeatured.useQuery(

@@ -8,7 +8,7 @@ import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostPreviews, {
   PostPreviewsSkeleton,
-} from "@/components/PostPreviews/PostPreviews"
+} from "@/components/Post/PostPreviews/PostPreviews"
 
 import type { GetServerSideProps } from "next"
 

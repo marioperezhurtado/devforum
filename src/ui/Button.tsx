@@ -56,6 +56,7 @@ export default function Button({
             className,
           })} rounded-full border-2 font-semibold transition`}
           {...props}
+          onClick={() => void {}}
         ></button>
       </Link>
     )

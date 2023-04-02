@@ -2,7 +2,7 @@ import type { RouterOutputs } from "@/utils/api"
 
 import CommentItem, {
   CommentSkeleton,
-} from "@/components/CommentItem/CommentItem"
+} from "@/components/Comment/CommentItem/CommentItem"
 
 type Comments = RouterOutputs["comment"]["getByPostId"]
 

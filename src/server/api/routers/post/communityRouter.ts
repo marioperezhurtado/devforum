@@ -8,10 +8,6 @@ export const communityRouter = createTRPCRouter({
         community: {
           name: input,
         },
-        createdAt: {
-          gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-          // last 7 days
-        },
       },
       include: {
         creator: true,

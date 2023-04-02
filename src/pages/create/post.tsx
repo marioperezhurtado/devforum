@@ -1,6 +1,6 @@
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import Link from "next/link"
-import CreatePost from "@/components/CreatePost/CreatePost"
+import CreatePost from "@/components/Post/CreatePost/CreatePost"
 
 export default function CreatePostPage() {
   return (

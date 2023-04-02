@@ -4,10 +4,12 @@ import { useRouter } from "next/router"
 import { useCommentStore } from "./store"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
-import PostItem from "@/components/PostItem/PostItem"
+import PostItem from "@/components/Post/PostItem/PostItem"
 import Button from "@/ui/Button"
-import Comments, { CommentsSkeleton } from "@/components/Comments/Comments"
-import AddComment from "@/components/AddComent/AddComent"
+import Comments, {
+  CommentsSkeleton,
+} from "@/components/Comment/Comments/Comments"
+import AddComment from "@/components/Comment/AddComent/AddComent"
 
 import type { GetServerSideProps } from "next"
 

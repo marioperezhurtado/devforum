@@ -76,6 +76,7 @@ describe("AddComment", () => {
     fireEvent.change(screen.getAllByRole("textbox")[1] as HTMLElement, {
       target: { value: "This is a test comment" },
     })
+
     fireEvent.submit(screen.getByRole("form"))
 
     expect(mockedReply).toHaveBeenCalled()

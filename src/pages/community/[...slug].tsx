@@ -6,10 +6,10 @@ import Image from "next/image"
 import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
-import CommunityInfo from "@/components/CommunityInfo/CommunityInfo"
+import CommunityInfo from "@/components/Community/CommunityInfo/CommunityInfo"
 import PostPreviews, {
   PostPreviewsSkeleton,
-} from "@/components/PostPreviews/PostPreviews"
+} from "@/components/Post/PostPreviews/PostPreviews"
 
 import type { GetServerSideProps } from "next"
 

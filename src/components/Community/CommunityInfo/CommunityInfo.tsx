@@ -4,7 +4,6 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { useSession } from "next-auth/react"
 import { toast } from "react-hot-toast"
 
-import Link from "next/link"
 import Button from "@/ui/Button"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -16,7 +15,7 @@ export default function CommunityInfo({ community }: { community: Community }) {
   const { data: session } = useSession()
   const utils = api.useContext()
 
-  const { data: myCommunities, isLoading: communitiesLoading } =
+  const { data: myCommunities, isFetching: communitiesLoading } =
     api.community.getAllByMember.useQuery(session?.user.id ?? "", {
       enabled: !!session,
       refetchOnWindowFocus: false,
@@ -37,7 +36,7 @@ export default function CommunityInfo({ community }: { community: Community }) {
   const handleJoin = async () => {
     await toast.promise(joinCommunity(community?.name ?? ""), {
       loading: "Joining community...",
-      success: "Joined community! 🎉",
+      success: `Welcome to ${community?.name ?? ""}! 🎉`,
       error: "Failed to join community",
     })
   }
@@ -59,13 +58,10 @@ export default function CommunityInfo({ community }: { community: Community }) {
         <h1 className="break-words text-xl font-semibold md:text-2xl">
           {community?.name}
         </h1>
-        {!communitiesLoading && !session && (
-          <Link href="/signIn">
-            <Button>Join</Button>
-          </Link>
-        )}
-        {!communitiesLoading && !!session && !isMember && (
-          <Button onClick={() => void handleJoin()}>Join</Button>
+        {!communitiesLoading && !isMember && (
+          <Button authRequired onClick={() => void handleJoin()}>
+            Join
+          </Button>
         )}
         {isMember && (
           <Button onClick={() => void handleLeave()} intent="secondary">
