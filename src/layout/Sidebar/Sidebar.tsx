@@ -7,6 +7,9 @@ import useOnClickOutside from "@/hooks/useOnClickOutside"
 import Image from "next/image"
 import Link from "next/link"
 import Button from "@/ui/Button"
+import Communities, {
+  CommunitiesSkeleton,
+} from "@/components/Community/Communities/Communities"
 
 import type { RouterOutputs } from "@/utils/api"
 
@@ -111,31 +114,5 @@ export default function Sidebar() {
         </Button>
       </Link>
     </aside>
-  )
-}
-
-function Communities({ communities }: { communities: Communities }) {
-  return (
-    <ul className="flex w-56 flex-col gap-2 pt-5">
-      {communities.map((c) => (
-        <li key={c.name}>
-          <Link href={`/community/${c.name}`} className="py-1.5">
-            {c.name}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function CommunitiesSkeleton() {
-  return (
-    <div className="flex w-56 animate-pulse flex-col gap-2 pt-5">
-      <div className="my-[2px] h-5 w-40 rounded-full bg-zinc-100" />
-      <div className="my-[2px] h-5 w-48 rounded-full bg-zinc-100" />
-      <div className="my-[2px] h-5 w-32 rounded-full bg-zinc-100" />
-      <div className="my-[2px] h-5 w-36 rounded-full bg-zinc-100" />
-      <span className="sr-only">Loading...</span>
-    </div>
   )
 }

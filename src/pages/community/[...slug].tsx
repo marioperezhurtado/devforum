@@ -1,4 +1,5 @@
 import { ssg } from "@/server/api/root"
+import { useState } from "react"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 
@@ -13,8 +14,18 @@ import PostPreviews, {
 
 import type { GetServerSideProps } from "next"
 
+const filters = ["trending", "latest", "most-upvoted", "controversial"]
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const name = ctx.params?.slug?.[0]
+  const filter = ctx.params?.slug?.[1] as string
+
+  if (filter && !filters.includes(filter)) {
+    return {
+      notFound: true,
+    }
+  }
+
   const community = await ssg.community.getByName.fetch(name as string)
 
   if (!community) {
@@ -32,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export default function CommunityPage() {
   const router = useRouter()
+  const utils = api.useContext()
   const { slug } = router.query
   const name = slug?.[0]
   const filter = slug?.[1] ?? "trending"
@@ -40,44 +52,48 @@ export default function CommunityPage() {
     refetchOnWindowFocus: false,
   })
 
-  const { data: trendingPosts, isFetching: trendingLoading } =
+  const { data: trendingPosts, isLoading: trendingLoading } =
     api.post.community.getTrending.useQuery(name as string, {
       enabled: filter === "trending",
       refetchOnWindowFocus: false,
     })
 
-  const { data: latestPosts, isFetching: latestLoading } =
+  const { data: latestPosts, isLoading: latestLoading } =
     api.post.community.getLatest.useQuery(name as string, {
       enabled: filter === "latest",
       refetchOnWindowFocus: false,
     })
 
-  const { data: mostUpvotedPosts, isFetching: mostUpvotedLoading } =
+  const { data: mostUpvotedPosts, isLoading: mostUpvotedLoading } =
     api.post.community.getMostUpvoted.useQuery(name as string, {
       enabled: filter === "most-upvoted",
       refetchOnWindowFocus: false,
     })
 
-  const { data: controversialPosts, isFetching: controversialLoading } =
+  const { data: controversialPosts, isLoading: controversialLoading } =
     api.post.community.getControversial.useQuery(name as string, {
       enabled: filter === "controversial",
       refetchOnWindowFocus: false,
     })
 
-  const isLoading =
-    trendingLoading ||
-    latestLoading ||
-    mostUpvotedLoading ||
-    controversialLoading
+  const data = {
+    trending: { posts: trendingPosts, isLoading: trendingLoading },
+    latest: { posts: latestPosts, isLoading: latestLoading },
+    "most-upvoted": { posts: mostUpvotedPosts, isLoading: mostUpvotedLoading },
+    controversial: {
+      posts: controversialPosts,
+      isLoading: controversialLoading,
+    },
+  }
 
-  const posts =
-    filter === "trending"
-      ? trendingPosts
-      : filter === "latest"
-      ? latestPosts
-      : filter === "most-upvoted"
-      ? mostUpvotedPosts
-      : controversialPosts
+  const { posts, isLoading } = data[filter as keyof typeof data]
+
+  const [touched, setTouched] = useState({
+    trending: false,
+    latest: false,
+    "most-upvoted": false,
+    controversial: false,
+  })
 
   return (
     <ForumLayout
@@ -88,6 +104,12 @@ export default function CommunityPage() {
       <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
         <li className="min-w-fit">
           <Link
+            onMouseEnter={() => {
+              if (!touched.trending) {
+                setTouched((prev) => ({ ...prev, trending: true }))
+                void utils.post.community.getTrending.prefetch(name as string)
+              }
+            }}
             href={`/community/${community?.name ?? ""}/trending`}
             className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
             ${
@@ -107,6 +129,12 @@ export default function CommunityPage() {
         </li>
         <li className="min-w-fit">
           <Link
+            onMouseEnter={() => {
+              if (!touched.latest) {
+                setTouched((prev) => ({ ...prev, latest: true }))
+                void utils.post.community.getLatest.prefetch(name as string)
+              }
+            }}
             href={`/community/${community?.name ?? ""}/latest`}
             className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
              ${
@@ -126,6 +154,14 @@ export default function CommunityPage() {
         </li>
         <li className="min-w-fit">
           <Link
+            onMouseEnter={() => {
+              if (!touched["most-upvoted"]) {
+                setTouched((prev) => ({ ...prev, "most-upvoted": true }))
+                void utils.post.community.getMostUpvoted.prefetch(
+                  name as string
+                )
+              }
+            }}
             href={`/community/${community?.name ?? ""}/most-upvoted`}
             className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
             ${
@@ -145,6 +181,14 @@ export default function CommunityPage() {
         </li>
         <li className="min-w-fit">
           <Link
+            onMouseEnter={() => {
+              if (!touched.controversial) {
+                setTouched((prev) => ({ ...prev, controversial: true }))
+                void utils.post.community.getControversial.prefetch(
+                  name as string
+                )
+              }
+            }}
             href={`/community/${community?.name ?? ""}/controversial`}
             className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
             ${

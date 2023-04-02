@@ -12,8 +12,18 @@ import PostPreviews, {
 
 import type { GetServerSideProps } from "next"
 
+const filters = ["trending", "latest", "most-upvoted", "controversial"]
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const name = ctx.params?.slug?.[0]
+  const filter = ctx.params?.slug?.[1] as string
+
+  if (filter && !filters.includes(filter)) {
+    return {
+      notFound: true,
+    }
+  }
+
   const topic = await ssg.topic.getByName.fetch(name as string)
 
   if (!topic) {
@@ -39,44 +49,41 @@ export default function TopicPage() {
     refetchOnWindowFocus: false,
   })
 
-  const { data: trendingPosts, isFetching: trendingLoading } =
+  const { data: trendingPosts, isLoading: trendingLoading } =
     api.post.topic.getTrending.useQuery(name as string, {
       enabled: filter === "trending",
       refetchOnWindowFocus: false,
     })
 
-  const { data: latestPosts, isFetching: latestLoading } =
+  const { data: latestPosts, isLoading: latestLoading } =
     api.post.topic.getLatest.useQuery(name as string, {
       enabled: filter === "latest",
       refetchOnWindowFocus: false,
     })
 
-  const { data: mostUpvotedPosts, isFetching: mostUpvotedLoading } =
+  const { data: mostUpvotedPosts, isLoading: mostUpvotedLoading } =
     api.post.topic.getMostUpvoted.useQuery(name as string, {
       enabled: filter === "most-upvoted",
       refetchOnWindowFocus: false,
     })
 
-  const { data: controversialPosts, isFetching: controversialLoading } =
+  const { data: controversialPosts, isLoading: controversialLoading } =
     api.post.topic.getControversial.useQuery(name as string, {
       enabled: filter === "controversial",
       refetchOnWindowFocus: false,
     })
 
-  const isLoading =
-    trendingLoading ||
-    latestLoading ||
-    mostUpvotedLoading ||
-    controversialLoading
+  const data = {
+    trending: { posts: trendingPosts, isLoading: trendingLoading },
+    latest: { posts: latestPosts, isLoading: latestLoading },
+    "most-upvoted": { posts: mostUpvotedPosts, isLoading: mostUpvotedLoading },
+    controversial: {
+      posts: controversialPosts,
+      isLoading: controversialLoading,
+    },
+  }
 
-  const posts =
-    filter === "trending"
-      ? trendingPosts
-      : filter === "latest"
-      ? latestPosts
-      : filter === "most-upvoted"
-      ? mostUpvotedPosts
-      : controversialPosts
+  const { posts, isLoading } = data[filter as keyof typeof data]
 
   return (
     <ForumLayout
