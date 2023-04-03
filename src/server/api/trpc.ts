@@ -97,6 +97,8 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  */
 export const createTRPCRouter = t.router
 
+import { Ratelimit } from "@upstash/ratelimit"
+import { Redis } from "@upstash/redis"
 /**
  * Public (unauthenticated) procedure
  *
@@ -104,13 +106,27 @@ export const createTRPCRouter = t.router
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
+
 export const publicProcedure = t.procedure
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" })
   }
+
+  const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(3, "10 s"),
+    analytics: true,
+  })
+
+  const { success } = await ratelimit.limit(ctx.session.user.id)
+
+  if (!success) {
+    throw new TRPCError({ code: "TOO_MANY_REQUESTS" })
+  }
+
   return next({
     ctx: {
       // infers the `session` as non-nullable

@@ -58,7 +58,7 @@ export default function CommunityInfo({ community }: { community: Community }) {
         <h1 className="break-words text-xl font-semibold md:text-2xl">
           {community?.name}
         </h1>
-        {!communitiesLoading && !isMember && (
+        {session && !communitiesLoading && !isMember && (
           <Button authRequired onClick={() => void handleJoin()}>
             Join
           </Button>

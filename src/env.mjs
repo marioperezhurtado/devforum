@@ -23,6 +23,8 @@ const server = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
+  UPSTASH_REDIS_REST_URL: z.string().url(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 })
 
 /**
@@ -48,6 +50,8 @@ const processEnv = {
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+  UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+  UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 }
 
