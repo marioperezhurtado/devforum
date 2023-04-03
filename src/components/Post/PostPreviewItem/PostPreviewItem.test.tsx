@@ -25,6 +25,7 @@ vi.mock("@/utils/api", () => ({
         }),
       },
     },
+    useContext: () => ({}),
   },
 }))
 

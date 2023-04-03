@@ -39,6 +39,8 @@ export default function Header() {
           id="search"
           type="text"
           placeholder="Start exploring..."
+          aria-label="search"
+          role="searchbox"
           className="w-full rounded-full border bg-zinc-50 px-4 py-1.5 focus:outline-sky-600"
         />
         <button className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full bg-sky-600 pl-2 pr-3 transition hover:bg-sky-500">
@@ -47,9 +49,11 @@ export default function Header() {
       </form>
       {!session && (
         <div className="flex items-center gap-4">
-          <Button intent="secondary" className="hidden xs:block">
-            Create account
-          </Button>
+          <Link href="/signIn">
+            <Button intent="secondary" className="hidden xs:block">
+              Create account
+            </Button>
+          </Link>
           <Link href="/signIn">
             <Button intent="primary">Sign In</Button>
           </Link>

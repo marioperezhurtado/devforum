@@ -75,6 +75,7 @@ export default function CreatePost() {
           Title
         </label>
         <input
+          id="title"
           {...register("title")}
           placeholder="An awesome title for your post"
           className="mb-2 w-full rounded-md border bg-zinc-50 px-2 py-1 focus:outline-sky-600 md:py-2 md:px-4"
@@ -86,6 +87,7 @@ export default function CreatePost() {
           Content
         </label>
         <textarea
+          id="content"
           {...register("content")}
           placeholder="Start writing here..."
           className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"
@@ -99,6 +101,7 @@ export default function CreatePost() {
           Community
         </label>
         <select
+          id="community"
           {...register("community")}
           defaultValue=""
           className="mb-2 rounded-md border bg-zinc-50 px-2 py-1 text-sm focus:outline-sky-600 md:py-2"

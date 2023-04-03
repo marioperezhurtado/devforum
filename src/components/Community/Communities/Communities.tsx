@@ -1,5 +1,5 @@
-import { useState } from "react"
 import { api } from "@/utils/api"
+import usePrefetch from "@/hooks/usePrefetch"
 
 import Link from "next/link"
 
@@ -36,13 +36,10 @@ export function CommunitiesSkeleton() {
 
 function Community({ community }: { community: Communities[0] }) {
   const utils = api.useContext()
-  const [prefetched, setPrefetched] = useState(false)
 
-  const handlePrefetch = async () => {
-    if (prefetched) return
-    await utils.post.community.getTrending.prefetch(community.name)
-    setPrefetched(true)
-  }
+  const { handlePrefetch } = usePrefetch(
+    () => void utils.post.community.getTrending.prefetch(community.name)
+  )
 
   return (
     <Link

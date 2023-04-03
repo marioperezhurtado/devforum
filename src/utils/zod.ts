@@ -43,8 +43,8 @@ export const commentSchema = z.object({
 export const communitySchema = z.object({
   name: z
     .string()
-    .min(2, {
-      message: "Name is too short. (At least 2 characters).",
+    .min(5, {
+      message: "Name is too short. (At least 5 characters).",
     })
     .max(20, {
       message: "Name is too long. Please keep it under 20 characters.",

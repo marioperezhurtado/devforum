@@ -2,7 +2,7 @@ import { api } from "@/utils/api"
 
 import Link from "next/link"
 
-export default function Topics() {
+export default function PopularTopics() {
   const { data: topics, isLoading } = api.topic.getPopular.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })

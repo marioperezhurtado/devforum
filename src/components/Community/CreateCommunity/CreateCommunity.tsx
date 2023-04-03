@@ -55,6 +55,7 @@ export default function CreateCommunity() {
           Name
         </label>
         <input
+          id="name"
           {...register("name")}
           placeholder="Community Name"
           className="mb-2 w-full rounded-md border bg-zinc-50 px-2 py-1 focus:outline-sky-600 md:py-2 md:px-4"
@@ -66,6 +67,7 @@ export default function CreateCommunity() {
           Description
         </label>
         <textarea
+          id="description"
           {...register("description")}
           placeholder="What is your community about?"
           className="h-20 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"

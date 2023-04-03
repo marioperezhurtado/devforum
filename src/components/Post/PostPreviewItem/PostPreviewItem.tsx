@@ -1,12 +1,13 @@
-import { useState } from "react"
 import { api } from "@/utils/api"
 import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import usePrefetch from "@/hooks/usePrefetch"
 
 import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
+import Topic from "@/components/Topic/PostTopic/PostTopic"
 import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -18,7 +19,6 @@ dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
   const utils = api.useContext()
-  const [prefetched, setPrefetched] = useState(false)
 
   const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
   const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
@@ -38,11 +38,9 @@ export default function PostPreviewItem({ post }: { post: Post }) {
     votes: post.reactions,
   })
 
-  const handlePrefetch = async () => {
-    if (prefetched) return
-    await utils.comment.getByPostId.prefetch(post.id)
-    setPrefetched(true)
-  }
+  const { handlePrefetch: prefetchComments } = usePrefetch(
+    () => void utils.comment.getByPostId.prefetch(post.id)
+  )
 
   return (
     <div className="rounded-md border bg-white py-2 px-3 shadow-md md:px-6 md:py-4">
@@ -50,7 +48,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
         <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
           <h2 className="text-lg font-semibold">
             <Link
-              onMouseEnter={() => void handlePrefetch()}
+              onMouseEnter={() => void prefetchComments()}
               href={`/post/${post.id}`}
             >
               {post.title}
@@ -80,7 +78,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
       </p>
       {post.content.length > MAX_PREVIEW_LENGTH && (
         <Link
-          onMouseEnter={() => void handlePrefetch()}
+          onMouseEnter={() => void prefetchComments()}
           href={`/post/${post.id}`}
           className="mt-2 block w-fit py-1.5 text-sm text-sky-600 underline"
         >
@@ -92,12 +90,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           <ul className="flex flex-wrap gap-2 text-sm">
             {post.topics.map((t) => (
               <li key={t.name}>
-                <Link
-                  href={`/topic/${t.name}`}
-                  className="py-1.5 font-semibold"
-                >
-                  #{t.name}
-                </Link>
+                <Topic topic={t} />
               </li>
             ))}
           </ul>
@@ -105,7 +98,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
         <div className="mt-5 flex items-center justify-between text-sm">
           <div className="flex gap-2">
             <Link
-              onMouseEnter={() => void handlePrefetch()}
+              onMouseEnter={() => void prefetchComments()}
               href={`/post/${post.id}`}
               className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
             >

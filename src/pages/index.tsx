@@ -2,7 +2,7 @@ import { api } from "@/utils/api"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import Categories from "@/components/Categories/Categories"
-import Topics from "@/components/Topics/Topics"
+import PopularTopics from "@/components/Topic/PopularTopics/PopularTopics"
 import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
@@ -19,7 +19,7 @@ export default function Home() {
       description="DevForum is the place for all developers to learn, share, and connect with your community. Wether you are a newbie or a seasoned dev, you can find a place to chat about your passion."
     >
       <Categories />
-      <Topics />
+      <PopularTopics />
       {isLoading && <PostPreviewsSkeleton />}
       {featuredPosts && <PostPreviews posts={featuredPosts} />}
     </ForumLayout>

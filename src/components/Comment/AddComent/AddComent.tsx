@@ -23,6 +23,15 @@ export default function AddComment({ postId, onClose }: Props) {
 
   const utils = api.useContext()
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<z.infer<typeof commentSchema>>({
+    resolver: zodResolver(commentSchema),
+  })
+
   const handleClose = () => {
     onClose()
     reset()
@@ -38,15 +47,6 @@ export default function AddComment({ postId, onClose }: Props) {
   })
   const { mutateAsync: addReply } = api.comment.reply.useMutation({
     onSuccess: async () => success(),
-  })
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<z.infer<typeof commentSchema>>({
-    resolver: zodResolver(commentSchema),
   })
 
   const onSubmit = handleSubmit(async (data) => {

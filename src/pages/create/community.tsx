@@ -42,7 +42,3 @@ export default function CreatePostPage() {
     </ForumLayout>
   )
 }
-
-/*
-is the place for all programmers to learn, share, and connect with your community.
-*/
