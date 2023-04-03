@@ -10,11 +10,18 @@ import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
 
-import type { GetServerSideProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 
 const filters = ["trending", "latest", "most-upvoted", "controversial"]
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
   const name = ctx.params?.slug?.[0]
   const filter = ctx.params?.slug?.[1] as string
 
@@ -35,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       trpcState: ssg.dehydrate(),
+      revalidate: 60 * 5, // 5 minutes
     },
   }
 }

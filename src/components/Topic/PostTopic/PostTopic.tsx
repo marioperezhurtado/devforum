@@ -9,13 +9,13 @@ type Topic = RouterOutputs["topic"]["getPopular"][0]
 export default function PostTopic({ topic }: { topic: Topic }) {
   const utils = api.useContext()
 
-  const { handlePrefetch: prefetchPosts } = usePrefetch(
+  const prefetchPosts = usePrefetch(
     () => void utils.post.topic.getTrending.prefetch(topic.name)
   )
 
   return (
     <Link
-      onMouseEnter={() => void prefetchPosts()}
+      onMouseEnter={prefetchPosts}
       href={`/topic/${topic.name}`}
       className="py-1.5 font-semibold"
     >

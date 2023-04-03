@@ -37,14 +37,14 @@ export function CommunitiesSkeleton() {
 function Community({ community }: { community: Communities[0] }) {
   const utils = api.useContext()
 
-  const { handlePrefetch } = usePrefetch(
+  const prefetchComunities = usePrefetch(
     () => void utils.post.community.getTrending.prefetch(community.name)
   )
 
   return (
     <Link
       href={`/community/${community.name}`}
-      onMouseEnter={() => void handlePrefetch()}
+      onMouseEnter={prefetchComunities}
       className="py-1.5"
     >
       {community.name}

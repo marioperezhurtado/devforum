@@ -1,6 +1,6 @@
 import { api } from "@/utils/api"
 import useVote from "@/hooks/useVote"
-import { useCommentStore } from "@/pages/post/store"
+import { useCommentStore } from "@/components/Comment/store"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 

@@ -3,7 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { useSession } from "next-auth/react"
 import { api } from "@/utils/api"
 import useVote from "@/hooks/useVote"
-import { useCommentStore } from "@/pages/post/store"
+import { useCommentStore } from "@/components/Comment/store"
 import { toast } from "react-hot-toast"
 
 import Image from "next/image"

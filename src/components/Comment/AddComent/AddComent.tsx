@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react"
 import { api } from "@/utils/api"
-import { useCommentStore } from "@/pages/post/store"
+import { useCommentStore } from "@/components/Comment/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { commentSchema } from "@/utils/zod"

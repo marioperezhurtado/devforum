@@ -38,7 +38,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
     votes: post.reactions,
   })
 
-  const { handlePrefetch: prefetchComments } = usePrefetch(
+  const prefetchComments = usePrefetch(
     () => void utils.comment.getByPostId.prefetch(post.id)
   )
 
@@ -47,10 +47,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
           <h2 className="text-lg font-semibold">
-            <Link
-              onMouseEnter={() => void prefetchComments()}
-              href={`/post/${post.id}`}
-            >
+            <Link onMouseEnter={prefetchComments} href={`/post/${post.id}`}>
               {post.title}
             </Link>
           </h2>

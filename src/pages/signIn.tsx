@@ -1,43 +1,20 @@
-import { getServerAuthSession } from "@/server/auth"
-import { signIn } from "next-auth/react"
+import { useEffect } from "react"
+import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 
 import Layout from "@/layout/Layout/Layout"
 import Image from "next/image"
 import Link from "next/link"
 
-import type { GetServerSideProps } from "next"
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getServerAuthSession(ctx)
-  const redirectTo = ctx.query.redirectTo as string
-
-  if (session?.user && redirectTo) {
-    return {
-      redirect: {
-        destination: redirectTo,
-        permanent: false,
-      },
-    }
-  }
-
-  if (session?.user) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {},
-  }
-}
-
 export default function SignIn() {
   const router = useRouter()
+  const { data: session } = useSession()
   const redirectTo = router.query.redirectTo as string
+
+  useEffect(() => {
+    if (!session) return
+    void router.push(redirectTo ?? "/")
+  }, [session, redirectTo, router])
 
   return (
     <Layout

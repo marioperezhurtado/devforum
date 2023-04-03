@@ -1,7 +1,7 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
-import { useCommentStore } from "./store"
+import { useCommentStore } from "@/components/Comment/store"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/Post/PostItem/PostItem"
@@ -11,9 +11,16 @@ import Comments, {
 } from "@/components/Comment/Comments/Comments"
 import AddComment from "@/components/Comment/AddComent/AddComent"
 
-import type { GetServerSideProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
   const id = ctx.params?.id
   const post = await ssg.post.getById.fetch(id as string)
 
@@ -25,6 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       trpcState: ssg.dehydrate(),
+      revalidate: 60 * 5, // 5 minutes
     },
   }
 }

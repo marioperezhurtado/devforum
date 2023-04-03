@@ -9,5 +9,5 @@ export default function usePrefetch(onPrefetch: () => void) {
     setPrefetched(true)
   }
 
-  return { handlePrefetch }
+  return handlePrefetch
 }
