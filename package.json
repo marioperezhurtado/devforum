@@ -35,6 +35,7 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.2.4",
     "@next/env": "^13.2.4",
     "@testing-library/react": "^14.0.0",
     "@types/eslint": "^8.21.1",
@@ -47,6 +48,7 @@
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.29.7",
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.2.1",
     "jsdom": "^21.1.1",

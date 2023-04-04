@@ -2,10 +2,10 @@ import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 
-import Image from "next/image"
 import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
+import Filter from "@/components/Filter/Filter"
 import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
@@ -49,34 +49,35 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 export default function TopicPage() {
   const router = useRouter()
+  const utils = api.useContext()
   const { slug } = router.query
-  const name = slug?.[0]
+  const name = slug?.[0] as string
   const filter = slug?.[1] ?? "trending"
 
-  const { data: topic } = api.topic.getByName.useQuery(name as string, {
+  const { data: topic } = api.topic.getByName.useQuery(name, {
     refetchOnWindowFocus: false,
   })
 
   const { data: trendingPosts, isLoading: trendingLoading } =
-    api.post.topic.getTrending.useQuery(name as string, {
+    api.post.topic.getTrending.useQuery(name, {
       enabled: filter === "trending",
       refetchOnWindowFocus: false,
     })
 
   const { data: latestPosts, isLoading: latestLoading } =
-    api.post.topic.getLatest.useQuery(name as string, {
+    api.post.topic.getLatest.useQuery(name, {
       enabled: filter === "latest",
       refetchOnWindowFocus: false,
     })
 
   const { data: mostUpvotedPosts, isLoading: mostUpvotedLoading } =
-    api.post.topic.getMostUpvoted.useQuery(name as string, {
+    api.post.topic.getMostUpvoted.useQuery(name, {
       enabled: filter === "most-upvoted",
       refetchOnWindowFocus: false,
     })
 
   const { data: controversialPosts, isLoading: controversialLoading } =
-    api.post.topic.getControversial.useQuery(name as string, {
+    api.post.topic.getControversial.useQuery(name, {
       enabled: filter === "controversial",
       refetchOnWindowFocus: false,
     })
@@ -109,84 +110,20 @@ export default function TopicPage() {
           Created on {topic?.createdAt.toLocaleDateString()}
         </p>
       </div>
-      <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
-        <li className="min-w-fit">
-          <Link
-            href={`/topic/${topic?.name ?? ""}/trending`}
-            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
-            ${
-              filter === "trending"
-                ? "bg-purple-500"
-                : "bg-sky-600 hover:bg-sky-500"
-            }`}
-          >
-            <Image
-              src="/icons/trending-light.svg"
-              alt="Trending Posts"
-              width={16}
-              height={16}
-            />
-            Trending
-          </Link>
-        </li>
-        <li className="min-w-fit">
-          <Link
-            href={`/topic/${topic?.name ?? ""}/latest`}
-            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
-             ${
-               filter === "latest"
-                 ? "bg-purple-500"
-                 : "bg-sky-600 hover:bg-sky-500"
-             }`}
-          >
-            <Image
-              src="/icons/latest.svg"
-              alt="Latest Posts"
-              width={16}
-              height={16}
-            />
-            Latest
-          </Link>
-        </li>
-        <li className="min-w-fit">
-          <Link
-            href={`/topic/${topic?.name ?? ""}/most-upvoted`}
-            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
-            ${
-              filter === "most-upvoted"
-                ? "bg-purple-500"
-                : "bg-sky-600 hover:bg-sky-500"
-            }`}
-          >
-            <Image
-              src="/icons/upvote-light.svg"
-              alt="Most Upvoted Posts"
-              width={18}
-              height={18}
-            />
-            Most upvoted
-          </Link>
-        </li>
-        <li className="min-w-fit">
-          <Link
-            href={`/topic/${topic?.name ?? ""}/controversial`}
-            className={`z-10 flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-sky-50 transition 
-            ${
-              filter === "controversial"
-                ? "bg-purple-500"
-                : "bg-sky-600 hover:bg-sky-500"
-            }`}
-          >
-            <Image
-              src="/icons/controversial.svg"
-              alt="Most Controversial Posts"
-              width={16}
-              height={16}
-            />
-            Controversial
-          </Link>
-        </li>
-      </ul>
+      <Filter
+        baseLink={`/topic/${name}`}
+        filter={filter}
+        prefetchTrending={() =>
+          void utils.post.topic.getTrending.prefetch(name)
+        }
+        prefetchLatest={() => void utils.post.topic.getLatest.prefetch(name)}
+        prefetchUpvoted={() =>
+          void utils.post.topic.getMostUpvoted.prefetch(name)
+        }
+        prefetchControversial={() =>
+          void utils.post.topic.getControversial.prefetch(name)
+        }
+      />
       {isLoading && <PostPreviewsSkeleton />}
       {posts && posts.length > 0 && !isLoading && (
         <PostPreviews posts={posts} />
