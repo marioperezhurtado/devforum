@@ -8,10 +8,11 @@ import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import Vote from "@/ui/Vote"
+import CodeSnippets from "@/components/CodeSnippets/CodeSnippets"
+import Links from "@/ui/Links"
 
 import type { RouterOutputs } from "@/utils/api"
-
-type Post = RouterOutputs["post"]["getFeatured"][0]
+type Post = NonNullable<RouterOutputs["post"]["getById"]>
 
 dayjs.extend(relativeTime)
 
@@ -56,7 +57,7 @@ export default function PostItem({ post }: { post: Post }) {
         {post.community.name}
       </Link>
       <p className="mt-5">{post.content}</p>
-      <div className="mt-10">
+      <div className="mt-5">
         {post.topics.length > 0 && (
           <ul className="flex flex-wrap gap-2 text-sm">
             {post.topics.map((t) => (
@@ -75,7 +76,7 @@ export default function PostItem({ post }: { post: Post }) {
           <div className="flex gap-2">
             <button
               onClick={open}
-              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
+              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-3 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
             >
               <Image
                 src="/icons/comment.svg"
@@ -103,6 +104,10 @@ export default function PostItem({ post }: { post: Post }) {
           <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
         </div>
       </div>
+      {post.codeSnippets.length > 0 && (
+        <CodeSnippets snippets={post.codeSnippets} />
+      )}
+      <Links />
     </div>
   )
 }

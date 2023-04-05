@@ -41,6 +41,7 @@ model Post {
     topics        Topic[]        @relation("PostTopics")
     comments      Comment[]
     reactions     PostReaction[]
+    codeSnippets  CodeSnippet[]
 
     @@index([creatorId])
     @@index([communityName])
@@ -90,6 +91,25 @@ model CommentReaction {
     @@unique([creatorId, commentId], name: "commentReactionCreatorIdCommentId")
     @@index([creatorId])
     @@index([commentId])
+}
+
+enum Language {
+    JavaScript
+    TypeScript
+    Python
+    Rust
+}
+
+model CodeSnippet {
+    id        String   @id @default(cuid())
+    filename  String   @db.VarChar(100)
+    code      String   @db.VarChar(1000)
+    language  Language
+    createdAt DateTime @default(now())
+    postId    String
+    Post      Post     @relation(fields: [postId], references: [id])
+
+    @@index([postId])
 }
 
 // Necessary for Next auth

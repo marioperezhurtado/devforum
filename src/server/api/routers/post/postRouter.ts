@@ -21,6 +21,7 @@ export const postRouter = createTRPCRouter({
         community: true,
         topics: true,
         reactions: true,
+        codeSnippets: true,
         _count: {
           select: {
             comments: true,

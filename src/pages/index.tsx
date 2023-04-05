@@ -1,3 +1,4 @@
+import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
@@ -6,6 +7,19 @@ import PopularTopics from "@/components/Topic/PopularTopics/PopularTopics"
 import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
+
+import type { GetStaticProps } from "next"
+
+export const getStaticProps: GetStaticProps = async () => {
+  await ssg.topic.getPopular.prefetch()
+
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+    revalidate: 60 * 5, // 5 minutes
+  }
+}
 
 export default function Home() {
   const { data: featuredPosts, isLoading } = api.post.getFeatured.useQuery(

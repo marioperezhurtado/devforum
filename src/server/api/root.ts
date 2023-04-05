@@ -5,6 +5,7 @@ import { topicRouter } from "./routers/topic/topicRouter"
 import { commentRouter } from "./routers/comment/commentRouter"
 import { postReactionRouter } from "./routers/postReaction/postReactionRouter"
 import { commentReactionRouter } from "./routers/commentReaction/commentReactionRouter"
+import { snippetRouter } from "./routers/snippet/snippetRouter"
 /**
  * This is the primary router for your server.
  *
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   comment: commentRouter,
   postReaction: postReactionRouter,
   commentReaction: commentReactionRouter,
+  snippet: snippetRouter,
 })
 
 // export type definition of API
