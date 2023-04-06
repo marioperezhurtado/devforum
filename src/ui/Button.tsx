@@ -24,7 +24,7 @@ const button = cva("button", {
       ],
     },
     size: {
-      small: ["px-2", "py-0.5", "text-xs"],
+      small: ["px-2", "py-0.5", "text-sm"],
       medium: ["px-4", "py-1", "text-sm"],
     },
   },

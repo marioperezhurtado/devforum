@@ -8,7 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import Vote from "@/ui/Vote"
-import CodeSnippets from "@/components/CodeSnippets/CodeSnippets"
+import CodeSnippets from "@/components/CodeSnippet/CodeSnippets/CodeSnippets"
 import Links from "@/components/Post/Links/Links"
 
 import type { RouterOutputs } from "@/utils/api"

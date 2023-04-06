@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 import { useSession } from "next-auth/react"
@@ -8,12 +9,14 @@ import { toast } from "react-hot-toast"
 
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
+import CreateSnippets from "@/components/CodeSnippet/CreateSnippets/CreateSnippets"
 
 import type { z } from "zod"
 
 export default function CreatePost() {
   const router = useRouter()
   const { data: session } = useSession()
+  const [snippetsOpen, setSnippetsOpen] = useState(true)
 
   const { mutateAsync: createPost } = api.post.create.useMutation({
     onSuccess: () => reset(),
@@ -123,6 +126,23 @@ export default function CreatePost() {
         </p>
       )}
       {errors.topics?.message && <FormError message={errors.topics.message} />}
+      {snippetsOpen && <CreateSnippets />}
+
+      <div className="mt-4 flex gap-2">
+        {!snippetsOpen && (
+          <Button
+            onClick={() => setSnippetsOpen(true)}
+            type="button"
+            size="small"
+            className="flex gap-1.5"
+          >
+            <span>+</span>Code snippets
+          </Button>
+        )}
+        <Button type="button" size="small" className="flex gap-1.5">
+          <span>+</span>Social links
+        </Button>
+      </div>
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={() => void reset()} type="button" intent="secondary">
           Reset

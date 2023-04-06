@@ -1,4 +1,7 @@
-export const Post = {
+import type { RouterOutputs } from "@/utils/api"
+type PostType = NonNullable<RouterOutputs["post"]["getById"]>
+
+export const Post: PostType = {
   id: "1",
   title: "My Post",
   content: "My Content",
@@ -43,4 +46,11 @@ export const Post = {
       postId: "1",
     },
   ],
+  codeSnippets: [],
+  demoUrl: null,
+  githubUrl: null,
+  discordUrl: null,
+  redditUrl: null,
+  twitterUrl: null,
+  youtubeUrl: null,
 }

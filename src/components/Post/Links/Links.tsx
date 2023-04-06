@@ -5,16 +5,13 @@ import type { RouterOutputs } from "@/utils/api"
 type Post = NonNullable<RouterOutputs["post"]["getById"]>
 
 export default function Links({ post }: { post: Post }) {
-  console.log(post)
-
   return (
     <ul className="mt-5 flex flex-wrap items-center justify-end gap-1 text-xs font-semibold">
       {post.demoUrl && (
         <li>
           <Link
-            href="#"
+            href={post.demoUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-green-600 px-2.5 py-1 text-slate-50"
           >
             <Image
@@ -31,9 +28,8 @@ export default function Links({ post }: { post: Post }) {
       {post.githubUrl && (
         <li>
           <Link
-            href="#"
+            href={post.githubUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-zinc-600 px-2.5 py-1 text-zinc-50"
           >
             <Image
@@ -49,9 +45,8 @@ export default function Links({ post }: { post: Post }) {
       {post.discordUrl && (
         <li>
           <Link
-            href="#"
+            href={post.discordUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-[#5766e3] px-2.5 py-1 text-indigo-50"
           >
             <Image
@@ -68,9 +63,8 @@ export default function Links({ post }: { post: Post }) {
       {post.twitterUrl && (
         <li>
           <Link
-            href="#"
+            href={post.twitterUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-cyan-600 px-2.5 py-1 text-sky-50"
           >
             <Image
@@ -87,9 +81,8 @@ export default function Links({ post }: { post: Post }) {
       {post.redditUrl && (
         <li>
           <Link
-            href="#"
+            href={post.redditUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-orange-600 px-2.5 py-1 text-orange-50"
           >
             <Image
@@ -105,9 +98,8 @@ export default function Links({ post }: { post: Post }) {
       {post.youtubeUrl && (
         <li>
           <Link
-            href="#"
+            href={post.youtubeUrl}
             target="_blank"
-            rel="noopener noreferrer"
             className="flex items-center gap-0.5 rounded-full bg-red-600 px-2.5 py-1 text-red-50"
           >
             <Image

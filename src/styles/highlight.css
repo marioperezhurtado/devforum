@@ -4,6 +4,7 @@
  * @author Rose Pritchard
  */
 
+textarea[class*="language-"],
 code[class*="language-"],
 pre[class*="language-"] {
   color: #ccc;
@@ -29,7 +30,8 @@ pre[class*="language-"] {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1em;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
   overflow: auto;
 }
 

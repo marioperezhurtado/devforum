@@ -4,13 +4,12 @@ import { toast } from "react-hot-toast"
 
 import Image from "next/image"
 
-export default function Code({
-  code,
-  language,
-}: {
-  code: string
-  language: string
-}) {
+import type { RouterOutputs } from "@/utils/api"
+type Snippet = NonNullable<RouterOutputs["snippet"]["getById"]>
+
+export default function Code({ snippet }: { snippet: Snippet }) {
+  const { code, language } = snippet
+
   const handleCopy = async () => {
     await navigator?.clipboard?.writeText(code)
     toast.success("Copied to clipboard! 📋")
@@ -31,6 +30,7 @@ export default function Code({
   return (
     <pre className={`language-${language} !bg-zinc-700`}>
       <button
+        type="button"
         onClick={() => void handleCopy()}
         className="absolute top-6 right-0.5 p-1 pr-0.5"
       >
