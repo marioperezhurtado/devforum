@@ -2,8 +2,9 @@ import { useSnippetsStore } from "./store"
 
 import Image from "next/image"
 import EditableCode from "@/components/CodeSnippet/EditableCode/EditableCode"
+import AddSnippetDropdown from "./AddSnippetDropdown"
 
-const langs = {
+export const langs = {
   JavaScript: {
     logo: "/icons/code/js.svg",
     extension: "js",
@@ -26,22 +27,11 @@ export default function CreateSnippets() {
   const {
     snippets,
     activeSnippet,
+    isAdding,
     changeActiveSnippet,
     removeSnippet,
-    addSnippet,
+    startAdding,
   } = useSnippetsStore()
-
-  const handleAddSnippet = () => {
-    addSnippet({
-      id: "123",
-      postId: "123",
-      language: "TypeScript",
-      filename: "script",
-      code: `
-`,
-      createdAt: new Date(),
-    })
-  }
 
   return (
     <section className="relative mt-2 rounded-md bg-zinc-600">
@@ -73,20 +63,31 @@ export default function CreateSnippets() {
             <button
               onClick={() => void removeSnippet(s.id)}
               type="button"
-              className="px-2 py-1 transition"
+              className="m-1 h-4 w-4 rounded-full transition hover:bg-zinc-500"
             >
-              x
+              <Image
+                src="/icons/close.svg"
+                alt="Remove snippet"
+                width={18}
+                height={18}
+              />
             </button>
           </li>
         ))}
-        <li>
+        <li className="relative">
           <button
-            onClick={handleAddSnippet}
+            onClick={startAdding}
             type="button"
-            className="px-2 py-0.5 text-sm transition"
+            className="flex items-center justify-center p-1 transition hover:bg-zinc-500"
           >
-            +
+            <Image
+              src="/icons/add.svg"
+              alt="Add snippet"
+              width={16}
+              height={16}
+            />
           </button>
+          {isAdding && <AddSnippetDropdown />}
         </li>
       </ul>
       {activeSnippet && <EditableCode />}

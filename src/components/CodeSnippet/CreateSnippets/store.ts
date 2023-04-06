@@ -6,10 +6,13 @@ type Snippet = NonNullable<RouterOutputs["snippet"]["getById"]>
 type SnippetsState = {
   snippets: Snippet[]
   activeSnippet: Snippet
-  changeActiveSnippet: (snippet: Snippet) => void
+  isAdding: boolean
   updateSnippet: (snippet: Snippet) => void
   removeSnippet: (id: string) => void
+  changeActiveSnippet: (snippet: Snippet) => void
   addSnippet: (newSnippet: Snippet) => void
+  startAdding: () => void
+  stopAdding: () => void
 }
 
 const dummySnippets: Snippet[] = [
@@ -18,9 +21,9 @@ const dummySnippets: Snippet[] = [
     postId: "1",
     filename: "index",
     language: "JavaScript" as const,
-    code: `// Paste your code here, or just type it in!
+    code: `// Paste your code here, or just type it in! 🚀
 console.log('Hello World!')
-// You can also create other snippets in your favourite languages ツ
+// You can create more snippets in your favourite languages ツ
 `,
     createdAt: new Date(),
   },
@@ -37,6 +40,7 @@ console.log('Hello World!')
 export const useSnippetsStore = create<SnippetsState>((set) => ({
   snippets: dummySnippets,
   activeSnippet: dummySnippets[0] as Snippet,
+  isAdding: false,
   changeActiveSnippet: (snippet) => {
     set({ activeSnippet: snippet })
   },
@@ -62,6 +66,16 @@ export const useSnippetsStore = create<SnippetsState>((set) => ({
     })
     set(() => ({
       activeSnippet: newSnippet,
+    }))
+  },
+  startAdding: () => {
+    set(() => ({
+      isAdding: true,
+    }))
+  },
+  stopAdding: () => {
+    set(() => ({
+      isAdding: false,
     }))
   },
 }))

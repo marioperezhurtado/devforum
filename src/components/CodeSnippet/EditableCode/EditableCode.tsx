@@ -75,7 +75,7 @@ export default function Code() {
         className="absolute top-1 right-0.5 p-1 pr-0.5"
       >
         <Image
-          src="/icons/code/clipboard.svg"
+          src="/icons/clipboard.svg"
           alt="Code snippet background"
           width={17}
           height={17}
