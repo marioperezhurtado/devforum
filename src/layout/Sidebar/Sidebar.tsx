@@ -37,7 +37,7 @@ export default function Sidebar() {
     <aside
       ref={ref}
       className={`z-10 w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5 lg:flex ${
-        isOpen ? "fixed top-0 flex h-full shadow-md lg:relative" : "hidden"
+        isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden"
       }`}
     >
       <button onClick={close} className="absolute top-4 right-4 lg:hidden">

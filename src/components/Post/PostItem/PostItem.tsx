@@ -9,7 +9,7 @@ import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import Vote from "@/ui/Vote"
 import CodeSnippets from "@/components/CodeSnippets/CodeSnippets"
-import Links from "@/ui/Links"
+import Links from "@/components/Post/Links/Links"
 
 import type { RouterOutputs } from "@/utils/api"
 type Post = NonNullable<RouterOutputs["post"]["getById"]>
@@ -107,7 +107,7 @@ export default function PostItem({ post }: { post: Post }) {
       {post.codeSnippets.length > 0 && (
         <CodeSnippets snippets={post.codeSnippets} />
       )}
-      <Links />
+      <Links post={post} />
     </div>
   )
 }

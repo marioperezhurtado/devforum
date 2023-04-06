@@ -36,6 +36,12 @@ model Post {
     createdAt     DateTime       @default(now())
     creatorId     String
     communityName String
+    demoUrl       String?
+    githubUrl     String?
+    discordUrl    String?
+    twitterUrl    String?
+    redditUrl     String?
+    youtubeUrl    String?
     creator       User           @relation(fields: [creatorId], references: [id])
     community     Community      @relation(fields: [communityName], references: [name])
     topics        Topic[]        @relation("PostTopics")
