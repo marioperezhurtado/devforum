@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import prism from "prismjs"
-import { useSnippetsStore } from "../CreateSnippets/store"
+import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
 import { toast } from "react-hot-toast"
 
 import Image from "next/image"
@@ -28,12 +28,10 @@ export default function Code() {
 
     if (e.key === "Tab") {
       e.preventDefault()
-
       const newText =
         textareaRef.current.value.substring(0, start) +
         "  " +
         textareaRef.current.value.substring(end)
-
       textareaRef.current.value = newText
       textareaRef.current.setSelectionRange(start + 2, start + 2)
     }
@@ -52,6 +50,7 @@ export default function Code() {
       prism.highlightAll()
     }
     void importLanguage()
+    console.log("language changed")
   }, [language])
 
   return (

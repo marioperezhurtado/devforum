@@ -39,7 +39,6 @@ export default function CreateCommunity() {
           error: "Failed to create community",
         }
       )
-
       await router.push(`/community/${createdCommunity.name}`)
     } catch (e) {}
   })

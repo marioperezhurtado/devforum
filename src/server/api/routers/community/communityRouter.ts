@@ -54,9 +54,15 @@ export const communityRouter = createTRPCRouter({
   create: protectedProcedure
     .input(communitySchema)
     .mutation(({ ctx, input }) => {
+      const name = input.name // test name -> TestName
+        .trim()
+        .split(/\s+/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("")
+
       return ctx.prisma.community.create({
         data: {
-          name: input.name,
+          name,
           description: input.description,
           creator: {
             connect: {

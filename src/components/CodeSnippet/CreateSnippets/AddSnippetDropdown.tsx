@@ -9,8 +9,8 @@ type Lang = keyof typeof langs
 
 export default function AddSnippetDropdown() {
   const ref = useRef<HTMLDivElement>(null)
-  const stopAdding = useSnippetsStore((state) => state.stopAdding)
   const addSnippet = useSnippetsStore((state) => state.addSnippet)
+  const stopAdding = useSnippetsStore((state) => state.stopAdding)
 
   useOnClickOutside({
     ref,
@@ -19,10 +19,10 @@ export default function AddSnippetDropdown() {
 
   const handleAddSnippet = (language: Lang) => {
     addSnippet({
-      id: "",
+      id: Math.random().toString(),
       postId: "",
+      filename: "snippet",
       language,
-      filename: "new_snippet",
       code: `
 `,
       createdAt: new Date(),

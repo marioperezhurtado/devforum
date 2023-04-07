@@ -27,14 +27,6 @@ console.log('Hello World!')
 `,
     createdAt: new Date(),
   },
-  {
-    id: "2",
-    postId: "1",
-    filename: "main",
-    language: "Python" as const,
-    code: "print('Hello World!')",
-    createdAt: new Date(),
-  },
 ]
 
 export const useSnippetsStore = create<SnippetsState>((set) => ({

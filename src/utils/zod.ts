@@ -26,6 +26,15 @@ export const postSchema = z.object({
       message: "You can only have up to 12 topics in a post.",
     })
     .optional(),
+  codeSnippets: z
+    .array(
+      z.object({
+        filename: z.string(),
+        code: z.string(),
+        language: z.enum(["JavaScript", "TypeScript", "Python", "Rust"]),
+      })
+    )
+    .optional(),
 })
 
 export const commentSchema = z.object({

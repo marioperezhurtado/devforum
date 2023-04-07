@@ -94,9 +94,16 @@ export const postRouter = createTRPCRouter({
             },
           },
           topics: {
-            connectOrCreate: input.topics?.map((n) => ({
-              where: { name: n },
-              create: { name: n },
+            connectOrCreate: input.topics?.map((t) => ({
+              where: { name: t },
+              create: { name: t },
+            })),
+          },
+          codeSnippets: {
+            create: input.codeSnippets?.map((s) => ({
+              filename: s.filename,
+              code: s.code,
+              language: s.language,
             })),
           },
         },

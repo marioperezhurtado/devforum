@@ -3,6 +3,7 @@ import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 import { useSession } from "next-auth/react"
 import { useForm, useWatch } from "react-hook-form"
+import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
@@ -16,7 +17,8 @@ import type { z } from "zod"
 export default function CreatePost() {
   const router = useRouter()
   const { data: session } = useSession()
-  const [snippetsOpen, setSnippetsOpen] = useState(true)
+  const [snippetsOpen, setSnippetsOpen] = useState(false)
+  const snippets = useSnippetsStore((state) => state.snippets)
 
   const { mutateAsync: createPost } = api.post.create.useMutation({
     onSuccess: () => reset(),
@@ -55,6 +57,7 @@ export default function CreatePost() {
           content: data.content,
           community: data.community,
           topics: getTopics(data.content),
+          codeSnippets: snippets,
         }),
         {
           loading: "Creating post...",
