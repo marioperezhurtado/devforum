@@ -12,7 +12,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.demoUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-green-600 px-2 py-1 text-slate-50"
+            className="flex items-center gap-0.5 rounded-full bg-sky-600 px-2 py-1 text-sky-50"
           >
             <Image
               src="/icons/link.svg"

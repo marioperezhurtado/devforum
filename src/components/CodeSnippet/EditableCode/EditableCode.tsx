@@ -71,7 +71,7 @@ export default function Code() {
       <button
         type="button"
         onClick={() => void handleCopy()}
-        className="absolute top-1 right-0.5 p-1 pr-0.5"
+        className="absolute top-1 right-0.5 rounded-full p-1 transition hover:bg-zinc-600"
       >
         <Image
           src="/icons/clipboard.svg"

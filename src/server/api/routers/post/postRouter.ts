@@ -30,7 +30,7 @@ export const postRouter = createTRPCRouter({
       },
     })
   }),
-  getFeatured: publicProcedure.query(({ ctx }) => {
+  getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.post.findMany({
       include: {
         creator: true,
@@ -42,6 +42,9 @@ export const postRouter = createTRPCRouter({
             comments: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     })
   }),

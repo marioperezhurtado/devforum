@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default function Home() {
-  const { data: featuredPosts, isLoading } = api.post.getFeatured.useQuery(
+  const { data: latestPosts, isLoading } = api.post.getLatest.useQuery(
     undefined,
     { refetchOnWindowFocus: false }
   )
@@ -35,7 +35,7 @@ export default function Home() {
       <Categories />
       <PopularTopics />
       {isLoading && <PostPreviewsSkeleton />}
-      {featuredPosts && <PostPreviews posts={featuredPosts} />}
+      {latestPosts && <PostPreviews posts={latestPosts} />}
     </ForumLayout>
   )
 }

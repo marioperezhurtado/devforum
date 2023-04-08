@@ -56,7 +56,7 @@ export default function CreatePost() {
       const createdPost = await toast.promise(
         createPost({
           topics: getTopics(data.content),
-          codeSnippets: snippets,
+          codeSnippets: snippetsOpen ? snippets : [],
           demoUrl: data.demoUrl ?? undefined,
           ...data,
         }),
@@ -135,11 +135,11 @@ export default function CreatePost() {
         <section className="mt-2 flex max-w-sm flex-col gap-2">
           <div className="relative">
             <Image
-              src="/icons/link-color.svg"
+              src="/icons/safari.svg"
               alt="Live Demo"
-              width={20}
-              height={20}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2"
+              width={16}
+              height={16}
+              className="absolute right-2 top-1/2 -translate-y-1/2"
             />
             <label htmlFor="demoUrl" className="sr-only">
               Live Demo URL
