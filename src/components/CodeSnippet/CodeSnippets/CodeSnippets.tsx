@@ -4,7 +4,7 @@ import Image from "next/image"
 import Code from "@/components/CodeSnippet/Code/Code"
 
 import type { RouterOutputs } from "@/utils/api"
-type Snippets = RouterOutputs["snippet"]["getByPost"]
+type Snippets = NonNullable<RouterOutputs["snippet"]["getById"]>[]
 
 const langs = {
   JavaScript: {

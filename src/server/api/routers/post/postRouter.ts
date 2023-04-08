@@ -106,6 +106,12 @@ export const postRouter = createTRPCRouter({
               language: s.language,
             })),
           },
+          demoUrl: input.demoUrl,
+          githubUrl: input.githubUrl,
+          discordUrl: input.discordUrl,
+          twitterUrl: input.twitterUrl,
+          redditUrl: input.redditUrl,
+          youtubeUrl: input.youtubeUrl,
         },
       })
     }),

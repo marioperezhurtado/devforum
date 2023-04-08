@@ -7,7 +7,7 @@ import usePrefetch from "@/hooks/usePrefetch"
 import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
-import Topic from "@/components/Topic/PostTopic/PostTopic"
+import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import Vote from "@/ui/Vote"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -67,7 +67,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           />
         </div>
       </div>
-      <p>
+      <p className="whitespace-pre-line break-words">
         {post.content.length <= MAX_PREVIEW_LENGTH && post.content}
         {post.content.length > MAX_PREVIEW_LENGTH &&
           post.content.slice(0, MAX_PREVIEW_LENGTH)}
@@ -87,7 +87,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           <ul className="flex flex-wrap gap-2 text-sm">
             {post.topics.map((t) => (
               <li key={t.name}>
-                <Topic topic={t} />
+                <PostTopic topic={t} />
               </li>
             ))}
           </ul>

@@ -49,6 +49,7 @@ export const commentRouter = createTRPCRouter({
       return ctx.prisma.comment.create({
         data: {
           content: input.content,
+          replyToId: input.replyToId,
           post: {
             connect: {
               id: input.postId,
@@ -57,11 +58,6 @@ export const commentRouter = createTRPCRouter({
           creator: {
             connect: {
               id: ctx.session.user.id,
-            },
-          },
-          replyTo: {
-            connect: {
-              id: input.replyToId,
             },
           },
         },

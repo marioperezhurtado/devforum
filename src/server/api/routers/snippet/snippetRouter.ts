@@ -9,11 +9,4 @@ export const snippetRouter = createTRPCRouter({
       },
     })
   }),
-  getByPost: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.codeSnippet.findMany({
-      where: {
-        postId: input,
-      },
-    })
-  }),
 })

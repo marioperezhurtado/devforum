@@ -34,7 +34,7 @@ export default function CreateSnippets() {
   } = useSnippetsStore()
 
   return (
-    <section className="relative mt-2 rounded-md bg-zinc-600">
+    <section className="relative mt-2 mb-4 rounded-md bg-zinc-600">
       <ul className="flex w-fit items-center rounded-t text-xs font-semibold text-zinc-100">
         <div className="flex items-center gap-1.5 border-r border-zinc-500 px-4 py-1.5">
           <span className="h-3 w-3 rounded-full bg-red-500" />

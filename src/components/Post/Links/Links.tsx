@@ -12,7 +12,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.demoUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-green-600 px-2.5 py-1 text-slate-50"
+            className="flex items-center gap-0.5 rounded-full bg-green-600 px-2 py-1 text-slate-50"
           >
             <Image
               src="/icons/link.svg"
@@ -30,7 +30,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.githubUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-zinc-600 px-2.5 py-1 text-zinc-50"
+            className="flex items-center gap-0.5 rounded-full bg-zinc-600 px-2 py-1 text-zinc-50"
           >
             <Image
               src="/icons/github.svg"
@@ -47,7 +47,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.discordUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-[#5766e3] px-2.5 py-1 text-indigo-50"
+            className="flex items-center gap-0.5 rounded-full bg-[#5766e3] px-2 py-1 text-indigo-50"
           >
             <Image
               src="/icons/discord.svg"
@@ -65,7 +65,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.twitterUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-cyan-600 px-2.5 py-1 text-sky-50"
+            className="flex items-center gap-0.5 rounded-full bg-cyan-600 px-2 py-1 text-sky-50"
           >
             <Image
               src="/icons/twitter.svg"
@@ -83,7 +83,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.redditUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-orange-600 px-2.5 py-1 text-orange-50"
+            className="flex items-center gap-0.5 rounded-full bg-orange-600 px-2 py-1 text-orange-50"
           >
             <Image
               src="/icons/reddit.svg"
@@ -100,7 +100,7 @@ export default function Links({ post }: { post: Post }) {
           <Link
             href={post.youtubeUrl}
             target="_blank"
-            className="flex items-center gap-0.5 rounded-full bg-red-600 px-2.5 py-1 text-red-50"
+            className="flex items-center gap-0.5 rounded-full bg-red-600 px-2 py-1 text-red-50"
           >
             <Image
               src="/icons/youtube.svg"

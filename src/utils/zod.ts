@@ -35,6 +35,12 @@ export const postSchema = z.object({
       })
     )
     .optional(),
+  demoUrl: z.string().optional(),
+  githubUrl: z.string().optional(),
+  discordUrl: z.string().optional(),
+  twitterUrl: z.string().optional(),
+  redditUrl: z.string().optional(),
+  youtubeUrl: z.string().optional(),
 })
 
 export const commentSchema = z.object({

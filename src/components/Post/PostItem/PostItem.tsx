@@ -1,6 +1,6 @@
 import { api } from "@/utils/api"
-import useVote from "@/hooks/useVote"
 import { useCommentStore } from "@/components/Comment/store"
+import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
@@ -8,6 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import Vote from "@/ui/Vote"
+import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import CodeSnippets from "@/components/CodeSnippet/CodeSnippets/CodeSnippets"
 import Links from "@/components/Post/Links/Links"
 
@@ -56,18 +57,13 @@ export default function PostItem({ post }: { post: Post }) {
       >
         {post.community.name}
       </Link>
-      <p className="mt-5">{post.content}</p>
+      <p className="mt-5 whitespace-pre-line break-words">{post.content}</p>
       <div className="mt-5">
         {post.topics.length > 0 && (
           <ul className="flex flex-wrap gap-2 text-sm">
             {post.topics.map((t) => (
               <li key={t.name}>
-                <Link
-                  href={`/topic/${t.name}`}
-                  className="py-1.5 font-semibold"
-                >
-                  #{t.name}
-                </Link>
+                <PostTopic topic={t} />
               </li>
             ))}
           </ul>

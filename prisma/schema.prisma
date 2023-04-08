@@ -66,7 +66,6 @@ model Comment {
 
     @@index([creatorId])
     @@index([postId])
-    @@index([replyToId])
 }
 
 model PostReaction {

@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast"
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
 import CreateSnippets from "@/components/CodeSnippet/CreateSnippets/CreateSnippets"
+import Image from "next/image"
 
 import type { z } from "zod"
 
@@ -18,6 +19,7 @@ export default function CreatePost() {
   const router = useRouter()
   const { data: session } = useSession()
   const [snippetsOpen, setSnippetsOpen] = useState(false)
+  const [linksOpen, setLinksOpen] = useState(false)
   const snippets = useSnippetsStore((state) => state.snippets)
 
   const { mutateAsync: createPost } = api.post.create.useMutation({
@@ -53,11 +55,10 @@ export default function CreatePost() {
     try {
       const createdPost = await toast.promise(
         createPost({
-          title: data.title,
-          content: data.content,
-          community: data.community,
           topics: getTopics(data.content),
           codeSnippets: snippets,
+          demoUrl: data.demoUrl ?? undefined,
+          ...data,
         }),
         {
           loading: "Creating post...",
@@ -65,7 +66,6 @@ export default function CreatePost() {
           error: "Failed to create post",
         }
       )
-
       await router.push(`/post/${createdPost.id}`)
     } catch (e) {}
   })
@@ -131,7 +131,120 @@ export default function CreatePost() {
       {errors.topics?.message && <FormError message={errors.topics.message} />}
       {snippetsOpen && <CreateSnippets />}
 
-      <div className="mt-4 flex gap-2">
+      {linksOpen && (
+        <section className="mt-2 flex max-w-sm flex-col gap-2">
+          <div className="relative">
+            <Image
+              src="/icons/link-color.svg"
+              alt="Live Demo"
+              width={20}
+              height={20}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="demoUrl" className="sr-only">
+              Live Demo URL
+            </label>
+            <input
+              id="demoUrl"
+              {...register("demoUrl")}
+              placeholder="https://your-live-demo.com"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/icons/github-color.svg"
+              alt="Github Repo"
+              width={24}
+              height={24}
+              className="absolute right-1 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="githubUrl" className="sr-only">
+              Github Repo URL
+            </label>
+            <input
+              id="githubUrl"
+              {...register("githubUrl")}
+              placeholder="https://github.com"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/icons/discord-color.svg"
+              alt="Discord"
+              width={20}
+              height={20}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="discordUrl" className="sr-only">
+              Discord URL
+            </label>
+            <input
+              id="discordUrl"
+              {...register("discordUrl")}
+              placeholder="https://discord.gg"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/icons/twitter-color.svg"
+              alt="Twitter"
+              width={20}
+              height={20}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="twitterUrl" className="sr-only">
+              Twitter URL
+            </label>
+            <input
+              id="twitterUrl"
+              {...register("twitterUrl")}
+              placeholder="https://twitter.com"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/icons/reddit-color.svg"
+              alt="Reddit"
+              width={24}
+              height={24}
+              className="absolute right-1 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="redditUrl" className="sr-only">
+              Reddit URL
+            </label>
+            <input
+              id="redditUrl"
+              {...register("redditUrl")}
+              placeholder="https://reddit.com"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+          <div className="relative">
+            <Image
+              src="/icons/youtube-color.svg"
+              alt="Youtube"
+              width={24}
+              height={24}
+              className="absolute right-1 top-1/2 -translate-y-1/2"
+            />
+            <label htmlFor="youtubeUrl" className="sr-only">
+              Youtube URL
+            </label>
+            <input
+              id="youtubeUrl"
+              {...register("youtubeUrl")}
+              placeholder="https://youtube.com"
+              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+            />
+          </div>
+        </section>
+      )}
+
+      <div className="mt-4 mb-2 flex gap-2">
         {!snippetsOpen && (
           <Button
             onClick={() => setSnippetsOpen(true)}
@@ -142,9 +255,16 @@ export default function CreatePost() {
             <span>+</span>Code snippets
           </Button>
         )}
-        <Button type="button" size="small" className="flex gap-1.5">
-          <span>+</span>Social links
-        </Button>
+        {!linksOpen && (
+          <Button
+            onClick={() => setLinksOpen(true)}
+            type="button"
+            size="small"
+            className="flex gap-1.5"
+          >
+            <span>+</span>Social links
+          </Button>
+        )}
       </div>
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={() => void reset()} type="button" intent="secondary">
