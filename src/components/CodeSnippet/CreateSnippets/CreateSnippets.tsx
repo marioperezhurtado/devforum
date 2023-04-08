@@ -2,6 +2,7 @@ import { useSnippetsStore } from "./store"
 
 import Image from "next/image"
 import EditableCode from "@/components/CodeSnippet/EditableCode/EditableCode"
+import SnippetTab from "@/components/CodeSnippet/SnippetTab/SnippetTab"
 import AddSnippetDropdown from "./AddSnippetDropdown"
 
 export const langs = {
@@ -24,14 +25,7 @@ export const langs = {
 }
 
 export default function CreateSnippets() {
-  const {
-    snippets,
-    activeSnippet,
-    isAdding,
-    changeActiveSnippet,
-    removeSnippet,
-    startAdding,
-  } = useSnippetsStore()
+  const { snippets, activeSnippet, isAdding, startAdding } = useSnippetsStore()
 
   return (
     <section className="relative mt-2 mb-4 rounded-md bg-zinc-600">
@@ -42,36 +36,8 @@ export default function CreateSnippets() {
           <span className="h-3 w-3 rounded-full bg-green-500" />
         </div>
         {snippets.map((s) => (
-          <li
-            key={s.id}
-            className={`flex items-center border-r border-zinc-500 
-               ${s.id !== activeSnippet?.id ? "bg-zinc-600" : "bg-zinc-700"}`}
-          >
-            <button
-              type="button"
-              onClick={() => void changeActiveSnippet(s)}
-              className="flex items-center gap-2 py-1 px-2"
-            >
-              <Image
-                src={langs[s.language].logo}
-                alt={s.language}
-                width={12}
-                height={12}
-              />
-              {s.filename}.{langs[s.language].extension}
-            </button>
-            <button
-              onClick={() => void removeSnippet(s.id)}
-              type="button"
-              className="m-1 h-4 w-4 rounded-full transition hover:bg-zinc-500"
-            >
-              <Image
-                src="/icons/close.svg"
-                alt="Remove snippet"
-                width={18}
-                height={18}
-              />
-            </button>
+          <li key={s.id}>
+            <SnippetTab snippet={s} />
           </li>
         ))}
         <li className="relative">

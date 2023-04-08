@@ -21,7 +21,7 @@ export default function AddSnippetDropdown() {
     addSnippet({
       id: Math.random().toString(),
       postId: "",
-      filename: "snippet",
+      filename: "Untitled",
       language,
       code: `
 `,

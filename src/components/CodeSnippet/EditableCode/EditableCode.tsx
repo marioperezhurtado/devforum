@@ -50,7 +50,6 @@ export default function Code() {
       prism.highlightAll()
     }
     void importLanguage()
-    console.log("language changed")
   }, [language])
 
   return (
