@@ -93,11 +93,11 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           </ul>
         )}
         <div className="mt-5 flex items-center justify-between text-sm">
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <Link
               onMouseEnter={() => void prefetchComments()}
               href={`/post/${post.id}`}
-              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 font-semibold text-zinc-600 transition hover:bg-zinc-200"
+              className="flex items-center gap-1.5 rounded-full border bg-zinc-100 py-0.5 px-2 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
             >
               <Image
                 src="/icons/comment.svg"
@@ -112,14 +112,14 @@ export default function PostPreviewItem({ post }: { post: Post }) {
               voteType="upvote"
               voted={myVote === true}
               votes={upvotes}
-              size="medium"
+              size="small"
             />
             <Vote
               onClick={() => void handleDownvote()}
               voteType="downvote"
               voted={myVote === false}
               votes={downvotes}
-              size="medium"
+              size="small"
             />
           </div>
           <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>

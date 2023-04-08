@@ -40,9 +40,6 @@ export default function Sidebar() {
         isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden"
       }`}
     >
-      <button onClick={close} className="absolute top-4 right-4 lg:hidden">
-        <Image src="/icons/back.svg" alt="Close menu" width={36} height={36} />
-      </button>
       <section>
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Trending</h2>

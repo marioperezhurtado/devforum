@@ -69,7 +69,7 @@ export default function PostItem({ post }: { post: Post }) {
           </ul>
         )}
         <div className="mt-5 flex items-center justify-between text-sm">
-          <div className="flex gap-2">
+          <div className="flex gap-1.5">
             <button
               onClick={open}
               className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-3 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"

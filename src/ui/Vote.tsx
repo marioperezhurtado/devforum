@@ -22,7 +22,7 @@ const vote = cva("button", {
       downvote: [],
     },
     size: {
-      small: ["px-2", "py-0.5", "text-xs", "gap-0.5"],
+      small: ["px-2", "py-0.5", "text-sm", "gap-0.5"],
       medium: ["px-2.5", "py-1", "text-sm", "gap-1"],
     },
   },
