@@ -6,7 +6,7 @@ export default function CreatePostPage() {
   return (
     <ForumLayout
       title="Create a community - DevForum.dev"
-      description="Everyone has something valuable to say.Take the plunge and share anything you want with other developers.
+      description="Create a community for your favorite topic or niche. It's free and easy.
       "
     >
       <div className="mb-5 rounded-md border bg-white px-2 py-3 shadow-md md:px-6 md:py-4">

@@ -15,6 +15,16 @@ import Image from "next/image"
 
 import type { z } from "zod"
 
+const categories = [
+  "Discussions",
+  "News",
+  "HelpNeeded",
+  "Jobs",
+  "Showcase",
+  "Tutorials",
+  "Resources",
+]
+
 export default function CreatePost() {
   const router = useRouter()
   const { data: session } = useSession()
@@ -102,7 +112,12 @@ export default function CreatePost() {
           <FormError message={errors.content.message} />
         )}
       </div>
-      <div className="mb-2">
+      {getTopics(content).length > 0 && (
+        <p className="my-4 text-sm font-semibold">
+          #{getTopics(content)?.join(", #") ?? ""}
+        </p>
+      )}
+      <div className="my-4">
         <label htmlFor="community" className="sr-only">
           Community
         </label>
@@ -122,12 +137,26 @@ export default function CreatePost() {
         {errors.community?.message && (
           <FormError message={errors.community.message} />
         )}
+        <label htmlFor="category" className="sr-only">
+          Category
+        </label>
+        <select
+          id="category"
+          {...register("category")}
+          defaultValue=""
+          className="my-2 block rounded-md border bg-zinc-50 px-2 py-1 text-sm focus:outline-sky-600 md:py-2"
+        >
+          <option value="" disabled>
+            Select a category
+          </option>
+          {categories?.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+        {errors.category?.message && (
+          <FormError message={errors.category.message} />
+        )}
       </div>
-      {getTopics(content).length > 0 && (
-        <p className="mt-2 text-sm font-semibold">
-          #{getTopics(content)?.join(", #") ?? ""}
-        </p>
-      )}
       {errors.topics?.message && <FormError message={errors.topics.message} />}
       {snippetsOpen && <CreateSnippets />}
 

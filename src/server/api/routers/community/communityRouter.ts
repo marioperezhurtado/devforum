@@ -24,14 +24,30 @@ export const getCommunityByName = ({
 }
 
 export const communityRouter = createTRPCRouter({
-  getTrending: publicProcedure.query(({ ctx }) => {
+  getTrendingPreview: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.community.findMany({
       orderBy: {
-        members: {
+        posts: {
           _count: "desc",
         },
       },
-      take: 10,
+      take: 5,
+    })
+  }),
+  getTrending: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.community.findMany({
+      orderBy: {
+        posts: {
+          _count: "desc",
+        },
+      },
+    })
+  }),
+  getDiscoverPreview: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.community.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
     })
   }),
   getByName: publicProcedure.input(z.string()).query(({ ctx, input }) => {

@@ -21,7 +21,12 @@ export default function Sidebar() {
   const { isOpen, close } = useSidebarStore()
 
   const { data: trendingCommunities, isLoading: trendingLoading } =
-    api.community.getTrending.useQuery(undefined, {
+    api.community.getTrendingPreview.useQuery(undefined, {
+      refetchOnWindowFocus: false,
+    })
+
+  const { data: discoverCommunities, isLoading: discoverLoading } =
+    api.community.getDiscoverPreview.useQuery(undefined, {
       refetchOnWindowFocus: false,
     })
 
@@ -36,70 +41,74 @@ export default function Sidebar() {
   return (
     <aside
       ref={ref}
-      className={`z-10 w-64 flex-col gap-10 border-r border-zinc-200 bg-white px-6 py-5 lg:flex ${
+      className={`z-10 w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 lg:flex ${
         isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden"
       }`}
     >
-      <section>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">Trending</h2>
-          <Image
-            src="/icons/trending.svg"
-            alt="Trending"
-            width={20}
-            height={20}
-          />
-        </div>
-        {trendingLoading && <CommunitiesSkeleton />}
-        {trendingCommunities && (
-          <Communities communities={trendingCommunities} />
-        )}
-        {trendingCommunities?.length === 0 && (
-          <p className="text-sm">
-            {"Sorry, we couldn't find any communities. Try again later."}
-          </p>
-        )}
-      </section>
-      <section>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">Discover</h2>
-          <Image
-            src="/icons/discover.svg"
-            alt="Discover"
-            width={20}
-            height={20}
-          />
-        </div>
-        {trendingLoading && <CommunitiesSkeleton />}
-        {trendingCommunities && (
-          <Communities communities={trendingCommunities} />
-        )}
-        {trendingCommunities?.length === 0 && (
-          <p className="text-sm">
-            {"Sorry, we couldn't find any communities. Try again later."}
-          </p>
-        )}
-      </section>
-      {session && (
-        <section>
+      <section className="flex flex-col-reverse gap-10 lg:flex-col">
+        <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold">Your communities</h2>
+            <h2 className="text-lg font-semibold">Trending</h2>
             <Image
-              src="/icons/community.svg"
-              alt="Your communities"
+              src="/icons/trending.svg"
+              alt="Trending"
               width={20}
               height={20}
             />
           </div>
-          {myLoading && <CommunitiesSkeleton />}
-          {myCommunities && <Communities communities={myCommunities} />}
-          {myCommunities?.length === 0 && (
+          {trendingLoading && <CommunitiesSkeleton />}
+          {trendingCommunities && (
+            <Communities communities={trendingCommunities} />
+          )}
+          {trendingCommunities?.length === 0 && (
             <p className="text-sm">
-              {"There's so much to discover! Join a community to get started."}
+              {"Sorry, we couldn't find any communities. Try again later."}
             </p>
           )}
-        </section>
-      )}
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold">Discover</h2>
+            <Image
+              src="/icons/discover.svg"
+              alt="Discover"
+              width={20}
+              height={20}
+            />
+          </div>
+          {discoverLoading && <CommunitiesSkeleton />}
+          {discoverCommunities && (
+            <Communities communities={discoverCommunities} />
+          )}
+          {discoverCommunities?.length === 0 && (
+            <p className="text-sm">
+              {"Sorry, we couldn't find any communities. Try again later."}
+            </p>
+          )}
+        </div>
+        {session && (
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold">Your communities</h2>
+              <Image
+                src="/icons/community.svg"
+                alt="Your communities"
+                width={20}
+                height={20}
+              />
+            </div>
+            {myLoading && <CommunitiesSkeleton />}
+            {myCommunities && <Communities communities={myCommunities} />}
+            {myCommunities?.length === 0 && (
+              <p className="text-sm">
+                {
+                  "There's so much to discover! Join a community to get started."
+                }
+              </p>
+            )}
+          </div>
+        )}
+      </section>
       <Link
         href={
           session ? "/create/community" : "/signIn?redirectTo=/create/community"

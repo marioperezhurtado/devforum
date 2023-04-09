@@ -29,6 +29,16 @@ model Topic {
     posts     Post[]   @relation("PostTopics")
 }
 
+enum PostCategory {
+    Discussions
+    News
+    HelpNeeded
+    Jobs
+    Showcase
+    Tutorials
+    Resources
+}
+
 model Post {
     id            String         @id @default(cuid())
     title         String         @db.VarChar(100)
@@ -36,6 +46,7 @@ model Post {
     createdAt     DateTime       @default(now())
     creatorId     String
     communityName String
+    category      PostCategory
     demoUrl       String?
     githubUrl     String?
     discordUrl    String?
