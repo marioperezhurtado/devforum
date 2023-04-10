@@ -4,6 +4,7 @@ import { useSidebarStore } from "@/layout/Sidebar/store"
 import Image from "next/image"
 import Link from "next/link"
 import AccountDropdown from "./AccountDropdown"
+import Search from "@/components/Search/Search"
 import Button from "@/ui/Button"
 
 export default function Header() {
@@ -27,26 +28,7 @@ export default function Header() {
           </h1>
         </Link>
       </div>
-      <form
-        name="searchForm"
-        className="relative hidden md:block md:w-80 lg:max-w-screen-xs lg:flex-grow"
-      >
-        <label htmlFor="search" className="sr-only">
-          Search topics, posts, users and more
-        </label>
-        <input
-          name="search"
-          id="search"
-          type="text"
-          placeholder="Start exploring..."
-          aria-label="search"
-          role="searchbox"
-          className="w-full rounded-full border bg-zinc-50 px-4 py-1.5 focus:outline-sky-600"
-        />
-        <button className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full bg-sky-600 pl-2 pr-3 transition hover:bg-sky-500">
-          <Image src="/icons/search.svg" alt="Search" width={20} height={20} />
-        </button>
-      </form>
+      <Search />
       {!session && (
         <div className="flex items-center gap-4">
           <Link href="/signIn">
@@ -59,7 +41,6 @@ export default function Header() {
           </Link>
         </div>
       )}
-
       {session && (
         <div className="flex items-center gap-2">
           <Link

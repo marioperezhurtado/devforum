@@ -20,10 +20,6 @@ export default function EditableCode() {
     toast.success("Copied to clipboard! 📋")
   }
 
-  const handleUpdate = (code: string) => {
-    updateSnippet({ ...activeSnippet, code })
-  }
-
   const handleHighlight = (code: string) => {
     const grammar = prism.languages[language.toLowerCase()]
     if (!grammar) return code
@@ -39,7 +35,7 @@ export default function EditableCode() {
     <div className="relative">
       <Editor
         value={code}
-        onValueChange={(code) => handleUpdate(code)}
+        onValueChange={(code) => updateSnippet({ ...activeSnippet, code })}
         highlight={handleHighlight}
         padding={10}
         className="border bg-zinc-50"
