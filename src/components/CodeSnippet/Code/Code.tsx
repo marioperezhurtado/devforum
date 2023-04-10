@@ -2,37 +2,47 @@ import { useEffect } from "react"
 import prism from "prismjs"
 import { toast } from "react-hot-toast"
 
+import "prismjs/themes/prism-tomorrow.css"
+
+import Editor from "react-simple-code-editor"
 import Image from "next/image"
 
 import type { RouterOutputs } from "@/utils/api"
 type Snippet = NonNullable<RouterOutputs["snippet"]["getById"]>
 
 export default function Code({ snippet }: { snippet: Snippet }) {
-  const { code, language } = snippet
+  const code = snippet.code
+  const language = snippet?.language ?? "JavaScript"
 
   const handleCopy = async () => {
     await navigator?.clipboard?.writeText(code)
     toast.success("Copied to clipboard! 📋")
   }
 
-  useEffect(() => {
-    prism.highlightAll()
-  }, [code])
+  const handleHighlight = (code: string) => {
+    const grammar = prism.languages[language.toLowerCase()]
+    if (!grammar) return code
+
+    return prism.highlight(code, grammar, language.toLowerCase())
+  }
 
   useEffect(() => {
-    const importLanguage = async () => {
-      await import(`prismjs/components/prism-${language.toLowerCase()}`)
-      prism.highlightAll()
-    }
-    void importLanguage()
+    import(`prismjs/components/prism-${language.toLowerCase()}`)
   }, [language])
 
   return (
-    <pre className={`language-${language} !bg-zinc-700`}>
+    <div className="relative">
+      <Editor
+        value={code}
+        onValueChange={() => null}
+        highlight={handleHighlight}
+        padding={10}
+        className="border bg-zinc-50"
+      />
       <button
         type="button"
         onClick={() => void handleCopy()}
-        className="absolute top-7 right-0.5 rounded-full p-1 transition hover:bg-zinc-600"
+        className="absolute top-1 right-0.5 rounded-full p-1 transition hover:bg-zinc-200"
       >
         <Image
           src="/icons/clipboard.svg"
@@ -41,7 +51,6 @@ export default function Code({ snippet }: { snippet: Snippet }) {
           height={17}
         />
       </button>
-      <code>{code.trim()}</code>
-    </pre>
+    </div>
   )
 }

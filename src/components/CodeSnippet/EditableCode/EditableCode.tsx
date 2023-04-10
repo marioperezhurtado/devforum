@@ -1,12 +1,15 @@
-import { useEffect, useRef } from "react"
-import prism from "prismjs"
+import { useEffect } from "react"
 import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
+import prism from "prismjs"
 import { toast } from "react-hot-toast"
 
+import "prismjs/themes/prism-tomorrow.css"
+import "prismjs/components/prism-typescript"
+
+import Editor from "react-simple-code-editor"
 import Image from "next/image"
 
-export default function Code() {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+export default function EditableCode() {
   const { activeSnippet, updateSnippet } = useSnippetsStore()
 
   const code = activeSnippet.code
@@ -17,60 +20,34 @@ export default function Code() {
     toast.success("Copied to clipboard! 📋")
   }
 
-  const handleUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    updateSnippet({ ...activeSnippet, code: e.target.value })
+  const handleUpdate = (code: string) => {
+    updateSnippet({ ...activeSnippet, code })
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!textareaRef.current) return
-    // Get the current position of the cursor
-    const { selectionStart: start, selectionEnd: end } = textareaRef.current
+  const handleHighlight = (code: string) => {
+    const grammar = prism.languages[language.toLowerCase()]
+    if (!grammar) return code
 
-    if (e.key === "Tab") {
-      e.preventDefault()
-      const newText =
-        textareaRef.current.value.substring(0, start) +
-        "  " +
-        textareaRef.current.value.substring(end)
-      textareaRef.current.value = newText
-      textareaRef.current.setSelectionRange(start + 2, start + 2)
-    }
+    return prism.highlight(code, grammar, language.toLowerCase())
   }
 
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.value = code
-    }
-    prism.highlightAll()
-  }, [code])
-
-  useEffect(() => {
-    const importLanguage = async () => {
-      await import(`prismjs/components/prism-${language.toLowerCase()}`)
-      prism.highlightAll()
-    }
-    void importLanguage()
+    import(`prismjs/components/prism-${language.toLowerCase()}`)
   }, [language])
 
   return (
     <div className="relative">
-      <textarea
-        ref={textareaRef}
-        defaultValue={code}
-        onChange={handleUpdate}
-        onKeyDown={handleKeyDown}
-        className={`language-${language} absolute top-0 m-4 h-full w-full resize-none overflow-hidden !text-transparent caret-zinc-100
-        outline-none`}
+      <Editor
+        value={code}
+        onValueChange={(code) => handleUpdate(code)}
+        highlight={handleHighlight}
+        padding={10}
+        className="border bg-zinc-50"
       />
-      <pre
-        className={`language-${language} overflow-auto rounded-b-md !bg-zinc-700`}
-      >
-        <code>{code}</code>
-      </pre>
       <button
         type="button"
         onClick={() => void handleCopy()}
-        className="absolute top-1 right-0.5 rounded-full p-1 transition hover:bg-zinc-600"
+        className="absolute top-1 right-0.5 rounded-full p-1 transition hover:bg-zinc-200"
       >
         <Image
           src="/icons/clipboard.svg"
@@ -82,6 +59,3 @@ export default function Code() {
     </div>
   )
 }
-
-// a bit hacky for now ¯\_(ツ)_/¯
-// (hidden textarea placed on top of the code snippet that updates its content)

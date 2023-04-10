@@ -19,12 +19,11 @@ const dummySnippets: Snippet[] = [
   {
     id: "1",
     postId: "1",
-    filename: "index",
+    filename: "script",
     language: "TypeScript" as const,
     code: `// Paste your code here, or just type it in! 🚀
 console.log('Hello World!')
-// You can create more snippets in your favourite languages ツ
-`,
+// You can create more snippets in your favourite languages ツ`,
     createdAt: new Date(),
   },
 ]

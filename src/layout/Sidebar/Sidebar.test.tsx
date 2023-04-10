@@ -12,9 +12,15 @@ import { api } from "@/utils/api"
 vi.mock("@/utils/api", () => ({
   api: {
     community: {
-      getTrending: {
+      getTrendingPreview: {
         useQuery: vi.fn().mockReturnValue({
           data: [{ name: "Trending 1" }, { name: "Trending 2" }],
+          isLoading: false,
+        }),
+      },
+      getDiscoverPreview: {
+        useQuery: vi.fn().mockReturnValue({
+          data: [{ name: "Discover 1" }, { name: "Discover 2" }],
           isLoading: false,
         }),
       },
@@ -38,7 +44,7 @@ describe("Sidebar", () => {
   })
 
   const mockGetTrending = vi.spyOn(
-    api.community.getTrending,
+    api.community.getTrendingPreview,
     "useQuery"
   ) as Mock
   const mockGetAllByMember = vi.spyOn(
