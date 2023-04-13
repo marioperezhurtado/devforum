@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from "vitest"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 
 import AddComment from "./AddComent"
 import { withNextTRPC } from "@/test/withNextTRPC"
@@ -7,6 +7,8 @@ import mockUseSession from "@/test/mocks/mockUseSession"
 import mockNextRouter from "@/test/mocks/mockNextRouter"
 
 import { api } from "@/utils/api"
+import { useCommentStore } from "@/components/Comment/store"
+import { Comment } from "@/test/data/Comment"
 
 import type { Mock } from "vitest"
 
@@ -22,12 +24,6 @@ vi.mock("@/utils/api", () => ({
     },
     useContext: () => ({}),
   },
-}))
-
-vi.mock("@/pages/post/store", () => ({
-  useCommentStore: () => ({
-    replyTo: null,
-  }),
 }))
 
 describe("AddComment", () => {
@@ -63,21 +59,45 @@ describe("AddComment", () => {
     ).toBeTruthy()
   })
 
+  test("Shows message if comment is too short", async () => {
+    fireEvent.change(screen.getAllByRole("textbox")[0] as HTMLElement, {
+      target: { value: "Short" },
+    })
+    fireEvent.submit(screen.getAllByRole("form")[0] as HTMLElement)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Comment is too short. (At least 10 characters).")
+      ).toBeTruthy()
+    })
+  })
+
   test("Adds comment", () => {
-    fireEvent.change(screen.getAllByRole("textbox")[1] as HTMLElement, {
+    fireEvent.change(screen.getAllByRole("textbox")[0] as HTMLElement, {
       target: { value: "This is a test comment" },
     })
+    expect(screen.getByText("Add comment")).toBeTruthy()
     fireEvent.submit(screen.getByRole("form"))
 
     expect(mockedCreate).toHaveBeenCalled()
   })
 
   test("Adds reply", () => {
-    fireEvent.change(screen.getAllByRole("textbox")[1] as HTMLElement, {
-      target: { value: "This is a test comment" },
+    useCommentStore.setState({
+      replyTo: Comment,
     })
 
-    fireEvent.submit(screen.getByRole("form"))
+    render(<AddComment postId="1" onClose={onClose} />, {
+      wrapper: withNextTRPC,
+    })
+
+    expect(screen.getAllByText("John Doe")).toBeTruthy()
+    expect(screen.getAllByText("Add reply")).toBeTruthy()
+
+    fireEvent.change(screen.getAllByRole("textbox")[0] as HTMLElement, {
+      target: { value: "This is a test reply" },
+    })
+    fireEvent.submit(screen.getAllByRole("form")[0] as HTMLElement)
 
     expect(mockedReply).toHaveBeenCalled()
   })

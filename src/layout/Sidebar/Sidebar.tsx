@@ -41,8 +41,8 @@ export default function Sidebar() {
   return (
     <aside
       ref={ref}
-      className={`z-10 w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 lg:flex ${
-        isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden"
+      className={`z-10 w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 ${
+        isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden lg:flex"
       }`}
     >
       <section className="flex flex-col-reverse gap-10 lg:flex-col">

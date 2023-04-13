@@ -6,6 +6,16 @@ import Header from "./Header"
 import mockUseSession from "@/test/mocks/mockUseSession"
 import mockNextRouter from "@/test/mocks/mockNextRouter"
 
+vi.mock("@/utils/api", () => ({
+  api: {
+    post: {
+      searchByTitlePreview: {
+        useQuery: () => [],
+      },
+    },
+  },
+}))
+
 describe("Header", () => {
   const mockedUseSession = mockUseSession()
   mockedUseSession.mockReturnValue({ data: false })

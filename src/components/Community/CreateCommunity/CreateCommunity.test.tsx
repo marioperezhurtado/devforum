@@ -73,5 +73,7 @@ describe("CreateCommunity", () => {
     await waitFor(() => {
       expect(mockedCreate).toHaveBeenCalled()
     })
+
+    expect(mockedNextRouter).toHaveBeenCalled()
   })
 })

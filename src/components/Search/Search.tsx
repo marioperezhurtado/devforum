@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import useDebounce from "@/hooks/useDebounce"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
@@ -8,7 +8,6 @@ import LoadSpinner from "@/ui/LoadSpinner"
 
 export default function Search() {
   const router = useRouter()
-  const ref = useRef<HTMLFormElement>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState("")
   const debouncedSearch = useDebounce(search, 500)
@@ -22,27 +21,30 @@ export default function Search() {
   )
 
   const goToResult = (id: string) => {
-    ref.current?.reset()
+    setSearch("")
     setIsOpen(false)
     void router.push(`/post/${id}`)
   }
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSearch("")
+    setIsOpen(false)
     void router.push(`/search?query=${search}`)
   }
 
   return (
     <form
-      ref={ref}
       onSubmit={handleSearch}
       name="searchForm"
+      role="searchbox"
       className="relative hidden md:block md:w-80 lg:max-w-screen-xs lg:flex-grow"
     >
       <label htmlFor="search" className="sr-only">
         Search topics, posts, users and more
       </label>
       <input
+        value={search}
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setIsOpen(true)}
         name="search"

@@ -47,6 +47,10 @@ describe("Sidebar", () => {
     api.community.getTrendingPreview,
     "useQuery"
   ) as Mock
+  const mockGetDiscover = vi.spyOn(
+    api.community.getDiscoverPreview,
+    "useQuery"
+  ) as Mock
   const mockGetAllByMember = vi.spyOn(
     api.community.getAllByMember,
     "useQuery"
@@ -96,6 +100,10 @@ describe("Sidebar", () => {
       data: [{ name: "Trending 1" }, { name: "Trending 2" }],
       isLoading: true,
     })
+    mockGetDiscover.mockReturnValue({
+      data: [{ name: "Discover 1" }, { name: "Discover 2" }],
+      isLoading: true,
+    })
     mockGetAllByMember.mockReturnValue({
       data: [{ name: "My 1" }, { name: "My 2" }],
       isLoading: true,
@@ -110,6 +118,10 @@ describe("Sidebar", () => {
 
   test("Renders message if no communities are found", async () => {
     mockGetTrending.mockReturnValue({
+      data: [],
+      isLoading: false,
+    })
+    mockGetDiscover.mockReturnValue({
       data: [],
       isLoading: false,
     })

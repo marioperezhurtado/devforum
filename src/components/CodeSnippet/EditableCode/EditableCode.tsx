@@ -47,7 +47,7 @@ export default function EditableCode() {
       >
         <Image
           src="/icons/clipboard.svg"
-          alt="Code snippet background"
+          alt="Copy to clipboard"
           width={17}
           height={17}
         />

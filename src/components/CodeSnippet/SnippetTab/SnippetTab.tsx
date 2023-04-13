@@ -24,7 +24,7 @@ export default function SnippetTab({ snippet }: { snippet: Snippet }) {
     <div
       key={snippet.id}
       className={`flex items-center border-r border-zinc-500 ${
-        snippet.id !== activeSnippet?.id ? "bg-zinc-600" : "bg-zinc-700"
+        snippet.id === activeSnippet?.id ? "bg-zinc-700" : "bg-zinc-600"
       }`}
     >
       <button
