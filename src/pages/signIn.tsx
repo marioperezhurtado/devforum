@@ -26,7 +26,7 @@ export default function SignIn() {
           <h1 className="mb-5 text-3xl font-semibold">Sign In</h1>
           <button
             onClick={() => void router.push(redirectTo || "/")}
-            className="absolute top-4 left-4 rounded-md border transition"
+            className="absolute top-4 left-4 rounded-md border border-white transition hover:border-zinc-200 hover:bg-zinc-50"
           >
             <Image
               src="/icons/back.svg"
