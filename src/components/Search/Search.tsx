@@ -12,13 +12,14 @@ export default function Search() {
   const [search, setSearch] = useState("")
   const debouncedSearch = useDebounce(search, 500)
 
-  const { data: results, isFetching } = api.post.searchByTitlePreview.useQuery(
-    debouncedSearch,
-    {
-      refetchOnWindowFocus: false,
-      enabled: search.length > 3,
-    }
-  )
+  const {
+    data: results,
+    isFetching,
+    isLoading,
+  } = api.post.searchByTitlePreview.useQuery(debouncedSearch, {
+    refetchOnWindowFocus: false,
+    enabled: search.length > 3,
+  })
 
   const goToResult = (id: string) => {
     setSearch("")
@@ -61,7 +62,7 @@ export default function Search() {
       >
         <Image src="/icons/search.svg" alt="Search" width={18} height={18} />
       </button>
-      {search.length > 3 && isOpen && (
+      {search.length > 3 && isOpen && !!results?.length && (
         <div className="absolute top-11 z-10 w-full max-w-md rounded-md border bg-white p-4 pb-2 text-sm shadow-md">
           {!!results?.length && (
             <ul className="mb-2 flex flex-col gap-2 font-bold">

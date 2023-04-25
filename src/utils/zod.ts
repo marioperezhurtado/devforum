@@ -20,16 +20,21 @@ export const postSchema = z.object({
   community: z.string().min(1, {
     message: "Please select a community.",
   }),
-  category: z.enum([
-    "Discussions",
-    "News",
-    "Tutorials",
-    "HelpNeeded",
-    "Jobs",
-    "Showcase",
-    "Tutorials",
-    "Resources",
-  ]),
+  category: z.enum(
+    [
+      "Discussions",
+      "News",
+      "Tutorials",
+      "HelpNeeded",
+      "Jobs",
+      "Showcase",
+      "Tutorials",
+      "Resources",
+    ],
+    {
+      errorMap: () => ({ message: "Please select a category" }),
+    }
+  ),
   topics: z
     .array(z.string())
     .max(12, {
