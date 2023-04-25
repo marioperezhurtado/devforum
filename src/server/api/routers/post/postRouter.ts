@@ -47,6 +47,32 @@ export const postRouter = createTRPCRouter({
         take: 5,
       })
     }),
+  searchByTitle: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.post.findMany({
+      where: {
+        title: {
+          contains: input,
+        },
+      },
+      orderBy: {
+        reactions: {
+          _count: "desc",
+        },
+      },
+      include: {
+        creator: true,
+        community: true,
+        topics: true,
+        reactions: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
+      take: 50,
+    })
+  }),
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.post.findMany({
       include: {

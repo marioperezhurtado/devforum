@@ -12,14 +12,13 @@ export default function Search() {
   const [search, setSearch] = useState("")
   const debouncedSearch = useDebounce(search, 500)
 
-  const {
-    data: results,
-    isFetching,
-    isLoading,
-  } = api.post.searchByTitlePreview.useQuery(debouncedSearch, {
-    refetchOnWindowFocus: false,
-    enabled: search.length > 3,
-  })
+  const { data: results, isFetching } = api.post.searchByTitlePreview.useQuery(
+    debouncedSearch,
+    {
+      refetchOnWindowFocus: false,
+      enabled: search.length > 3,
+    }
+  )
 
   const goToResult = (id: string) => {
     setSearch("")
@@ -31,7 +30,7 @@ export default function Search() {
     e.preventDefault()
     setSearch("")
     setIsOpen(false)
-    void router.push(`/search?query=${search}`)
+    void router.push(`/search?search=${search}`)
   }
 
   return (
@@ -39,7 +38,7 @@ export default function Search() {
       onSubmit={handleSearch}
       name="searchForm"
       role="searchbox"
-      className="relative hidden md:block md:w-80 lg:max-w-screen-xs lg:flex-grow"
+      className="relative hidden md:block md:w-80 lg:w-96"
     >
       <label htmlFor="search" className="sr-only">
         Search topics, posts, users and more
