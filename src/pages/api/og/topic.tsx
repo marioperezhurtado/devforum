@@ -29,7 +29,7 @@ export default async function TopicOGImage(req: NextRequest) {
         }}
       >
         <span tw="font-bold text-2xl mb-10 ml-2">Topic</span>
-        <h1 tw="text-sky-600 text-5xl">#{topic}</h1>
+        <h1 tw="text-sky-600 text-7xl">#{topic}</h1>
         <span tw="ml-auto mt-auto font-bold text-4xl">
           <span tw="text-sky-600">Dev</span>Forum
         </span>
