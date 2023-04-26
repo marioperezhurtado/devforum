@@ -2,6 +2,7 @@ import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 
+import Head from "next/head"
 import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
@@ -99,6 +100,14 @@ export default function CommunityPage() {
       title={`${name} Community - DevForum.dev`}
       description={community?.description ?? ""}
     >
+      <Head>
+        <meta
+          property="og:image"
+          content={`http://localhost:3000/api/og/community?name=${name}&description=${
+            community?.description ?? ""
+          }`}
+        />
+      </Head>
       {community && <CommunityInfo community={community} />}
       <Filter
         baseLink={`/community/${name}`}
