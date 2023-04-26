@@ -2,6 +2,7 @@ import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 
+import Head from "next/head"
 import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
@@ -100,6 +101,14 @@ export default function TopicPage() {
       description={`#${topic?.name ?? ""} 
       Topic at DevForum.dev, the place for all programmers to learn, share, and connect with your community.  `}
     >
+      <Head>
+        <meta
+          property="og:image"
+          content={`https://devforum.dev/api/og/topic?topic=${
+            topic?.name ?? ""
+          }`}
+        />
+      </Head>
       <div className="rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
         <p className="mb-2 text-sm">Topic</p>
         <div className="mb-3 flex flex-wrap items-center gap-6">

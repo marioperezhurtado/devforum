@@ -9,11 +9,10 @@ const font = fetch(
   new URL("@/assets/work-sans-medium.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer())
 
-export default async function PostOGImage(req: NextRequest) {
+export default async function TopicOGImage(req: NextRequest) {
   const { searchParams } = req.nextUrl
 
-  const name = searchParams.get("name")
-  const title = searchParams.get("title")
+  const topic = searchParams.get("topic")
 
   const fontData = await font
 
@@ -29,8 +28,8 @@ export default async function PostOGImage(req: NextRequest) {
           backgroundSize: "100px 100px",
         }}
       >
-        <span tw="font-bold text-2xl mb-10 ml-2">{name}</span>
-        <h1 tw="text-sky-600 text-5xl">{title}</h1>
+        <span tw="font-bold text-2xl mb-10 ml-2">Topic</span>
+        <h1 tw="text-sky-600 text-5xl">#{topic}</h1>
         <span tw="ml-auto mt-auto font-bold text-4xl">
           <span tw="text-sky-600">Dev</span>Forum
         </span>

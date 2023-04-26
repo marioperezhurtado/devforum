@@ -64,7 +64,7 @@ export default function PostPage() {
       <Head>
         <meta
           property="og:image"
-          content={`http://devforum.dev/api/og/post?name=${
+          content={`https://devforum.dev/api/og/post?name=${
             post?.creator.name ?? ""
           }&title=${post?.title ?? ""}`}
         />

@@ -103,7 +103,7 @@ export default function CommunityPage() {
       <Head>
         <meta
           property="og:image"
-          content={`http://devforum.dev/api/og/community?name=${name}&description=${
+          content={`https://devforum.dev/api/og/community?name=${name}&description=${
             community?.description ?? ""
           }`}
         />
