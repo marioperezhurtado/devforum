@@ -4,9 +4,9 @@ import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
-import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
+import CommunityButton from "@/ui/CommunityButton"
 import Vote from "@/ui/Vote"
 import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import CodeSnippets from "@/components/CodeSnippet/CodeSnippets/CodeSnippets"
@@ -51,12 +51,7 @@ export default function PostItem({ post }: { post: Post }) {
           />
         </div>
       </div>
-      <Link
-        href={`/community/${post.community.name}`}
-        className="mt-0.5 min-w-fit rounded-full bg-green-500 px-2 py-0.5 text-sm font-bold text-green-50"
-      >
-        {post.community.name}
-      </Link>
+      <CommunityButton community={post.community} />
       <p className="mt-5 whitespace-pre-line break-words">{post.content}</p>
       <div className="mt-5">
         {post.topics.length > 0 && (

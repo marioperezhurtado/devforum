@@ -87,4 +87,10 @@ export const communitySchema = z.object({
     .max(120, {
       message: "Description is too long. Please keep it under 120 characters.",
     }),
+  color: z
+    .string()
+    .length(7)
+    .regex(/^#[0-9A-Fa-f]{6}$/, {
+      message: "Select a valid hexadecimal color.",
+    }), // #000000 - #ffffff
 })

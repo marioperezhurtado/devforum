@@ -80,6 +80,7 @@ export const communityRouter = createTRPCRouter({
         data: {
           name,
           description: input.description,
+          color: input.color.slice(1),
           creator: {
             connect: {
               id: ctx.session.user.id,

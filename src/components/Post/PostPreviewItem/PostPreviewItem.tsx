@@ -7,6 +7,7 @@ import usePrefetch from "@/hooks/usePrefetch"
 import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
+import CommunityButton from "@/ui/CommunityButton"
 import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import Vote from "@/ui/Vote"
 
@@ -51,12 +52,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
               {post.title}
             </Link>
           </h2>
-          <Link
-            href={`/community/${post.community.name}`}
-            className="mt-0.5 min-w-fit rounded-full bg-green-500 px-2 py-0.5 text-sm font-bold text-green-50"
-          >
-            {post.community.name}
-          </Link>
+          <CommunityButton community={post.community} />
         </div>
         <div className="flex items-center gap-2 text-sm">
           <span className="font-semibold">{post.creator.name}</span>

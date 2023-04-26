@@ -14,6 +14,7 @@ datasource db {
 model Community {
     name        String   @id
     description String   @db.VarChar(120)
+    color       String   @db.VarChar(6)
     createdAt   DateTime @default(now())
     creatorId   String
     creator     User     @relation(fields: [creatorId], references: [id])

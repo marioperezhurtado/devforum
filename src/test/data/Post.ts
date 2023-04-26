@@ -23,6 +23,7 @@ export const Post: PostType = {
   community: {
     name: "Test Community",
     description: "Test Description",
+    color: "#000000",
     createdAt: new Date(),
     creatorId: "1",
   },

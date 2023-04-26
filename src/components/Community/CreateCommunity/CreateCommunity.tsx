@@ -28,17 +28,11 @@ export default function CreateCommunity() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const createdCommunity = await toast.promise(
-        createPost({
-          name: data.name,
-          description: data.description,
-        }),
-        {
-          loading: "Creating community...",
-          success: "Community created! 🚀",
-          error: "Failed to create community",
-        }
-      )
+      const createdCommunity = await toast.promise(createPost(data), {
+        loading: "Creating community...",
+        success: "Community created! 🚀",
+        error: "Failed to create community",
+      })
       await router.push(`/community/${createdCommunity.name}`)
     } catch (e) {}
   })
@@ -74,6 +68,19 @@ export default function CreateCommunity() {
         {errors.description?.message && (
           <FormError message={errors.description.message} />
         )}
+      </div>
+      <div className="mb-2">
+        <label htmlFor="color" className="sr-only">
+          Color
+        </label>
+        <input
+          type="color"
+          id="color"
+          {...register("color")}
+          defaultValue="#0284c7"
+          className="h-8 w-16 rounded-md border px-1 py-0.5"
+        />
+        {errors.color?.message && <FormError message={errors.color.message} />}
       </div>
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={() => void reset()} type="button" intent="secondary">
