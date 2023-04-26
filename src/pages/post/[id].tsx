@@ -3,6 +3,7 @@ import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 import { useCommentStore } from "@/components/Comment/store"
 
+import Head from "next/head"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/Post/PostItem/PostItem"
 import Button from "@/ui/Button"
@@ -60,6 +61,14 @@ export default function PostPage() {
       description={`${post?.title ?? ""} - by ${post?.creator.name ?? ""}
        at DevForum.dev - ${topics ? `#${topics}` : ""}`}
     >
+      <Head>
+        <meta
+          property="og:image"
+          content={`http://devforum.dev/api/og/post?name=${
+            post?.creator.name ?? ""
+          }&title=${post?.title ?? ""}`}
+        />
+      </Head>
       {post && <PostItem post={post} />}
       {isOpen && post && <AddComment postId={id} onClose={() => close()} />}
       {commentsLoading && <CommentsSkeleton />}

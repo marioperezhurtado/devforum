@@ -13,7 +13,7 @@ export default async function CommunityOGImage(req: NextRequest) {
   const { searchParams } = req.nextUrl
 
   const name = searchParams.get("name")
-  const description = searchParams.get("description")
+  const title = searchParams.get("title")
 
   const fontData = await font
 
@@ -29,9 +29,8 @@ export default async function CommunityOGImage(req: NextRequest) {
           backgroundSize: "100px 100px",
         }}
       >
-        <span tw="font-bold text-2xl mb-10 ml-2">Community</span>
-        <h1 tw="text-sky-600 text-7xl">{name}</h1>
-        <h2 tw="text-zinc-400 text-4xl ml-2">{description}</h2>
+        <span tw="font-bold text-2xl mb-10 ml-2">{name}</span>
+        <h1 tw="text-sky-600 text-5xl">{title}</h1>
         <span tw="ml-auto mt-auto font-bold text-4xl">
           <span tw="text-sky-600">Dev</span>Forum
         </span>
