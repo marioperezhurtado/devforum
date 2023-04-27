@@ -1,27 +1,54 @@
-import Layout from "@/layout/Layout/Layout"
+import { Work_Sans } from "next/font/google"
+
+import Head from "next/head"
 import Header from "@/layout/Header/Header"
 import Sidebar from "@/layout/Sidebar/Sidebar"
+
+const fontBody = Work_Sans({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+})
 
 type Props = {
   title: string
   description: string
+  ogImage?: string
   children: React.ReactNode
 }
 
-export default function ForumLayout({ title, description, children }: Props) {
+export default function ForumLayout({
+  title,
+  description,
+  ogImage,
+  children,
+}: Props) {
   return (
-    <Layout title={title} description={description}>
-      <div className="flex h-screen flex-col">
-        <Header />
-        <div className="relative flex flex-grow overflow-hidden">
-          <Sidebar />
-          <div className="w-full overflow-x-hidden overflow-y-scroll">
-            <div className="mx-auto min-h-screen max-w-screen-md p-3 xs:p-5 sm:p-10">
-              {children}
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:image"
+          content={ogImage ?? "https://devforum.dev/api/og/default"}
+        />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+      </Head>
+      <main className={`${fontBody.className} min-h-screen text-zinc-700`}>
+        <div className="flex h-screen flex-col">
+          <Header />
+          <div className="relative flex flex-grow overflow-hidden">
+            <Sidebar />
+            <div className="w-full overflow-x-hidden overflow-y-scroll">
+              <div className="mx-auto min-h-screen max-w-screen-md p-3 xs:p-5 sm:p-10">
+                {children}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </main>
+    </>
   )
 }

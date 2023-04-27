@@ -3,7 +3,6 @@ import { api } from "@/utils/api"
 import { useRouter } from "next/router"
 import { useCommentStore } from "@/components/Comment/store"
 
-import Head from "next/head"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import PostItem from "@/components/Post/PostItem/PostItem"
 import Button from "@/ui/Button"
@@ -58,17 +57,13 @@ export default function PostPage() {
     <ForumLayout
       title={`${post?.title ?? ""} - by ${post?.creator.name ?? ""}
        at DevForum.dev`}
-      description={`${post?.title ?? ""} - by ${post?.creator.name ?? ""}
-       at DevForum.dev - ${topics ? `#${topics}` : ""}`}
+      description={`${post?.title ?? ""} - by ${
+        post?.creator.name ?? ""
+      } at DevForum.dev - ${topics ? `#${topics}` : ""}`}
+      ogImage={`https://devforum.dev/api/og/post?name=${
+        post?.creator.name ?? ""
+      }&title=${post?.title ?? ""}`}
     >
-      <Head>
-        <meta
-          property="og:image"
-          content={`https://devforum.dev/api/og/post?name=${
-            post?.creator.name ?? ""
-          }&title=${post?.title ?? ""}`}
-        />
-      </Head>
       {post && <PostItem post={post} />}
       {isOpen && post && <AddComment postId={id} onClose={() => close()} />}
       {commentsLoading && <CommentsSkeleton />}

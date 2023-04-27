@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 
-import Layout from "@/layout/Layout/Layout"
+import ForumLayout from "@/layout/ForumLayout/ForumLayout"
+import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -17,10 +18,16 @@ export default function SignIn() {
   }, [session, redirectTo, router])
 
   return (
-    <Layout
+    <ForumLayout
       title="Sign In - DevForum.dev"
       description="Sign in to your DevForum.dev account and connect with other developers"
     >
+      <Head>
+        <meta
+          property="og:image"
+          content="https://devforum.dev/api/og/default"
+        />
+      </Head>
       <section className="mx-auto mt-5 mb-10 w-fit p-2 sm:mt-10 md:mt-20">
         <div className="relative max-w-sm rounded-xl border bg-white py-5 px-6 text-center shadow-md md:py-10">
           <h1 className="mb-5 text-3xl font-semibold">Sign In</h1>
@@ -79,6 +86,6 @@ export default function SignIn() {
           Create account
         </Link>
       </p>
-    </Layout>
+    </ForumLayout>
   )
 }
