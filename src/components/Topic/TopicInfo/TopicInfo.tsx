@@ -64,7 +64,7 @@ export default function TopicInfo({ topic }: { topic: Topic }) {
           !followingTopicsLoading &&
           !isFollowing && (
             <Button authRequired onClick={() => void handleFollow()}>
-              Join
+              Follow
             </Button>
           )}
         {isFollowing && (
@@ -73,7 +73,7 @@ export default function TopicInfo({ topic }: { topic: Topic }) {
             onClick={() => void handleUnfollow()}
             intent="secondary"
           >
-            Leave
+            Unfollow
           </Button>
         )}
       </div>

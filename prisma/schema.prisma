@@ -177,6 +177,8 @@ model User {
     postReactions      PostReaction[]
     commentReactions   CommentReaction[]
     followingTopics    Topic[]           @relation("UserFollowingTopics")
+    following          User[]            @relation("Following")
+    followers          User[]            @relation("Following")
 }
 
 model VerificationToken {
