@@ -44,6 +44,7 @@ const community = {
   description: "Test description",
   createdAt: new Date("2077-01-02"),
   creatorId: "1",
+  color: "#000000",
 }
 
 describe("CommunityInfo", () => {

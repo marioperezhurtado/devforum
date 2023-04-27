@@ -1,5 +1,9 @@
 import { z } from "zod"
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc"
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc"
 
 import type { PrismaClient } from "@prisma/client"
 
@@ -29,6 +33,45 @@ export const topicRouter = createTRPCRouter({
       orderBy: {
         posts: {
           _count: "desc",
+        },
+      },
+    })
+  }),
+  getAllByUser: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.topic.findMany({
+      where: {
+        followers: {
+          some: {
+            id: input,
+          },
+        },
+      },
+    })
+  }),
+  follow: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.topic.update({
+      where: {
+        name: input,
+      },
+      data: {
+        followers: {
+          connect: {
+            id: ctx.session.user.id,
+          },
+        },
+      },
+    })
+  }),
+  unfollow: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.topic.update({
+      where: {
+        name: input,
+      },
+      data: {
+        followers: {
+          disconnect: {
+            id: ctx.session.user.id,
+          },
         },
       },
     })

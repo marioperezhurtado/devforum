@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
+import { useSession } from "next-auth/react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import { useSession } from "next-auth/react"
 import { toast } from "react-hot-toast"
 
 import Button from "@/ui/Button"
@@ -12,7 +12,7 @@ type Community = RouterOutputs["community"]["getByName"]
 dayjs.extend(relativeTime)
 
 export default function CommunityInfo({ community }: { community: Community }) {
-  const { data: session } = useSession()
+  const { data: session, status: sessionStatus } = useSession()
   const utils = api.useContext()
 
   const { data: myCommunities, isFetching: communitiesLoading } =
@@ -34,19 +34,23 @@ export default function CommunityInfo({ community }: { community: Community }) {
   })
 
   const handleJoin = async () => {
-    await toast.promise(joinCommunity(community?.name ?? ""), {
-      loading: "Joining community...",
-      success: `Welcome to ${community?.name ?? ""}! 🎉`,
-      error: "Failed to join community",
-    })
+    try {
+      await toast.promise(joinCommunity(community?.name ?? ""), {
+        loading: "Joining community...",
+        success: `Welcome to ${community?.name ?? ""}! 🎉`,
+        error: "Failed to join community",
+      })
+    } catch (e) {}
   }
 
   const handleLeave = async () => {
-    await toast.promise(leaveCommunity(community?.name ?? ""), {
-      loading: "Leaving community...",
-      success: "See you anytime! 👋",
-      error: "Failed to leave community",
-    })
+    try {
+      await toast.promise(leaveCommunity(community?.name ?? ""), {
+        loading: "Leaving community...",
+        success: "See you anytime! 👋",
+        error: "Failed to leave community",
+      })
+    } catch (e) {}
   }
 
   const isMember = myCommunities?.some((c) => c.name === community?.name)
@@ -58,13 +62,17 @@ export default function CommunityInfo({ community }: { community: Community }) {
         <h1 className="break-words text-xl font-semibold md:text-2xl">
           {community?.name}
         </h1>
-        {session && !communitiesLoading && !isMember && (
+        {sessionStatus !== "loading" && !communitiesLoading && !isMember && (
           <Button authRequired onClick={() => void handleJoin()}>
             Join
           </Button>
         )}
         {isMember && (
-          <Button onClick={() => void handleLeave()} intent="secondary">
+          <Button
+            authRequired
+            onClick={() => void handleLeave()}
+            intent="secondary"
+          >
             Leave
           </Button>
         )}

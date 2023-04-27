@@ -28,6 +28,9 @@ model Topic {
     name      String   @id
     createdAt DateTime @default(now())
     posts     Post[]   @relation("PostTopics")
+    followers User[]   @relation("UserFollowingTopics")
+
+    @@index([name])
 }
 
 enum PostCategory {
@@ -173,6 +176,7 @@ model User {
     comments           Comment[]
     postReactions      PostReaction[]
     commentReactions   CommentReaction[]
+    followingTopics    Topic[]           @relation("UserFollowingTopics")
 }
 
 model VerificationToken {

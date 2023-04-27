@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
+import TopicInfo from "@/components/Topic/TopicInfo/TopicInfo"
 import Filter from "@/components/Filter/Filter"
 import PostPreviews, {
   PostPreviewsSkeleton,
@@ -101,16 +102,7 @@ export default function TopicPage() {
       Topic at DevForum.dev, the place for all programmers to learn, share, and connect with your community.  `}
       ogImage={`https://devforum.dev/api/og/topic?topic=${topic?.name ?? ""}`}
     >
-      <div className="rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
-        <p className="mb-2 text-sm">Topic</p>
-        <div className="mb-3 flex flex-wrap items-center gap-6">
-          <h1 className="text-xl font-semibold md:text-2xl">#{topic?.name}</h1>
-          <Button>Follow</Button>
-        </div>
-        <p className="text-right text-sm">
-          Created on {topic?.createdAt.toLocaleDateString()}
-        </p>
-      </div>
+      {topic && <TopicInfo topic={topic} />}
       <Filter
         baseLink={`/topic/${name}`}
         filter={filter}
