@@ -2,6 +2,7 @@ import { useState } from "react"
 import { signOut, useSession } from "next-auth/react"
 
 import Image from "next/image"
+import Link from "next/link"
 
 export default function AccountDropdown() {
   const [isOpen, setIsOpen] = useState(false)
@@ -53,12 +54,25 @@ export default function AccountDropdown() {
             </div>
 
             <div role="none">
+              <Link
+                href={`/profile/${session?.user.email ?? ""}`}
+                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
+                role="menuitem"
+                id="menu-item-1"
+              >
+                <Image
+                  src="/icons/profile.svg"
+                  alt="Your profile"
+                  width={16}
+                  height={16}
+                />
+                Your profile
+              </Link>
               <a
                 href="#"
                 className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
                 role="menuitem"
-                tabIndex={-1}
-                id="menu-item-1"
+                id="menu-item-2"
               >
                 <Image
                   src="/icons/settings.svg"
@@ -68,12 +82,13 @@ export default function AccountDropdown() {
                 />
                 Account settings
               </a>
+            </div>
+            <div role="none">
               <a
                 href="#"
                 className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
                 role="menuitem"
-                tabIndex={-1}
-                id="menu-item-2"
+                id="menu-item-3"
               >
                 <Image
                   src="/icons/support.svg"
@@ -87,8 +102,7 @@ export default function AccountDropdown() {
                 href="#"
                 className="transiton flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-zinc-50"
                 role="menuitem"
-                tabIndex={-1}
-                id="menu-item-3"
+                id="menu-item-4"
               >
                 <Image
                   src="/icons/terms-conditions.svg"
@@ -105,8 +119,7 @@ export default function AccountDropdown() {
                 onClick={() => void signOut()}
                 className="flex w-full items-center gap-2 px-4 py-3 text-left font-bold text-gray-700 transition hover:bg-zinc-50"
                 role="menuitem"
-                tabIndex={-1}
-                id="menu-item-4"
+                id="menu-item-5"
               >
                 <Image
                   src="/icons/signout.svg"

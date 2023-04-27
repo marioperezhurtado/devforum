@@ -2,16 +2,20 @@ import Image from "next/image"
 
 const SIZES = {
   small: {
-    width: 24,
-    className: "h-6 w-6",
-  },
-  medium: {
     width: 28,
     className: "h-7 w-7",
   },
+  medium: {
+    width: 40,
+    className: "h-10 w-10",
+  },
   large: {
-    width: 48,
-    className: "h-12 w-12",
+    width: 64,
+    className: "h-16 w-16",
+  },
+  xlarge: {
+    width: 96,
+    className: "h-24 w-24",
   },
 }
 

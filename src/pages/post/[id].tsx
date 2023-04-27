@@ -22,6 +22,10 @@ export const getStaticPaths: GetStaticPaths = () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const id = ctx.params?.id
+  if (!id)
+    return {
+      notFound: true,
+    }
   const post = await ssg.post.getById.fetch(id as string)
 
   if (!post)
