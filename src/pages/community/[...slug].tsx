@@ -6,7 +6,7 @@ import Link from "next/link"
 import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
 import CommunityInfo from "@/components/Community/CommunityInfo/CommunityInfo"
-import Filter from "@/components/Filter/Filter"
+import Filter from "@/components/Post/Filter/Filter"
 import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
@@ -49,7 +49,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 export default function CommunityPage() {
   const router = useRouter()
-  const utils = api.useContext()
   const { slug } = router.query
   const name = slug?.[0] as string
   const filter = slug?.[1] ?? "trending"
@@ -103,22 +102,7 @@ export default function CommunityPage() {
       }`}
     >
       {community && <CommunityInfo community={community} />}
-      <Filter
-        baseLink={`/community/${name}`}
-        filter={filter}
-        prefetchTrending={() =>
-          void utils.post.community.getTrending.prefetch(name)
-        }
-        prefetchLatest={() =>
-          void utils.post.community.getLatest.prefetch(name)
-        }
-        prefetchUpvoted={() =>
-          void utils.post.community.getMostUpvoted.prefetch(name)
-        }
-        prefetchControversial={() =>
-          void utils.post.community.getControversial.prefetch(name)
-        }
-      />
+      <Filter baseLink={`/community/${name}`} filter={filter} />
       {isLoading && <PostPreviewsSkeleton />}
       {posts && posts.length > 0 && !isLoading && (
         <PostPreviews posts={posts} />

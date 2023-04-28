@@ -1,6 +1,3 @@
-import { api } from "@/utils/api"
-import usePrefetch from "@/hooks/usePrefetch"
-
 import Link from "next/link"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -35,18 +32,8 @@ export function CommunitiesSkeleton() {
 }
 
 function Community({ community }: { community: Communities[0] }) {
-  const utils = api.useContext()
-
-  const prefetchComunities = usePrefetch(
-    () => void utils.post.community.getTrending.prefetch(community.name)
-  )
-
   return (
-    <Link
-      href={`/community/${community.name}`}
-      onMouseEnter={prefetchComunities}
-      className="py-1.5"
-    >
+    <Link href={`/community/${community.name}`} className="py-1.5">
       {community.name}
     </Link>
   )

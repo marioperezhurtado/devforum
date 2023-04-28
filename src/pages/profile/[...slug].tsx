@@ -1,15 +1,16 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
-import Link from "next/link"
-import Button from "@/ui/Button"
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
-import TopicInfo from "@/components/Topic/TopicInfo/TopicInfo"
+import ProfileInfo from "@/components/Profile/ProfileInfo/ProfileInfo"
 import Filter from "@/components/Post/Filter/Filter"
 import PostPreviews, {
   PostPreviewsSkeleton,
 } from "@/components/Post/PostPreviews/PostPreviews"
+import Link from "next/link"
+import Button from "@/ui/Button"
 
 import type { GetStaticPaths, GetStaticProps } from "next"
 
@@ -23,7 +24,7 @@ export const getStaticPaths: GetStaticPaths = () => {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const name = ctx.params?.slug?.[0]
+  const email = ctx.params?.slug?.[0]
   const filter = ctx.params?.slug?.[1] as string
 
   if (filter && !filters.includes(filter)) {
@@ -32,13 +33,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     }
   }
 
-  const topic = await ssg.topic.getByName.fetch(name as string)
-
-  if (!topic) {
+  const profile = await ssg.user.getByEmail.fetch(email as string)
+  if (!profile)
     return {
       notFound: true,
     }
-  }
 
   return {
     props: {
@@ -48,36 +47,36 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
 }
 
-export default function TopicPage() {
+export default function Profile() {
   const router = useRouter()
   const { slug } = router.query
-  const name = slug?.[0] as string
+  const email = slug?.[0] as string
   const filter = slug?.[1] ?? "trending"
 
-  const { data: topic } = api.topic.getByName.useQuery(name, {
+  const { data: profile } = api.user.getByEmail.useQuery(email, {
     refetchOnWindowFocus: false,
   })
 
   const { data: trendingPosts, isLoading: trendingLoading } =
-    api.post.topic.getTrending.useQuery(name, {
+    api.post.user.getTrending.useQuery(email, {
       enabled: filter === "trending",
       refetchOnWindowFocus: false,
     })
 
   const { data: latestPosts, isLoading: latestLoading } =
-    api.post.topic.getLatest.useQuery(name, {
+    api.post.user.getLatest.useQuery(email, {
       enabled: filter === "latest",
       refetchOnWindowFocus: false,
     })
 
   const { data: mostUpvotedPosts, isLoading: mostUpvotedLoading } =
-    api.post.topic.getMostUpvoted.useQuery(name, {
+    api.post.user.getMostUpvoted.useQuery(email, {
       enabled: filter === "most-upvoted",
       refetchOnWindowFocus: false,
     })
 
   const { data: controversialPosts, isLoading: controversialLoading } =
-    api.post.topic.getControversial.useQuery(name, {
+    api.post.user.getControversial.useQuery(email, {
       enabled: filter === "controversial",
       refetchOnWindowFocus: false,
     })
@@ -96,36 +95,56 @@ export default function TopicPage() {
 
   return (
     <ForumLayout
-      title={`#${topic?.name ?? ""} - DevForum.dev`}
-      description={`#${topic?.name ?? ""} 
-      Topic at DevForum.dev, the place for all programmers to learn, share, and connect with your community.  `}
-      ogImage={`https://devforum.dev/api/og/topic?topic=${topic?.name ?? ""}`}
+      title={`${profile?.name ?? ""} - DevForum`}
+      description={`${profile?.name ?? ""}'s profile on DevForum. Follow ${
+        profile?.name ?? ""
+      }, or find out about his latest posts and comments.`}
     >
-      {topic && <TopicInfo topic={topic} />}
-      <Filter baseLink={`/topic/${name}`} filter={filter} />
+      {profile && <ProfileInfo profile={profile} />}
+      <Filter filter={filter} baseLink={`/profile/${email}`} />
       {isLoading && <PostPreviewsSkeleton />}
       {posts && posts.length > 0 && !isLoading && (
         <PostPreviews posts={posts} />
       )}
       {!posts?.length && !isLoading && (
-        <NoPostsFound name={topic?.name ?? ""} />
+        <NoPostsFound name={profile?.name ?? ""} email={email} />
       )}
     </ForumLayout>
   )
 }
 
-function NoPostsFound({ name }: { name: string }) {
+function NoPostsFound({ name, email }: { name: string; email: string }) {
+  const { data: session, status: sessionStatus } = useSession()
+  const isOwnProfile = session?.user?.email === email
+
   return (
-    <div>
-      <p className="mb-2 text-center text-xl font-semibold">
-        Ready to kick off this topic?
-      </p>
-      <p className="mx-auto max-w-md text-center">
-        {`Don't be shy - if there's something related to ${name} that you want to share, start now.`}
-      </p>
-      <Link href="/create/post">
-        <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
-      </Link>
-    </div>
+    <>
+      {sessionStatus !== "loading" && !isOwnProfile && (
+        <div>
+          <p className="mb-2 text-center text-xl font-semibold">
+            {"This user hasn't posted anything yet."}
+          </p>
+          <p className="mx-auto max-w-md text-center">
+            Follow {name} to stay up to date and get notified when new content
+            is published.
+          </p>
+        </div>
+      )}
+      {sessionStatus !== "loading" && isOwnProfile && (
+        <div>
+          <p className="mb-2 text-center text-xl font-semibold">
+            {"You haven't posted anything yet."}
+          </p>
+          <p className="mx-auto max-w-md text-center">
+            {
+              "Share something or ask a question to get things going, and your posts will appear here. You can also follow other users to see their posts."
+            }
+          </p>
+          <Link href="/create/post">
+            <Button className="mx-auto mt-5 block w-fit">Create a post</Button>
+          </Link>
+        </div>
+      )}
+    </>
   )
 }

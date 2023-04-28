@@ -2,7 +2,6 @@ import { api } from "@/utils/api"
 import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import usePrefetch from "@/hooks/usePrefetch"
 
 import Link from "next/link"
 import Image from "next/image"
@@ -19,8 +18,6 @@ const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
-  const utils = api.useContext()
-
   const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
   const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
 
@@ -39,28 +36,23 @@ export default function PostPreviewItem({ post }: { post: Post }) {
     votes: post.reactions,
   })
 
-  const prefetchComments = usePrefetch(
-    () => void utils.comment.getByPostId.prefetch(post.id)
-  )
-
   return (
     <div className="rounded-md border bg-white py-2 px-3 shadow-md md:px-6 md:py-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
           <h2 className="text-lg font-semibold">
-            <Link onMouseEnter={prefetchComments} href={`/post/${post.id}`}>
-              {post.title}
-            </Link>
+            <Link href={`/post/${post.id}`}>{post.title}</Link>
           </h2>
           <CommunityButton community={post.community} />
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">{post.creator.name}</span>
-          <Avatar
-            name={post.creator.name ?? ""}
-            imgUrl={post.creator.image}
-            size="small"
-          />
+          <Link
+            href={`/profile/${post.creator.email ?? ""}`}
+            className="font-semibold"
+          >
+            {post.creator.name}
+          </Link>
+          <Avatar user={post.creator} size="small" />
         </div>
       </div>
       <p className="whitespace-pre-line break-words">
@@ -71,7 +63,6 @@ export default function PostPreviewItem({ post }: { post: Post }) {
       </p>
       {post.content.length > MAX_PREVIEW_LENGTH && (
         <Link
-          onMouseEnter={() => void prefetchComments()}
           href={`/post/${post.id}`}
           className="mt-2 block w-fit py-1.5 text-sm text-sky-600 underline"
         >
@@ -91,7 +82,6 @@ export default function PostPreviewItem({ post }: { post: Post }) {
         <div className="mt-5 flex items-center justify-between text-sm">
           <div className="flex gap-1">
             <Link
-              onMouseEnter={() => void prefetchComments()}
               href={`/post/${post.id}`}
               className="flex items-center gap-1.5 rounded-full border bg-zinc-100 py-0.5 px-2 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
             >

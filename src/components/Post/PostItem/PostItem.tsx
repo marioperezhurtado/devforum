@@ -4,6 +4,7 @@ import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
+import Link from "next/link"
 import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import CommunityButton from "@/ui/CommunityButton"
@@ -43,12 +44,13 @@ export default function PostItem({ post }: { post: Post }) {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <h2 className="text-lg font-semibold md:text-2xl">{post.title}</h2>
         <div className="flex items-center gap-2 text-sm">
-          <span className="font-semibold">{post.creator.name}</span>
-          <Avatar
-            name={post.creator.name ?? ""}
-            imgUrl={post.creator.image}
-            size="medium"
-          />
+          <Link
+            href={`/profile/${post.creator.email ?? ""}`}
+            className="font-semibold"
+          >
+            {post.creator.name}
+          </Link>
+          <Avatar user={post.creator} size="medium" />
         </div>
       </div>
       <CommunityButton community={post.community} />

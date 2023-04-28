@@ -1,4 +1,8 @@
 import Image from "next/image"
+import Link from "next/link"
+
+import type { RouterOutputs } from "@/utils/api"
+type User = Omit<NonNullable<RouterOutputs["user"]["getByEmail"]>, "_count">
 
 const SIZES = {
   small: {
@@ -20,17 +24,16 @@ const SIZES = {
 }
 
 export default function Avatar({
-  name,
-  imgUrl,
+  user,
   size,
 }: {
-  name: string
-  imgUrl: string | null
+  user: User
   size: keyof typeof SIZES
 }) {
   const { width, className } = SIZES[size]
+  const { name, email, image } = user
 
-  if (!imgUrl)
+  if (!image)
     return (
       <div
         className={`flex min-w-fit items-center justify-center rounded-full border bg-zinc-100 ${className}`}
@@ -42,12 +45,14 @@ export default function Avatar({
     )
 
   return (
-    <Image
-      src={imgUrl}
-      alt={`${name}'s profile picture`}
-      width={width}
-      height={width}
-      className={`min-w-fit rounded-full object-cover ${className}`}
-    />
+    <Link href={`/profile/${email ?? ""}`}>
+      <Image
+        src={image}
+        alt={`${name ?? ""}'s profile picture`}
+        width={width}
+        height={width}
+        className={`min-w-fit rounded-full object-cover ${className}`}
+      />
+    </Link>
   )
 }

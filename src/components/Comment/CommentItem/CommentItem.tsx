@@ -6,6 +6,7 @@ import useVote from "@/hooks/useVote"
 import { useCommentStore } from "@/components/Comment/store"
 import { toast } from "react-hot-toast"
 
+import Link from "next/link"
 import Image from "next/image"
 import Vote from "@/ui/Vote"
 import Avatar from "@/ui/Avatar"
@@ -67,12 +68,13 @@ export default function CommentItem({
     <>
       <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
         <div className="flex flex-wrap items-center gap-2 px-2 py-4">
-          <Avatar
-            imgUrl={comment.creator.image}
-            name={comment.creator.name ?? ""}
-            size="small"
-          />
-          <span className="text-sm font-semibold">{comment.creator.name}</span>
+          <Avatar user={comment.creator} size="small" />
+          <Link
+            href={`/profile/${comment.creator.email ?? ""}`}
+            className="text-sm font-semibold"
+          >
+            {comment.creator.name}
+          </Link>
           <span className="text-xs text-gray-500">
             · {dayjs(comment.createdAt).fromNow()}
           </span>

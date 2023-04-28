@@ -1,35 +1,16 @@
-import usePrefetch from "@/hooks/usePrefetch"
-
 import Link from "next/link"
 import Image from "next/image"
 
 type Props = {
   baseLink: string
   filter: string
-  prefetchTrending: () => void
-  prefetchLatest: () => void
-  prefetchUpvoted: () => void
-  prefetchControversial: () => void
 }
 
-export default function Filter({
-  baseLink,
-  filter,
-  prefetchTrending,
-  prefetchLatest,
-  prefetchUpvoted,
-  prefetchControversial,
-}: Props) {
-  const handlePrefetchTrending = usePrefetch(prefetchTrending)
-  const handlePrefetchLatest = usePrefetch(prefetchLatest)
-  const handlePrefetchUpvoted = usePrefetch(prefetchUpvoted)
-  const handlePrefetchControversial = usePrefetch(prefetchControversial)
-
+export default function Filter({ baseLink, filter }: Props) {
   return (
     <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 text-sm font-semibold md:my-10">
       <li className="min-w-fit">
         <Link
-          onMouseEnter={handlePrefetchTrending}
           href={`${baseLink}/trending`}
           className={`z-10 flex items-center gap-1 rounded-full px-2 py-1  transition
               ${
@@ -49,7 +30,6 @@ export default function Filter({
       </li>
       <li className="min-w-fit">
         <Link
-          onMouseEnter={handlePrefetchLatest}
           href={`${baseLink}/latest`}
           className={`z-10 flex items-center gap-1 rounded-full px-2 py-1  transition
               ${
@@ -69,7 +49,6 @@ export default function Filter({
       </li>
       <li className="min-w-fit">
         <Link
-          onMouseEnter={handlePrefetchUpvoted}
           href={`${baseLink}/most-upvoted`}
           className={`z-10 flex items-center gap-1 rounded-full px-2 py-1  transition
               ${
@@ -89,7 +68,6 @@ export default function Filter({
       </li>
       <li className="min-w-fit">
         <Link
-          onMouseEnter={handlePrefetchControversial}
           href={`${baseLink}/controversial`}
           className={`z-10 flex items-center gap-1 rounded-full px-2 py-1  transition
               ${
