@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { api } from "@/utils/api"
 import useVote from "@/hooks/useVote"
 import { useSession } from "next-auth/react"
@@ -6,11 +7,13 @@ import { toast } from "react-hot-toast"
 import Link from "next/link"
 import Image from "next/image"
 import Vote from "@/ui/Vote"
+import DangerConfirm from "@/components/Modal/DangerConfirm/DangerConfirm"
 
 import type { RouterOutputs } from "@/utils/api"
 type Post = RouterOutputs["post"]["community"]["getLatest"][0]
 
 export default function Actions({ post }: { post: Post }) {
+  const [isDeleting, setIsDeleting] = useState(false)
   const { data: session } = useSession()
   const utils = api.useContext()
 
@@ -74,12 +77,26 @@ export default function Actions({ post }: { post: Post }) {
       />
       {isOwn && (
         <button
-          onClick={() => void handleDelete()}
+          onClick={() => setIsDeleting(true)}
           title="Delete"
           className="flex items-center gap-1.5 rounded-full border bg-zinc-100 px-2 py-0.5 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
         >
           <Image src="/icons/delete.svg" alt="Delete" width={16} height={16} />
         </button>
+      )}
+      {isDeleting && (
+        <DangerConfirm
+          confirmText="I want to delete this post"
+          dangerMessage="I understand the consequences, delete this post."
+          onClose={() => setIsDeleting(false)}
+          onConfirm={() => void handleDelete()}
+        >
+          <p className="text-xl font-bold">Are you sure?</p>
+          <p className="mt-2">
+            This action cannot be undone. This will permanently delete this post
+            and all of its comments and reactions.
+          </p>
+        </DangerConfirm>
       )}
     </div>
   )

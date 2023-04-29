@@ -13,6 +13,8 @@ import type { GetStaticProps } from "next"
 export const getStaticProps: GetStaticProps = async () => {
   await ssg.topic.getPopular.prefetch()
   await ssg.post.getLatest.prefetch()
+  await ssg.community.getDiscoverPreview.prefetch()
+  await ssg.community.getTrendingPreview.prefetch()
 
   return {
     props: {

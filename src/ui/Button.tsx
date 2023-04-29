@@ -22,10 +22,20 @@ const button = cva("button", {
         "hover:border-sky-500",
         "hover:text-sky-500",
       ],
+      danger: [
+        "bg-red-600",
+        "text-red-100",
+        "border-red-600",
+        "hover:border-red-500",
+        "hover:bg-red-500",
+      ],
     },
     size: {
       small: ["px-2", "py-0.5", "text-sm"],
       medium: ["px-4", "py-1", "text-sm"],
+    },
+    disabled: {
+      true: ["opacity-50", "cursor-not-allowed"],
     },
   },
   defaultVariants: { intent: "primary", size: "medium" },
@@ -40,6 +50,7 @@ export default function Button({
   intent,
   size,
   className,
+  disabled,
   authRequired,
   ...props
 }: ButtonProps) {
@@ -54,6 +65,7 @@ export default function Button({
             intent,
             size,
             className,
+            disabled,
           })} rounded-full border-2 font-semibold transition`}
           {...props}
           onClick={() => void {}}
@@ -68,6 +80,7 @@ export default function Button({
         intent,
         size,
         className,
+        disabled,
       })} rounded-full border-2 font-semibold transition`}
       {...props}
     ></button>
