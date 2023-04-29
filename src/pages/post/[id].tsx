@@ -63,7 +63,7 @@ export default function PostPage() {
        at DevForum.dev`}
       description={`${post?.title ?? ""} - by ${
         post?.creator.name ?? ""
-      } at DevForum.dev - ${topics ? `#${topics}` : ""}`}
+      } at DevForum.dev ${topics ? `- #${topics}` : ""}`}
       ogImage={`https://devforum.dev/api/og/post?name=${
         post?.creator.name ?? ""
       }&title=${post?.title ?? ""}`}

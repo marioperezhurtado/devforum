@@ -1,6 +1,7 @@
 import { api } from "@/utils/api"
 import { useSession } from "next-auth/react"
 import { toast } from "react-hot-toast"
+import dayjs from "dayjs"
 
 import Avatar from "@/ui/Avatar"
 import Button from "@/ui/Button"
@@ -76,7 +77,7 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
   return (
     <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
       <div className="h-28 bg-sky-600">
-        <span className="absolute top-12 left-3 md:left-6">
+        <span className="absolute left-3 top-12 md:left-6">
           <Avatar user={profile} size="xlarge" />
         </span>
       </div>
@@ -85,7 +86,7 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
           <Button
             authRequired
             onClick={() => void handleFollow()}
-            className="absolute top-32 right-3 md:right-6"
+            className="absolute right-3 top-32 md:right-6"
           >
             Follow
           </Button>
@@ -95,7 +96,7 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
             authRequired
             intent="secondary"
             onClick={() => void handleUnfollow()}
-            className="absolute top-32 right-3 md:right-6"
+            className="absolute right-3 top-32 md:right-6"
           >
             Unfollow
           </Button>
@@ -107,19 +108,24 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
           </h1>
           ·<h2>{profile?.email ?? ""}</h2>
         </div>
-        <div className="mt-5 flex gap-4 text-sm text-zinc-500">
-          <p>
-            {followerCount ?? 0}{" "}
-            {followerCount === 1 ? "follower" : "followers"}
-          </p>
-          <p>
-            {postCount ?? 0} {postCount === 1 ? "post" : "posts"}
-          </p>
-          <p>
-            {commentCount ?? 0} {commentCount === 1 ? "comment" : "comments"}
-          </p>
-          <p>
-            {reactionCount ?? 0} {reactionCount === 1 ? "vote" : "votes"}
+        <div className="mt-5 flex flex-wrap gap-x-10 gap-y-4 text-sm text-zinc-500">
+          <div className="flex flex-wrap gap-4">
+            <p>
+              {followerCount ?? 0}{" "}
+              {followerCount === 1 ? "follower" : "followers"}
+            </p>
+            <p>
+              {postCount ?? 0} {postCount === 1 ? "post" : "posts"}
+            </p>
+            <p>
+              {commentCount ?? 0} {commentCount === 1 ? "comment" : "comments"}
+            </p>
+            <p>
+              {reactionCount ?? 0} {reactionCount === 1 ? "vote" : "votes"}
+            </p>
+          </div>
+          <p className="ml-auto">
+            Joined on {dayjs(profile?.createdAt).format("DD MMMM YYYY")}
           </p>
         </div>
       </div>
