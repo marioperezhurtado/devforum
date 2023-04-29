@@ -22,8 +22,8 @@ export default function AccountDropdown() {
           <Image
             src="/icons/profile.svg"
             alt="Your profile"
-            width={22}
-            height={22}
+            width={20}
+            height={20}
           />
           <svg
             className="-mr-1 h-5 w-5 text-gray-500"

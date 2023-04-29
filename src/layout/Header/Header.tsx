@@ -12,7 +12,7 @@ export default function Header() {
   const { open } = useSidebarStore()
 
   return (
-    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white py-2 px-3 text-zinc-700 xs:px-4 sm:py-3 sm:px-6">
+    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-3 text-zinc-700 xs:px-4 sm:py-3 sm:px-6">
       <div className="flex items-center gap-6">
         <button onClick={open} className="lg:hidden" name="Open sidebar">
           <Image
@@ -30,16 +30,9 @@ export default function Header() {
       </div>
       <Search />
       {!session && (
-        <div className="flex items-center gap-4">
-          <Link href="/signIn">
-            <Button intent="secondary" className="hidden xs:block">
-              Create account
-            </Button>
-          </Link>
-          <Link href="/signIn">
-            <Button intent="primary">Sign In</Button>
-          </Link>
-        </div>
+        <Link href="/signIn">
+          <Button intent="primary">Sign In</Button>
+        </Link>
       )}
       {session && (
         <div className="flex items-center gap-2">
@@ -50,8 +43,8 @@ export default function Header() {
             <Image
               src="/icons/create.svg"
               alt="Create Post"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
             />
           </Link>
           <AccountDropdown />

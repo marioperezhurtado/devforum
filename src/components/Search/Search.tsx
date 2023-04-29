@@ -39,7 +39,7 @@ export default function Search() {
       onSubmit={handleSearch}
       name="searchForm"
       role="searchbox"
-      className="relative hidden md:block md:w-80 lg:w-96"
+      className="relative mx-auto hidden md:block md:w-80 lg:w-96"
     >
       <label htmlFor="search" className="sr-only">
         Search topics, posts, users and more
@@ -58,6 +58,7 @@ export default function Search() {
       />
       <button
         type="button"
+        aria-label="search"
         className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full bg-sky-600 pl-2 pr-2.5 transition hover:bg-sky-500"
       >
         <Image src="/icons/search.svg" alt="Search" width={18} height={18} />
