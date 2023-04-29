@@ -95,7 +95,6 @@ export const postRouter = createTRPCRouter({
       },
     })
   }),
-
   create: protectedProcedure
     .input(postSchema)
     .mutation(async ({ ctx, input }) => {
@@ -123,7 +122,7 @@ export const postRouter = createTRPCRouter({
       )
       if (!isJoined) {
         throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
+          code: "FORBIDDEN",
           message: "You are not a member of this community",
         })
       }
@@ -162,6 +161,36 @@ export const postRouter = createTRPCRouter({
           twitterUrl: input.twitterUrl,
           redditUrl: input.redditUrl,
           youtubeUrl: input.youtubeUrl,
+        },
+      })
+    }),
+  delete: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.findUnique({
+        where: {
+          id: input,
+        },
+        include: {
+          creator: true,
+        },
+      })
+      if (!post) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Post not found",
+        })
+      }
+      if (post.creator.id !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not the creator of this post",
+        })
+      }
+
+      return ctx.prisma.post.delete({
+        where: {
+          id: input,
         },
       })
     }),

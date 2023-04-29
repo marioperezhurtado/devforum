@@ -1,15 +1,11 @@
 import { describe, test, expect, vi } from "vitest"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 
 import PostItem from "./PostItem"
 import { withNextTRPC } from "@/test/withNextTRPC"
 import mockUseSession from "@/test/mocks/mockUseSession"
 import mockNextRouter from "@/test/mocks/mockNextRouter"
 import { Post } from "@/test/data/Post"
-
-import { api } from "@/utils/api"
-
-import type { Mock } from "vitest"
 
 vi.mock("@/utils/api", () => ({
   api: {
@@ -19,6 +15,13 @@ vi.mock("@/utils/api", () => ({
           mutate: () => vi.fn(),
         }),
       },
+      delete: {
+        useMutation: vi.fn().mockReturnValue({
+          mutate: () => vi.fn(),
+        }),
+      },
+    },
+    post: {
       delete: {
         useMutation: vi.fn().mockReturnValue({
           mutate: () => vi.fn(),
@@ -42,11 +45,6 @@ describe("PostItem", () => {
     },
   })
 
-  const mockAddOrUpdate = vi.spyOn(
-    api.postReaction.addOrUpdate,
-    "useMutation"
-  ) as Mock
-
   test("Renders post", () => {
     render(<PostItem post={Post} />, { wrapper: withNextTRPC })
 
@@ -58,25 +56,5 @@ describe("PostItem", () => {
     expect(screen.getByAltText("John Doe's profile picture")).toBeTruthy()
     expect(screen.getByText("#Test Topic")).toBeTruthy()
     expect(screen.getByText("#Test Topic 2")).toBeTruthy()
-  })
-
-  test("Upvotes post", async () => {
-    const upvoteBtn = screen.getByTitle("Upvote")
-
-    fireEvent.click(upvoteBtn)
-
-    await waitFor(() => {
-      expect(mockAddOrUpdate).toHaveBeenCalled()
-    })
-  })
-
-  test("Downvotes post", async () => {
-    const downvoteBtn = screen.getByTitle("Downvote")
-
-    fireEvent.click(downvoteBtn)
-
-    await waitFor(() => {
-      expect(mockAddOrUpdate).toHaveBeenCalled()
-    })
   })
 })

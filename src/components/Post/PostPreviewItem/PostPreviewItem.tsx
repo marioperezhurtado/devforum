@@ -1,43 +1,21 @@
-import { api } from "@/utils/api"
-import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 
 import Link from "next/link"
-import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import CommunityButton from "@/ui/CommunityButton"
 import PostTopic from "@/components/Topic/PostTopic/PostTopic"
-import Vote from "@/ui/Vote"
+import Actions from "@/components/Post/Actions/Actions"
 
 import type { RouterOutputs } from "@/utils/api"
-
 type Post = RouterOutputs["post"]["community"]["getLatest"][0]
 
 const MAX_PREVIEW_LENGTH = 200
 dayjs.extend(relativeTime)
 
 export default function PostPreviewItem({ post }: { post: Post }) {
-  const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
-  const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
-
-  const { upvotes, downvotes, handleUpvote, handleDownvote, myVote } = useVote({
-    onUpvote: () =>
-      handleVote({
-        postId: post.id,
-        vote: true,
-      }),
-    onDownvote: () =>
-      handleVote({
-        postId: post.id,
-        vote: false,
-      }),
-    onRemoveVote: () => handleRemoveVote(post.id),
-    votes: post.reactions,
-  })
-
   return (
-    <div className="rounded-md border bg-white py-2 px-3 shadow-md md:px-6 md:py-4">
+    <div className="rounded-md border bg-white px-3 py-2 shadow-md md:px-6 md:py-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
           <h2 className="text-lg font-semibold">
@@ -80,34 +58,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
           </ul>
         )}
         <div className="mt-5 flex items-center justify-between text-sm">
-          <div className="flex gap-1">
-            <Link
-              href={`/post/${post.id}`}
-              className="flex items-center gap-1.5 rounded-full border bg-zinc-100 py-0.5 px-2 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
-            >
-              <Image
-                src="/icons/comment.svg"
-                alt="Comments"
-                width={16}
-                height={16}
-              />
-              {post._count?.comments > 0 && post._count?.comments}
-            </Link>
-            <Vote
-              onClick={() => void handleUpvote()}
-              voteType="upvote"
-              voted={myVote === true}
-              votes={upvotes}
-              size="small"
-            />
-            <Vote
-              onClick={() => void handleDownvote()}
-              voteType="downvote"
-              voted={myVote === false}
-              votes={downvotes}
-              size="small"
-            />
-          </div>
+          <Actions post={post} />
           <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
         </div>
       </div>

@@ -31,8 +31,8 @@ describe("Header", () => {
     expect(screen.getByText("Forum")).toBeTruthy()
   })
 
-  test("Renders create account and sign in buttons if user IS NOT logged in", () => {
-    expect(screen.getByText("Create account")).toBeTruthy()
+  test("Renders sign in button if user IS NOT logged in", () => {
+    expect(screen.getByText("Sign In")).toBeTruthy()
   })
 
   test("Renders account dropdown if user IS logged in", () => {

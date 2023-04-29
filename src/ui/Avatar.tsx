@@ -10,8 +10,8 @@ const SIZES = {
     className: "h-7 w-7",
   },
   medium: {
-    width: 40,
-    className: "h-10 w-10",
+    width: 36,
+    className: "h-9 w-9",
   },
   large: {
     width: 64,

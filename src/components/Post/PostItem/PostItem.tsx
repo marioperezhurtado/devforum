@@ -1,14 +1,10 @@
-import { api } from "@/utils/api"
-import { useCommentStore } from "@/components/Comment/store"
-import useVote from "@/hooks/useVote"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import Actions from "@/components/Post/Actions/Actions"
 
 import Link from "next/link"
-import Image from "next/image"
 import Avatar from "@/ui/Avatar"
 import CommunityButton from "@/ui/CommunityButton"
-import Vote from "@/ui/Vote"
 import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import CodeSnippets from "@/components/CodeSnippet/CodeSnippets/CodeSnippets"
 import Links from "@/components/Post/Links/Links"
@@ -19,28 +15,8 @@ type Post = NonNullable<RouterOutputs["post"]["getById"]>
 dayjs.extend(relativeTime)
 
 export default function PostItem({ post }: { post: Post }) {
-  const { open } = useCommentStore()
-
-  const { mutate: handleVote } = api.postReaction.addOrUpdate.useMutation()
-  const { mutate: handleRemoveVote } = api.postReaction.delete.useMutation()
-
-  const { upvotes, downvotes, handleUpvote, handleDownvote, myVote } = useVote({
-    onUpvote: () =>
-      handleVote({
-        postId: post.id,
-        vote: true,
-      }),
-    onDownvote: () =>
-      handleVote({
-        postId: post.id,
-        vote: false,
-      }),
-    onRemoveVote: () => handleRemoveVote(post.id),
-    votes: post.reactions,
-  })
-
   return (
-    <div className="mb-5 rounded-md border bg-white px-3 py-2 shadow-md md:mb-10 md:py-4 md:px-6">
+    <div className="mb-5 rounded-md border bg-white px-3 py-2 shadow-md md:mb-10 md:px-6 md:py-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <h2 className="text-lg font-semibold md:text-2xl">{post.title}</h2>
         <div className="flex items-center gap-2 text-sm">
@@ -66,34 +42,7 @@ export default function PostItem({ post }: { post: Post }) {
           </ul>
         )}
         <div className="mt-5 flex items-center justify-between text-sm">
-          <div className="flex gap-1.5">
-            <button
-              onClick={open}
-              className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-3 font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
-            >
-              <Image
-                src="/icons/comment.svg"
-                alt="Comments"
-                width={16}
-                height={16}
-              />
-              {post._count?.comments > 0 && post._count?.comments}
-            </button>
-            <Vote
-              onClick={() => void handleUpvote()}
-              voteType="upvote"
-              voted={myVote === true}
-              votes={upvotes}
-              size="medium"
-            />
-            <Vote
-              onClick={() => void handleDownvote()}
-              voteType="downvote"
-              voted={myVote === false}
-              votes={downvotes}
-              size="medium"
-            />
-          </div>
+          <Actions post={post} />
           <span className="ml-auto">{dayjs(post.createdAt).fromNow()}</span>
         </div>
       </div>
