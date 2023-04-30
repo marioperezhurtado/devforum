@@ -12,10 +12,7 @@ export default function AddSnippetDropdown() {
   const addSnippet = useSnippetsStore((state) => state.addSnippet)
   const stopAdding = useSnippetsStore((state) => state.stopAdding)
 
-  useOnClickOutside({
-    ref,
-    handler: stopAdding,
-  })
+  useOnClickOutside(ref, stopAdding)
 
   const handleAddSnippet = (language: Lang) => {
     addSnippet({

@@ -23,7 +23,10 @@ export default function CreateSnippets() {
         ))}
         <li className="relative">
           <button
-            onClick={startAdding}
+            onClick={(e) => {
+              e.stopPropagation()
+              startAdding()
+            }}
             type="button"
             className="flex items-center justify-center p-1 transition hover:bg-zinc-500"
           >

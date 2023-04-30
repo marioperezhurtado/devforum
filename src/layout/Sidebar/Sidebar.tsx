@@ -36,7 +36,7 @@ export default function Sidebar() {
       refetchOnWindowFocus: false,
     })
 
-  useOnClickOutside({ ref, handler: close })
+  useOnClickOutside(ref, close)
 
   return (
     <aside

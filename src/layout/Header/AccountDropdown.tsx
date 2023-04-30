@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { signOut, useSession } from "next-auth/react"
+import useOnClickOutside from "@/hooks/useOnClickOutside"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -7,9 +8,12 @@ import Link from "next/link"
 export default function AccountDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
+  const ref = useRef(null)
+
+  useOnClickOutside(ref, () => setIsOpen(false))
 
   return (
-    <>
+    <div ref={ref}>
       <div className="relative inline-block text-left">
         <button
           onClick={() => setIsOpen((o) => !o)}
@@ -133,6 +137,6 @@ export default function AccountDropdown() {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
