@@ -42,7 +42,7 @@ export default function Code({ snippet }: { snippet: Snippet }) {
       <button
         type="button"
         onClick={() => void handleCopy()}
-        className="absolute top-1 right-0.5 rounded-full p-1 transition hover:bg-zinc-200"
+        className="absolute right-0.5 top-1 rounded-full p-1 transition hover:bg-zinc-200"
       >
         <Image
           src="/icons/clipboard.svg"

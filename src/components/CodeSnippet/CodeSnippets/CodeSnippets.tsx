@@ -1,29 +1,11 @@
 import { useState } from "react"
+import { langs } from "@/components/CodeSnippet/langs"
 
 import Image from "next/image"
 import Code from "@/components/CodeSnippet/Code/Code"
 
 import type { RouterOutputs } from "@/utils/api"
 type Snippets = NonNullable<RouterOutputs["snippet"]["getById"]>[]
-
-const langs = {
-  JavaScript: {
-    logo: "/icons/code/js.svg",
-    extension: "js",
-  },
-  TypeScript: {
-    logo: "/icons/code/ts.svg",
-    extension: "ts",
-  },
-  Python: {
-    logo: "/icons/code/py.svg",
-    extension: "py",
-  },
-  Rust: {
-    logo: "/icons/code/rs.svg",
-    extension: "rs",
-  },
-}
 
 export default function CodeSnippets({ snippets }: { snippets: Snippets }) {
   const [activeSnippet, setActiveSnippet] = useState(snippets[0])

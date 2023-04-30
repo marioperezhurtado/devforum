@@ -94,7 +94,7 @@ export default function CreatePost() {
           id="title"
           {...register("title")}
           placeholder="An awesome title for your post"
-          className="mb-2 w-full rounded-md border bg-zinc-50 px-2 py-1 focus:outline-sky-600 md:py-2 md:px-4"
+          className="mb-2 w-full rounded-md border bg-zinc-50 px-2 py-1 focus:outline-sky-600 md:px-4 md:py-2"
         />
         {errors.title?.message && <FormError message={errors.title.message} />}
       </div>
@@ -106,7 +106,7 @@ export default function CreatePost() {
           id="content"
           {...register("content")}
           placeholder="Start writing here..."
-          className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:py-2 md:px-4"
+          className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:px-4 md:py-2"
         />
         {errors.content?.message && (
           <FormError message={errors.content.message} />
@@ -273,7 +273,7 @@ export default function CreatePost() {
         </section>
       )}
 
-      <div className="mt-4 mb-2 flex gap-2">
+      <div className="mb-2 mt-4 flex gap-2">
         {!snippetsOpen && (
           <Button
             onClick={() => setSnippetsOpen(true)}

@@ -115,7 +115,15 @@ enum Language {
     JavaScript
     TypeScript
     Python
+    Go
     Rust
+    PHP
+    Java
+    C
+    Cpp
+    CSharp
+    JSX
+    TSX
 }
 
 model CodeSnippet {

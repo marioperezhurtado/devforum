@@ -46,7 +46,20 @@ export const postSchema = z.object({
       z.object({
         filename: z.string(),
         code: z.string(),
-        language: z.enum(["JavaScript", "TypeScript", "Python", "Rust"]),
+        language: z.enum([
+          "JavaScript",
+          "TypeScript",
+          "Python",
+          "Go",
+          "Rust",
+          "PHP",
+          "Java",
+          "C",
+          "Cpp",
+          "CSharp",
+          "JSX",
+          "TSX",
+        ]),
       })
     )
     .optional(),

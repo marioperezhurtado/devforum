@@ -1,5 +1,5 @@
 import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
-import { langs } from "@/components/CodeSnippet/CreateSnippets/CreateSnippets"
+import { langs } from "@/components/CodeSnippet/langs"
 
 import Image from "next/image"
 
@@ -30,7 +30,7 @@ export default function SnippetTab({ snippet }: { snippet: Snippet }) {
       <button
         type="button"
         onClick={() => void changeActiveSnippet(snippet)}
-        className="flex items-center gap-2 py-1 px-2"
+        className="flex items-center gap-2 px-2 py-1"
       >
         <Image
           src={langs[snippet.language].logo}

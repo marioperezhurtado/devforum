@@ -5,30 +5,11 @@ import EditableCode from "@/components/CodeSnippet/EditableCode/EditableCode"
 import SnippetTab from "@/components/CodeSnippet/SnippetTab/SnippetTab"
 import AddSnippetDropdown from "./AddSnippetDropdown"
 
-export const langs = {
-  JavaScript: {
-    logo: "/icons/code/js.svg",
-    extension: "js",
-  },
-  TypeScript: {
-    logo: "/icons/code/ts.svg",
-    extension: "ts",
-  },
-  Python: {
-    logo: "/icons/code/py.svg",
-    extension: "py",
-  },
-  Rust: {
-    logo: "/icons/code/rs.svg",
-    extension: "rs",
-  },
-}
-
 export default function CreateSnippets() {
   const { snippets, activeSnippet, isAdding, startAdding } = useSnippetsStore()
 
   return (
-    <section className="relative mt-2 mb-4 rounded-md bg-zinc-600">
+    <section className="relative mb-4 mt-2 rounded-md bg-zinc-600">
       <ul className="flex w-fit items-center rounded-t text-xs font-semibold text-zinc-100">
         <div className="flex items-center gap-1.5 border-r border-zinc-500 px-4 py-1.5">
           <span className="h-3 w-3 rounded-full bg-red-500" />
