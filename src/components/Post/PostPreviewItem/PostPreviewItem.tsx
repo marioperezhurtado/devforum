@@ -1,5 +1,6 @@
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import { shorten } from "@/utils/text"
 
 import Link from "next/link"
 import Avatar from "@/ui/Avatar"
@@ -34,10 +35,7 @@ export default function PostPreviewItem({ post }: { post: Post }) {
         </div>
       </div>
       <p className="whitespace-pre-line break-words">
-        {post.content.length <= MAX_PREVIEW_LENGTH && post.content}
-        {post.content.length > MAX_PREVIEW_LENGTH &&
-          post.content.slice(0, MAX_PREVIEW_LENGTH)}
-        {post.content.length > MAX_PREVIEW_LENGTH && <span>...</span>}
+        {shorten(post.content, MAX_PREVIEW_LENGTH)}
       </p>
       {post.content.length > MAX_PREVIEW_LENGTH && (
         <Link
