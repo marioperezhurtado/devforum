@@ -7,7 +7,7 @@ import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
-import { categories } from "@/pages/category/categories"
+import { categories } from "@/components/Category/categories"
 
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"

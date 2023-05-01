@@ -1,7 +1,7 @@
 import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
-import { categories } from "./categories"
+import { categories } from "@/components/Category/categories"
 
 import Link from "next/link"
 import Button from "@/ui/Button"
