@@ -7,6 +7,7 @@ import {
 import { communityRouter } from "./community"
 import { topicRouter } from "./topic"
 import { userRouter } from "./user"
+import { categoryRouter } from "./category"
 import { TRPCError } from "@trpc/server"
 
 import { postSchema } from "@/utils/zod"
@@ -15,6 +16,7 @@ export const postRouter = createTRPCRouter({
   community: communityRouter,
   topic: topicRouter,
   user: userRouter,
+  category: categoryRouter,
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.post.findUnique({
       where: {

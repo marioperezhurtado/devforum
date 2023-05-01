@@ -2,7 +2,7 @@ import { ssg } from "@/server/api/root"
 import { api } from "@/utils/api"
 
 import ForumLayout from "@/layout/ForumLayout/ForumLayout"
-import Categories from "@/components/Categories/Categories"
+import Categories from "@/components/Category/Categories/Categories"
 import PopularTopics from "@/components/Topic/PopularTopics/PopularTopics"
 import PostPreviews, {
   PostPreviewsSkeleton,
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-export default function Home() {
+export default function HomePage() {
   const { data: latestPosts, isLoading } = api.post.getLatest.useQuery(
     undefined,
     { refetchOnWindowFocus: false }

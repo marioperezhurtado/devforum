@@ -1,5 +1,21 @@
 import { z } from "zod"
 
+export const categorySchema = z.enum(
+  [
+    "discussions",
+    "news",
+    "help",
+    "jobs",
+    "showcase",
+    "tutorials",
+    "resources",
+    "others",
+  ],
+  {
+    errorMap: () => ({ message: "Please select a valid category" }),
+  }
+)
+
 export const postSchema = z.object({
   title: z
     .string()
@@ -20,21 +36,7 @@ export const postSchema = z.object({
   community: z.string().min(1, {
     message: "Please select a community.",
   }),
-  category: z.enum(
-    [
-      "Discussions",
-      "News",
-      "Tutorials",
-      "HelpNeeded",
-      "Jobs",
-      "Showcase",
-      "Tutorials",
-      "Resources",
-    ],
-    {
-      errorMap: () => ({ message: "Please select a category" }),
-    }
-  ),
+  category: categorySchema,
   topics: z
     .array(z.string())
     .max(12, {

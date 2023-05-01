@@ -47,7 +47,7 @@ export const Post: PostType = {
       postId: "1",
     },
   ],
-  category: "Discussions",
+  category: "discussions",
   codeSnippets: [],
   demoUrl: null,
   githubUrl: null,

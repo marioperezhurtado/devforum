@@ -34,13 +34,14 @@ model Topic {
 }
 
 enum PostCategory {
-    Discussions
-    News
-    HelpNeeded
-    Jobs
-    Showcase
-    Tutorials
-    Resources
+    discussions
+    news
+    help
+    jobs
+    showcase
+    tutorials
+    resources
+    others
 }
 
 model Post {

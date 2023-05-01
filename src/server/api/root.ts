@@ -30,7 +30,7 @@ import { createServerSideHelpers } from "@trpc/react-query/server"
 import { createInnerTRPCContext } from "@/server/api/trpc"
 import superjson from "superjson"
 
-// SSG SSR helpers
+// Server side helpers
 export const ssg = createServerSideHelpers({
   router: appRouter,
   ctx: createInnerTRPCContext({ session: null }),

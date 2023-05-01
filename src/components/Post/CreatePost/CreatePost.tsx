@@ -7,6 +7,7 @@ import { useSnippetsStore } from "@/components/CodeSnippet/CreateSnippets/store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
+import { categories } from "@/pages/category/categories"
 
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
@@ -14,16 +15,6 @@ import CreateSnippets from "@/components/CodeSnippet/CreateSnippets/CreateSnippe
 import Image from "next/image"
 
 import type { z } from "zod"
-
-const categories = [
-  "Discussions",
-  "News",
-  "HelpNeeded",
-  "Jobs",
-  "Showcase",
-  "Tutorials",
-  "Resources",
-]
 
 export default function CreatePost() {
   const router = useRouter()
@@ -150,7 +141,9 @@ export default function CreatePost() {
             Select a category
           </option>
           {categories?.map((c) => (
-            <option key={c}>{c}</option>
+            <option key={c.name} value={c.name}>
+              {(c.name[0]?.toUpperCase() ?? "") + c.name.slice(1)}
+            </option>
           ))}
         </select>
         {errors.category?.message && (
