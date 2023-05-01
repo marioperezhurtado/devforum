@@ -12,7 +12,7 @@ export default function Header() {
   const { open } = useSidebarStore()
 
   return (
-    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-3 text-zinc-700 xs:px-4 sm:px-6 sm:py-3">
+    <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-3 py-2 text-zinc-700 xs:px-4 sm:px-6 sm:py-3">
       <div className="flex items-center gap-6">
         <button
           onClick={(e) => {

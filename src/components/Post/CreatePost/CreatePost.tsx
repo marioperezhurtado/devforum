@@ -13,8 +13,11 @@ import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
 import CreateSnippets from "@/components/CodeSnippet/CreateSnippets/CreateSnippets"
 import Image from "next/image"
+import Info from "@/ui/Info"
 
 import type { z } from "zod"
+
+const MAX_CONTENT_LENGTH = 1000
 
 export default function CreatePost() {
   const router = useRouter()
@@ -93,12 +96,32 @@ export default function CreatePost() {
         <label htmlFor="content" className="sr-only">
           Content
         </label>
-        <textarea
-          id="content"
-          {...register("content")}
-          placeholder="Start writing here..."
-          className="h-44 w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:px-4 md:py-2"
-        />
+        <div className="relative">
+          <textarea
+            id="content"
+            {...register("content")}
+            placeholder="Start writing here..."
+            className="h-44 min-h-[11rem] w-full rounded-md border bg-zinc-50 px-2 py-1  focus:outline-sky-600 md:px-4 md:py-2"
+          />
+          <span
+            className={`absolute bottom-3 right-3 text-xs 
+          ${
+            content.length > MAX_CONTENT_LENGTH
+              ? "text-red-500"
+              : "text-zinc-500"
+          }
+          `}
+          >
+            {content.length}/{MAX_CONTENT_LENGTH}
+          </span>
+          <span className="absolute bottom-4 left-2.5">
+            <Info>
+              This is the content of your post. You can use <i>markdown</i>{" "}
+              syntax to format the text. Keep it between <b>50</b> and{" "}
+              <b>1000</b> characters.
+            </Info>
+          </span>
+        </div>
         {errors.content?.message && (
           <FormError message={errors.content.message} />
         )}

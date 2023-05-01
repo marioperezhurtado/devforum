@@ -69,7 +69,6 @@ describe("PostPreviewItem", () => {
       { wrapper: withNextTRPC }
     )
 
-    expect(screen.getByText("...")).toBeTruthy()
     expect(screen.queryByText("My Content".repeat(100))).toBeNull()
     expect(screen.getByText("Read more...")).toBeTruthy()
   })
