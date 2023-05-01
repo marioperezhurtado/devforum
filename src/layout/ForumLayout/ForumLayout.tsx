@@ -30,11 +30,16 @@ export default function ForumLayout({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <meta
           property="og:image"
           content={ogImage ?? "https://devforum.dev/api/og/default"}
         />
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={description} />
+        <meta name="og:type" content="website" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
       </Head>
       <main className={`${fontBody.className} min-h-screen text-zinc-700`}>
         <div className="flex h-screen flex-col">

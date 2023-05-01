@@ -5,6 +5,7 @@ import Actions from "@/components/Post/Actions/Actions"
 import Link from "next/link"
 import Avatar from "@/ui/Avatar"
 import CommunityButton from "@/ui/CommunityButton"
+import PostText from "../PostText/PostText"
 import PostTopic from "@/components/Topic/PostTopic/PostTopic"
 import CodeSnippets from "@/components/CodeSnippet/CodeSnippets/CodeSnippets"
 import Links from "@/components/Post/Links/Links"
@@ -30,7 +31,7 @@ export default function PostItem({ post }: { post: Post }) {
         </div>
       </div>
       <CommunityButton community={post.community} />
-      <p className="mt-5 whitespace-pre-line break-words">{post.content}</p>
+      <PostText text={post.content} />
       <div className="mt-5">
         {post.topics.length > 0 && (
           <ul className="flex flex-wrap gap-2 text-sm">

@@ -13,7 +13,7 @@ datasource db {
 
 model Community {
     name        String   @id
-    description String   @db.VarChar(120)
+    description String   @db.VarChar(150)
     color       String   @db.VarChar(6)
     createdAt   DateTime @default(now())
     creatorId   String

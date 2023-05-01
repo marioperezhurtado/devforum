@@ -79,7 +79,7 @@ export default function CommentItem({
             · {dayjs(comment.createdAt).fromNow()}
           </span>
         </div>
-        <p className="px-2">{comment.content}</p>
+        <p className="whitespace-pre-wrap px-2">{comment.content}</p>
         <div className="mt-2 flex items-center gap-1 border-t  bg-zinc-50 p-1">
           <Vote
             onClick={() => void handleUpvote()}
@@ -100,7 +100,7 @@ export default function CommentItem({
               <button
                 disabled={isDeleting}
                 onClick={() => void handleDelete()}
-                className="flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
+                className="flex items-center gap-1 rounded-full border bg-zinc-100 px-2 py-1 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
               >
                 <Image
                   src="/icons/delete.svg"
@@ -113,7 +113,7 @@ export default function CommentItem({
             )}
             <button
               onClick={() => reply(comment)}
-              className="ml-auto flex items-center gap-1 rounded-full border bg-zinc-100 py-1 px-2 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
+              className="ml-auto flex items-center gap-1 rounded-full border bg-zinc-100 px-2 py-1 text-xs font-semibold text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-200"
             >
               <Image
                 src="/icons/comment.svg"

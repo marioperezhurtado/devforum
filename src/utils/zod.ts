@@ -99,8 +99,8 @@ export const communitySchema = z.object({
     .min(10, {
       message: "Description is too short. (At least 10 characters).",
     })
-    .max(120, {
-      message: "Description is too long. Please keep it under 120 characters.",
+    .max(150, {
+      message: "Description is too long. Please keep it under 150 characters.",
     }),
   color: z
     .string()
