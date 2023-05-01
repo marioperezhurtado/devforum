@@ -99,6 +99,9 @@ export default function Profile() {
       description={`${profile?.name ?? ""}'s profile on DevForum. Follow ${
         profile?.name ?? ""
       }, or find out about his latest posts and comments.`}
+      ogImage={`https://devforum.dev/api/og/profile?name=${
+        profile?.name ?? ""
+      }&email=${email}&image=${profile?.image ?? ""}`}
     >
       {profile && <ProfileInfo profile={profile} />}
       <Filter filter={filter} baseLink={`/profile/${email}`} />
