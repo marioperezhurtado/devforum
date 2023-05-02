@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { postSchema } from "@/utils/zod"
 import { toast } from "react-hot-toast"
 import { categories } from "@/components/Category/categories"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import Button from "@/ui/Button"
 import FormError from "@/ui/FormError"
@@ -22,9 +23,13 @@ const MAX_CONTENT_LENGTH = 1000
 export default function CreatePost() {
   const router = useRouter()
   const { data: session } = useSession()
+
   const [snippetsOpen, setSnippetsOpen] = useState(false)
   const [linksOpen, setLinksOpen] = useState(false)
   const snippets = useSnippetsStore((state) => state.snippets)
+
+  const [snippetsRef] = useAutoAnimate()
+  const [linksRef] = useAutoAnimate()
 
   const { mutateAsync: createPost } = api.post.create.useMutation({
     onSuccess: () => reset(),
@@ -174,142 +179,140 @@ export default function CreatePost() {
         )}
       </div>
       {errors.topics?.message && <FormError message={errors.topics.message} />}
-      {snippetsOpen && <CreateSnippets />}
+      <div ref={snippetsRef}>{snippetsOpen && <CreateSnippets />}</div>
 
-      {linksOpen && (
-        <section className="mt-2 flex max-w-sm flex-col gap-2">
-          <div className="relative">
-            <Image
-              src="/icons/safari.svg"
-              alt="Live Demo"
-              width={16}
-              height={16}
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="demoUrl" className="sr-only">
-              Live Demo URL
-            </label>
-            <input
-              id="demoUrl"
-              {...register("demoUrl")}
-              placeholder="https://your-live-demo.com"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/icons/github-color.svg"
-              alt="Github Repo"
-              width={24}
-              height={24}
-              className="absolute right-1 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="githubUrl" className="sr-only">
-              Github Repo URL
-            </label>
-            <input
-              id="githubUrl"
-              {...register("githubUrl")}
-              placeholder="https://github.com"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/icons/discord-color.svg"
-              alt="Discord"
-              width={20}
-              height={20}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="discordUrl" className="sr-only">
-              Discord URL
-            </label>
-            <input
-              id="discordUrl"
-              {...register("discordUrl")}
-              placeholder="https://discord.gg"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/icons/twitter-color.svg"
-              alt="Twitter"
-              width={20}
-              height={20}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="twitterUrl" className="sr-only">
-              Twitter URL
-            </label>
-            <input
-              id="twitterUrl"
-              {...register("twitterUrl")}
-              placeholder="https://twitter.com"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/icons/reddit-color.svg"
-              alt="Reddit"
-              width={24}
-              height={24}
-              className="absolute right-1 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="redditUrl" className="sr-only">
-              Reddit URL
-            </label>
-            <input
-              id="redditUrl"
-              {...register("redditUrl")}
-              placeholder="https://reddit.com"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-          <div className="relative">
-            <Image
-              src="/icons/youtube-color.svg"
-              alt="Youtube"
-              width={24}
-              height={24}
-              className="absolute right-1 top-1/2 -translate-y-1/2"
-            />
-            <label htmlFor="youtubeUrl" className="sr-only">
-              Youtube URL
-            </label>
-            <input
-              id="youtubeUrl"
-              {...register("youtubeUrl")}
-              placeholder="https://youtube.com"
-              className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
-            />
-          </div>
-        </section>
-      )}
+      <div ref={linksRef}>
+        {linksOpen && (
+          <section className="mt-2 flex max-w-sm flex-col gap-2">
+            <div className="relative">
+              <Image
+                src="/icons/safari.svg"
+                alt="Live Demo"
+                width={16}
+                height={16}
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="demoUrl" className="sr-only">
+                Live Demo URL
+              </label>
+              <input
+                id="demoUrl"
+                {...register("demoUrl")}
+                placeholder="https://your-live-demo.com"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src="/icons/github-color.svg"
+                alt="Github Repo"
+                width={24}
+                height={24}
+                className="absolute right-1 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="githubUrl" className="sr-only">
+                Github Repo URL
+              </label>
+              <input
+                id="githubUrl"
+                {...register("githubUrl")}
+                placeholder="https://github.com"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src="/icons/discord-color.svg"
+                alt="Discord"
+                width={20}
+                height={20}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="discordUrl" className="sr-only">
+                Discord URL
+              </label>
+              <input
+                id="discordUrl"
+                {...register("discordUrl")}
+                placeholder="https://discord.gg"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src="/icons/twitter-color.svg"
+                alt="Twitter"
+                width={20}
+                height={20}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="twitterUrl" className="sr-only">
+                Twitter URL
+              </label>
+              <input
+                id="twitterUrl"
+                {...register("twitterUrl")}
+                placeholder="https://twitter.com"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src="/icons/reddit-color.svg"
+                alt="Reddit"
+                width={24}
+                height={24}
+                className="absolute right-1 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="redditUrl" className="sr-only">
+                Reddit URL
+              </label>
+              <input
+                id="redditUrl"
+                {...register("redditUrl")}
+                placeholder="https://reddit.com"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src="/icons/youtube-color.svg"
+                alt="Youtube"
+                width={24}
+                height={24}
+                className="absolute right-1 top-1/2 -translate-y-1/2"
+              />
+              <label htmlFor="youtubeUrl" className="sr-only">
+                Youtube URL
+              </label>
+              <input
+                id="youtubeUrl"
+                {...register("youtubeUrl")}
+                placeholder="https://youtube.com"
+                className="w-full rounded-md border bg-zinc-50 px-2 py-1 pr-8 focus:outline-sky-600"
+              />
+            </div>
+          </section>
+        )}
+      </div>
 
       <div className="mb-2 mt-4 flex gap-2">
-        {!snippetsOpen && (
-          <Button
-            onClick={() => setSnippetsOpen(true)}
-            type="button"
-            size="small"
-            className="flex gap-1.5"
-          >
-            <span>+</span>Code snippets
-          </Button>
-        )}
-        {!linksOpen && (
-          <Button
-            onClick={() => setLinksOpen(true)}
-            type="button"
-            size="small"
-            className="flex gap-1.5"
-          >
-            <span>+</span>Social links
-          </Button>
-        )}
+        <Button
+          onClick={() => setSnippetsOpen((o) => !o)}
+          type="button"
+          size="small"
+          className="flex gap-1.5"
+        >
+          <span>{snippetsOpen ? "-" : "+"}</span>Code snippets
+        </Button>
+        <Button
+          onClick={() => setLinksOpen((o) => !o)}
+          type="button"
+          size="small"
+          className="flex gap-1.5"
+        >
+          <span>{linksOpen ? "-" : "+"}</span>Social links
+        </Button>
       </div>
       <div className="flex items-center justify-end gap-1.5 md:mt-2 md:gap-4">
         <Button onClick={() => void reset()} type="button" intent="secondary">

@@ -19,10 +19,6 @@ export const langs = {
     logo: "/icons/code/rs.svg",
     extension: "rs",
   },
-  PHP: {
-    logo: "/icons/code/php.svg",
-    extension: "php",
-  },
   Java: {
     logo: "/icons/code/java.svg",
     extension: "java",

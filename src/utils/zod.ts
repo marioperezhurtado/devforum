@@ -54,7 +54,6 @@ export const postSchema = z.object({
           "Python",
           "Go",
           "Rust",
-          "PHP",
           "Java",
           "C",
           "Cpp",

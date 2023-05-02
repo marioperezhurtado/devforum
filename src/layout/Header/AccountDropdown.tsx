@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { signOut, useSession } from "next-auth/react"
 import useOnClickOutside from "@/hooks/useOnClickOutside"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -9,6 +10,7 @@ export default function AccountDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
   const ref = useRef(null)
+  const [dropdownRef] = useAutoAnimate()
 
   useOnClickOutside(ref, () => setIsOpen(false))
 
@@ -42,100 +44,102 @@ export default function AccountDropdown() {
             />
           </svg>
         </button>
-        {isOpen && (
-          <div
-            className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white text-sm shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="menu-button"
-            tabIndex={-1}
-          >
-            <div className="py-1" role="none">
-              <p className="px-4 py-2">
-                Logged in as{" "}
-                <span className="font-semibold">{session?.user.name}</span>
-              </p>
-            </div>
+        <div ref={dropdownRef} className="z-10">
+          {isOpen && (
+            <div
+              className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white text-sm shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+              tabIndex={-1}
+            >
+              <div className="py-1" role="none">
+                <p className="px-4 py-2">
+                  Logged in as{" "}
+                  <span className="font-semibold">{session?.user.name}</span>
+                </p>
+              </div>
 
-            <div role="none">
-              <Link
-                href={`/profile/${session?.user.email ?? ""}`}
-                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
-                role="menuitem"
-                id="menu-item-1"
-              >
-                <Image
-                  src="/icons/profile.svg"
-                  alt="Your profile"
-                  width={16}
-                  height={16}
-                />
-                Your profile
-              </Link>
-              <a
-                href="#"
-                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
-                role="menuitem"
-                id="menu-item-2"
-              >
-                <Image
-                  src="/icons/settings.svg"
-                  alt="Account settings"
-                  width={16}
-                  height={16}
-                />
-                Account settings
-              </a>
-            </div>
-            <div role="none">
-              <a
-                href="#"
-                className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
-                role="menuitem"
-                id="menu-item-3"
-              >
-                <Image
-                  src="/icons/support.svg"
-                  alt="Support"
-                  width={16}
-                  height={16}
-                />
-                Support
-              </a>
-              <a
-                href="#"
-                className="transiton flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-zinc-50"
-                role="menuitem"
-                id="menu-item-4"
-              >
-                <Image
-                  src="/icons/terms-conditions.svg"
-                  alt="Terms and conditions"
-                  width={16}
-                  height={16}
-                />
-                Terms and conditions
-              </a>
-            </div>
+              <div role="none">
+                <Link
+                  href={`/profile/${session?.user.email ?? ""}`}
+                  className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
+                  role="menuitem"
+                  id="menu-item-1"
+                >
+                  <Image
+                    src="/icons/profile.svg"
+                    alt="Your profile"
+                    width={16}
+                    height={16}
+                  />
+                  Your profile
+                </Link>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
+                  role="menuitem"
+                  id="menu-item-2"
+                >
+                  <Image
+                    src="/icons/settings.svg"
+                    alt="Account settings"
+                    width={16}
+                    height={16}
+                  />
+                  Account settings
+                </a>
+              </div>
+              <div role="none">
+                <a
+                  href="#"
+                  className="flex items-center gap-2 px-4 py-3 text-gray-700 transition hover:bg-zinc-50"
+                  role="menuitem"
+                  id="menu-item-3"
+                >
+                  <Image
+                    src="/icons/support.svg"
+                    alt="Support"
+                    width={16}
+                    height={16}
+                  />
+                  Support
+                </a>
+                <a
+                  href="#"
+                  className="transiton flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-zinc-50"
+                  role="menuitem"
+                  id="menu-item-4"
+                >
+                  <Image
+                    src="/icons/terms-conditions.svg"
+                    alt="Terms and conditions"
+                    width={16}
+                    height={16}
+                  />
+                  Terms and conditions
+                </a>
+              </div>
 
-            <div role="none">
-              <button
-                onClick={() => void signOut()}
-                className="flex w-full items-center gap-2 px-4 py-3 text-left font-bold text-gray-700 transition hover:bg-zinc-50"
-                role="menuitem"
-                id="menu-item-5"
-              >
-                <Image
-                  src="/icons/signout.svg"
-                  alt="Sign out"
-                  width={16}
-                  height={16}
-                />
-                Sign out
-              </button>
+              <div role="none">
+                <button
+                  onClick={() => void signOut()}
+                  className="flex w-full items-center gap-2 px-4 py-3 text-left font-bold text-gray-700 transition hover:bg-zinc-50"
+                  role="menuitem"
+                  id="menu-item-5"
+                >
+                  <Image
+                    src="/icons/signout.svg"
+                    alt="Sign out"
+                    width={16}
+                    height={16}
+                  />
+                  Sign out
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )
