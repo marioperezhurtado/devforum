@@ -40,7 +40,9 @@ This project is made using the **[T3 Stack](https://create.t3.gg/)**
 
 **Code snippet editor:** [react-simple-code-editor](https://github.com/react-simple-code-editor/react-simple-code-editor)
 
-**Tailwind variants:** [Cva](https://cva.style/docs)
+**Markdown:** [markdown-to-jsx](https://github.com/probablyup/markdown-to-jsx)
+
+**Tailwind variants:** [cva](https://cva.style/docs)
 
 **Dates and times:** [Day.js](https://day.js.org/)
 
@@ -77,5 +79,21 @@ To run this project, you will need to add the following environment variables to
 `UPSTASH_REDIS_REST_URL='https://your-upstash-redis-rest-url'`
 
 `UPSTASH_REDIS_REST_TOKEN='your-upstash-redis-rest-token'`
+
+## 🚀 Installation
+
+```bash
+git clone https://github.com/marioperezhurtado/devforum.git
+cd devforum
+pnpm i
+```
+
+## 🏗️ Where is this deployed?
+
+**[Vercel](https://vercel.com/)**
+
+**[PlanetScale](https://planetscale.com/)**
+
+**[Upstash](https://upstash.com/)**
 
 
