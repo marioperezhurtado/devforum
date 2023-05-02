@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic"
 
-import styles from "./PostText.module.css"
+import styles from "./PostContent.module.css"
 
 const DynamicMarkdown = dynamic(
   () => import("markdown-to-jsx").then((markdown) => markdown),
@@ -9,7 +9,7 @@ const DynamicMarkdown = dynamic(
   }
 )
 
-export default function PostText({ text }: { text: string }) {
+export default function PostContent({ text }: { text: string }) {
   return (
     <div
       className={`mt-5 whitespace-pre-wrap break-words ${

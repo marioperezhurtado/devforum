@@ -41,11 +41,11 @@ export default function Sidebar() {
   return (
     <aside
       ref={ref}
-      className={`fixed  top-0 z-10 flex h-full w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 shadow-md transition-all duration-500 lg:relative lg:shadow-none
+      className={`fixed  top-0 z-10 flex h-full w-64 flex-col border-r border-zinc-200 bg-white shadow-md transition-all duration-500 lg:relative lg:shadow-none
       ${isOpen ? "left-0" : "-left-[16rem] lg:left-0"}
       `}
     >
-      <button onClick={close} className="absolute right-4 md:hidden">
+      <button onClick={close} className="absolute right-4 top-4 md:hidden">
         <Image
           src="/icons/back.svg"
           alt="Close sidebar"
@@ -53,7 +53,7 @@ export default function Sidebar() {
           height={32}
         />
       </button>
-      <section className="flex flex-col gap-5 overflow-y-auto overflow-x-hidden sm:gap-10 lg:flex-col">
+      <section className="flex flex-col gap-5 overflow-y-auto overflow-x-hidden px-6 py-5 sm:gap-10 lg:flex-col">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-semibold">Trending</h2>
@@ -121,9 +121,9 @@ export default function Sidebar() {
         href={
           session ? "/create/community" : "/signIn?redirectTo=/create/community"
         }
-        className="mt-auto"
+        className="mt-auto px-6 py-5"
       >
-        <Button intent="secondary" className="mt-5 w-full">
+        <Button intent="secondary" className="w-full">
           Create a community
         </Button>
       </Link>
