@@ -9,7 +9,7 @@ import Button from "@/ui/Button"
 
 export default function Header() {
   const { data: session } = useSession()
-  const { open } = useSidebarStore()
+  const { toggle } = useSidebarStore()
 
   return (
     <header className="mx-auto flex w-full items-center justify-between border-b border-zinc-200 bg-white px-3 py-2 text-zinc-700 xs:px-4 sm:px-6 sm:py-3">
@@ -17,7 +17,7 @@ export default function Header() {
         <button
           onClick={(e) => {
             e.stopPropagation()
-            open()
+            toggle()
           }}
           className="lg:hidden"
           name="Open sidebar"

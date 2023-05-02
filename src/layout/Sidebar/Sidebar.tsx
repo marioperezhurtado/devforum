@@ -41,11 +41,19 @@ export default function Sidebar() {
   return (
     <aside
       ref={ref}
-      className={`z-10 w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 ${
-        isOpen ? "fixed top-0 flex h-full shadow-md" : "hidden lg:flex"
-      }`}
+      className={`fixed  top-0 z-10 flex h-full w-64 flex-col border-r border-zinc-200 bg-white px-6 py-5 shadow-md transition-all duration-500 lg:relative lg:shadow-none
+      ${isOpen ? "left-0" : "-left-[16rem] lg:left-0"}
+      `}
     >
-      <section className="flex flex-col-reverse gap-10 lg:flex-col">
+      <button onClick={close} className="absolute right-4 md:hidden">
+        <Image
+          src="/icons/back.svg"
+          alt="Close sidebar"
+          width={32}
+          height={32}
+        />
+      </button>
+      <section className="flex flex-col gap-5 overflow-y-auto overflow-x-hidden sm:gap-10 lg:flex-col">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-semibold">Trending</h2>
@@ -115,7 +123,7 @@ export default function Sidebar() {
         }
         className="mt-auto"
       >
-        <Button intent="secondary" className="w-full">
+        <Button intent="secondary" className="mt-5 w-full">
           Create a community
         </Button>
       </Link>
