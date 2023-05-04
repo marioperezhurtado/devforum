@@ -16,6 +16,10 @@ vi.mock("@/utils/api", () => ({
   },
 }))
 
+vi.mock("@formkit/auto-animate/react", () => ({
+  useAutoAnimate: vi.fn().mockReturnValue([{ current: {} }]),
+}))
+
 describe("Header", () => {
   const mockedUseSession = mockUseSession()
   mockedUseSession.mockReturnValue({ data: false })

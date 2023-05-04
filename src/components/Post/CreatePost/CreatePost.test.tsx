@@ -8,6 +8,10 @@ import type { Mock } from "vitest"
 
 import CreatePost from "./CreatePost"
 
+vi.mock("@formkit/auto-animate/react", () => ({
+  useAutoAnimate: vi.fn().mockReturnValue([{ current: {} }]),
+}))
+
 vi.mock("@/utils/api", () => ({
   api: {
     post: {

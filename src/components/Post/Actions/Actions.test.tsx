@@ -45,7 +45,6 @@ describe("Actions", () => {
   mockedUseSession.mockReturnValue({
     user: {
       id: "1",
-      username: "John Doe",
     },
   })
   const mockAddOrUpdate = vi.spyOn(

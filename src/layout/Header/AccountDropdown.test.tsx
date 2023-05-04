@@ -1,8 +1,12 @@
-import { describe, test, expect } from "vitest"
+import { describe, test, expect, vi } from "vitest"
 import { render, screen, fireEvent } from "@testing-library/react"
 
 import AccountDropdown from "./AccountDropdown"
 import mockUseSession from "@/test/mocks/mockUseSession"
+
+vi.mock("@formkit/auto-animate/react", () => ({
+  useAutoAnimate: vi.fn().mockReturnValue([{ current: {} }]),
+}))
 
 describe("AccountDropdown", () => {
   const mockedUseSession = mockUseSession()
