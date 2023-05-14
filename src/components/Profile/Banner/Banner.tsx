@@ -28,7 +28,7 @@ export default function Banner({
     useUploadThing({
       endpoint: "banner",
       onClientUploadComplete: () => {
-        utils.user.getByEmail.invalidate(profile.email as string)
+        void utils.user.getByEmail.invalidate(profile.email as string)
       },
     })
 
@@ -36,7 +36,7 @@ export default function Banner({
     useUploadThing({
       endpoint: "avatar",
       onClientUploadComplete: () => {
-        utils.user.getByEmail.invalidate(profile.email as string)
+        void utils.user.getByEmail.invalidate(profile.email as string)
       },
     })
 
@@ -46,13 +46,13 @@ export default function Banner({
         onMouseEnter={() => setIsBannerHovered(true)}
         onMouseLeave={() => setIsBannerHovered(false)}
         className={`relative h-28 bg-sky-600 ${
-          isUploadingAvatar && "brightness-50"
+          isUploadingAvatar ? "brightness-50" : ""
         }`}
       >
         {profile.banner && (
           <Image
             src={profile.banner}
-            alt={`${profile.name}'s profile banner`}
+            alt={`${profile.name ?? ""}'s profile banner`}
             width={650}
             height={120}
             className="h-28 w-full object-cover"
@@ -63,27 +63,29 @@ export default function Banner({
             <LoadSpinner />
           </span>
         )}
-        <div
-          className={`absolute bottom-2 right-2 flex h-6 w-6 overflow-hidden rounded-md border bg-white opacity-0 shadow-md transition duration-200
-        ${isBannerHovered && "opacity-100"}
+        {isOwn && (
+          <div
+            className={`absolute bottom-2 right-2 flex h-6 w-6 overflow-hidden rounded-md border bg-white opacity-0 shadow-md transition duration-200
+        ${isBannerHovered ? "opacity-100" : ""}
         `}
-        >
-          <input
-            className="z-10 opacity-0"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              e.target.files && uploadBanner(Array.from(e.target.files))
-            }}
-          />
-          <Image
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            src="/icons/camera.svg"
-            alt="Upload banner image"
-            width={18}
-            height={18}
-          />
-        </div>
+          >
+            <input
+              className="z-10 opacity-0"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                e.target.files && void uploadBanner(Array.from(e.target.files))
+              }}
+            />
+            <Image
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              src="/icons/camera.svg"
+              alt="Upload banner image"
+              width={18}
+              height={18}
+            />
+          </div>
+        )}
       </div>
 
       <span
@@ -92,7 +94,7 @@ export default function Banner({
         className="absolute left-3 top-12 z-10 md:left-6"
       >
         <div className="relative">
-          <span className={`${isUploadingAvatar && "brightness-50"}`}>
+          <span className={`${isUploadingAvatar ? "brightness-50" : ""}`}>
             <Avatar user={profile} size="xlarge" />
           </span>
           {isUploadingAvatar && (
@@ -101,27 +103,29 @@ export default function Banner({
             </span>
           )}
         </div>
-        <div
-          className={`absolute bottom-0 right-0 flex h-6 w-6 overflow-hidden rounded-md border bg-white opacity-0 shadow-md transition duration-200
-        ${isAvatarHovered && "opacity-100"}
+        {isOwn && (
+          <div
+            className={`absolute bottom-0 right-0 flex h-6 w-6 overflow-hidden rounded-md border bg-white opacity-0 shadow-md transition duration-200
+        ${isAvatarHovered ? "opacity-100" : ""}
         `}
-        >
-          <input
-            className="z-10 opacity-0"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              e.target.files && uploadAvatar(Array.from(e.target.files))
-            }}
-          />
-          <Image
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            src="/icons/camera.svg"
-            alt="Upload banner image"
-            width={18}
-            height={18}
-          />
-        </div>
+          >
+            <input
+              className="z-10 opacity-0"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                e.target.files && void uploadAvatar(Array.from(e.target.files))
+              }}
+            />
+            <Image
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              src="/icons/camera.svg"
+              alt="Upload banner image"
+              width={18}
+              height={18}
+            />
+          </div>
+        )}
       </span>
     </>
   )
