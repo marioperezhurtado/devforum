@@ -1,16 +1,35 @@
+import { useState, useRef } from "react"
 import { api } from "@/utils/api"
 
 import Link from "next/link"
 
 export default function PopularTopics() {
+  const [isScrolling, setIsScrolling] = useState(false)
+  const listRef = useRef<HTMLUListElement>(null)
+
   const { data: topics, isLoading } = api.topic.getPopular.useQuery(undefined, {
     refetchOnWindowFocus: false,
   })
 
+  const handleScroll = (e: React.MouseEvent<HTMLUListElement>) => {
+    if (!isScrolling) return
+    if (!listRef.current) return
+
+    const distance = e.movementX
+    listRef.current.scrollLeft -= distance
+  }
+
   if (isLoading) return <TopicsSkeleton />
 
   return (
-    <ul className="scrollbar-hide my-5 flex gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10">
+    <ul
+      ref={listRef}
+      onMouseDown={() => setIsScrolling(true)}
+      onMouseUp={() => setIsScrolling(false)}
+      onMouseLeave={() => setIsScrolling(false)}
+      onMouseMove={handleScroll}
+      className="scrollbar-hide my-5 flex select-none gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10"
+    >
       {topics?.map((t) => (
         <li key={t.name}>
           <Topic name={t.name} />
