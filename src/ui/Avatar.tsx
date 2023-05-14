@@ -36,7 +36,7 @@ export default function Avatar({
   if (!image)
     return (
       <div
-        className={`flex min-w-fit items-center justify-center rounded-full border bg-zinc-100 ${className}`}
+        className={`flex min-w-fit items-center justify-center rounded-full  bg-white ${className}`}
       >
         <span className="text-sm font-semibold text-zinc-400">
           {name?.[0]?.toUpperCase()}
@@ -51,7 +51,7 @@ export default function Avatar({
         alt={`${name ?? ""}'s profile picture`}
         width={width}
         height={width}
-        className={`min-w-fit rounded-full object-cover ${className}`}
+        className={`aspect-square min-w-fit rounded-full object-cover ${className}`}
       />
     </Link>
   )

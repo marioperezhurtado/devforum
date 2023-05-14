@@ -28,6 +28,9 @@ const config = {
       },
     ],
   },
+  experimental: {
+    esmExternals: false,
+  },
 }
 
 const withBundleAnalyzer = NextBundleAnalyzer({

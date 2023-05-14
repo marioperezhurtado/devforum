@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react"
 import { toast } from "react-hot-toast"
 import dayjs from "dayjs"
 
-import Avatar from "@/ui/Avatar"
+import Banner from "@/components/Profile/Banner/Banner"
 import Button from "@/ui/Button"
 
 import type { RouterOutputs } from "@/utils/api"
@@ -76,11 +76,7 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
 
   return (
     <div className="relative overflow-hidden rounded-md border bg-white shadow-md">
-      <div className="h-28 bg-sky-600">
-        <span className="absolute left-3 top-12 md:left-6">
-          <Avatar user={profile} size="xlarge" />
-        </span>
-      </div>
+      <Banner profile={profile} isOwn={isOwnProfile} />
       <div className=" px-3 py-2 md:px-6 md:py-4">
         {!isLoading && !isOwnProfile && !isFollowing && (
           <Button
