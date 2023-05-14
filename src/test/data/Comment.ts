@@ -10,6 +10,7 @@ export const Comment = {
     name: "John Doe",
     email: "john@test.com",
     image: "https://image.com",
+    banner: "https://banner.com",
     emailVerified: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
