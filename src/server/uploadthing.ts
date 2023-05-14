@@ -8,12 +8,6 @@ import { prisma } from "./db"
 
 const f = createUploadthing()
 
-import type { NextApiRequest, NextApiResponse } from "next"
-
-const auth = (req: NextApiRequest, res: NextApiResponse) => ({
-  id: "clgxeuj7h0002n843xekaeemp",
-})
-
 export const fileRouter = {
   avatar: f
     .fileTypes(["image"])
