@@ -108,3 +108,22 @@ export const communitySchema = z.object({
       message: "Select a valid hexadecimal color.",
     }), // #000000 - #ffffff
 })
+
+export const updateProfileSchema = z.object({
+  name: z
+    .string()
+    .min(5, {
+      message: "Name is too short. (At least 5 characters).",
+    })
+    .max(30, {
+      message: "Name is too long. Please keep it under 30 characters.",
+    }),
+  bio: z
+    .string()
+    .min(10, {
+      message: "Bio is too short. (At least 10 characters).",
+    })
+    .max(150, {
+      message: "Bio is too long. Please keep it under 150 characters.",
+    }),
+})

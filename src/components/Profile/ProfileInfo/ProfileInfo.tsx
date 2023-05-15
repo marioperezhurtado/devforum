@@ -3,8 +3,9 @@ import { useSession } from "next-auth/react"
 import { toast } from "react-hot-toast"
 import dayjs from "dayjs"
 
-import Banner from "@/components/Profile/Banner/Banner"
 import Button from "@/ui/Button"
+import Banner from "@/components/Profile/Banner/Banner"
+import EditProfile from "../EditProfile/EditProfile"
 
 import type { RouterOutputs } from "@/utils/api"
 type Profile = NonNullable<RouterOutputs["user"]["getByEmail"]>
@@ -98,12 +99,19 @@ export default function ProfileInfo({ profile }: { profile: Profile }) {
           </Button>
         )}
 
+        {isOwnProfile && (
+          <span className="absolute right-3 top-32 md:right-6">
+            <EditProfile profile={profile} />
+          </span>
+        )}
+
         <div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-zinc-500">
           <h1 className="text-lg font-bold text-zinc-700">
             {profile?.name ?? ""}
           </h1>
           ·<h2>{profile?.email ?? ""}</h2>
         </div>
+        {profile.bio && <p className="mt-2">{profile.bio}</p>}
         <div className="mt-5 flex flex-wrap gap-x-10 gap-y-4 text-sm text-zinc-500">
           <div className="flex flex-wrap gap-4">
             <p>

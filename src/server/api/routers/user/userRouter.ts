@@ -6,6 +6,8 @@ import {
 } from "@/server/api/trpc"
 import { TRPCError } from "@trpc/server"
 
+import { updateProfileSchema } from "@/utils/zod"
+
 export const userRouter = createTRPCRouter({
   getByEmail: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.user.findUnique({
@@ -88,4 +90,17 @@ export const userRouter = createTRPCRouter({
       },
     })
   }),
+  update: protectedProcedure
+    .input(updateProfileSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          name: input.name,
+          bio: input.bio,
+        },
+      })
+    }),
 })

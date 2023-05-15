@@ -92,7 +92,7 @@ export default function Actions({ post }: { post: Post }) {
           onConfirm={() => void handleDelete()}
         >
           <p className="text-xl font-bold">Are you sure?</p>
-          <p className="mt-2">
+          <p className="mt-2 text-base">
             This action cannot be undone. This will permanently delete this post
             and all of its comments and reactions.
           </p>
