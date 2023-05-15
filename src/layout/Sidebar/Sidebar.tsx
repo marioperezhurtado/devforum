@@ -41,7 +41,7 @@ export default function Sidebar() {
   return (
     <aside
       ref={ref}
-      className={`fixed  top-0 z-10 flex h-full w-64 flex-col border-r border-zinc-200 bg-white shadow-md transition-all duration-500 lg:relative lg:shadow-none
+      className={`fixed  top-0 z-20 flex h-full w-64 flex-col border-r border-zinc-200 bg-white shadow-md transition-all duration-500 lg:relative lg:shadow-none
       ${isOpen ? "left-0" : "-left-[16rem] lg:left-0"}
       `}
     >

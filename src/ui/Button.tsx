@@ -10,11 +10,11 @@ const button = cva("button", {
   variants: {
     intent: {
       primary: [
-        "bg-sky-600",
+        "!bg-sky-600",
         "text-sky-100",
         "border-sky-600",
         "hover:border-sky-500",
-        "hover:bg-sky-500",
+        "hover:!bg-sky-500",
       ],
       secondary: [
         "text-sky-600",
