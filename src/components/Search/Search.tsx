@@ -59,7 +59,7 @@ export default function Search() {
       <button
         type="button"
         aria-label="search"
-        className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full bg-sky-600 pl-2 pr-2.5 transition hover:bg-sky-500"
+        className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full !bg-sky-600 pl-2 pr-2.5 transition hover:!bg-sky-500"
       >
         <Image src="/icons/search.svg" alt="Search" width={18} height={18} />
       </button>
@@ -94,7 +94,7 @@ export default function Search() {
         </div>
       )}
       {isFetching && (
-        <span className="absolute top-1/2 right-12 -translate-y-1/2">
+        <span className="absolute right-12 top-1/2 -translate-y-1/2">
           <LoadSpinner />
         </span>
       )}

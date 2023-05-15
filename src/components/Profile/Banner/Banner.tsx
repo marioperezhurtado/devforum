@@ -56,6 +56,7 @@ export default function Banner({
             width={650}
             height={120}
             className="h-28 w-full object-cover"
+            priority
           />
         )}
         {isUploadingBanner && (
