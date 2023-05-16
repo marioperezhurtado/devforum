@@ -15,6 +15,10 @@ export default async function ProfileOGImage(req: NextRequest) {
   const name = searchParams.get("name")
   const email = searchParams.get("email")
   const image = searchParams.get("image")
+  const followers = searchParams.get("followers")
+  const posts = searchParams.get("posts")
+  const comments = searchParams.get("comments")
+  const votes = searchParams.get("votes")
 
   const fontData = await font
 
@@ -44,9 +48,33 @@ export default async function ProfileOGImage(req: NextRequest) {
             tw="rounded-full"
           />
         </div>
-        <span tw="ml-auto mt-auto font-bold text-4xl">
-          <span tw="text-sky-600">Dev</span>Forum
-        </span>
+        <div tw="flex justify-between mt-auto">
+          <div tw="flex text-4xl text-zinc-400">
+            <div tw="mr-14 flex items-center">
+              <span tw="mr-2">{followers}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <FollowersIcon />
+            </div>
+            <div tw="mr-14 flex items-center">
+              <span tw="mr-2">{posts}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <PostsIcon />
+            </div>
+            <div tw="mr-14 flex items-center">
+              <span tw="mr-2">{comments}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <CommentsIcon />
+            </div>
+            <div tw="mr-14 flex items-center">
+              <span tw="mr-2">{votes}</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <VotesIcon />
+            </div>
+          </div>
+          <span tw="font-bold text-4xl">
+            <span tw="text-sky-600">Dev</span>Forum
+          </span>
+        </div>
       </div>
     ),
     {
@@ -62,3 +90,92 @@ export default async function ProfileOGImage(req: NextRequest) {
     }
   )
 }
+
+const FollowersIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <path
+          stroke="#a1a1aa"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="3"
+          d="M21 20c0-1.742-1.67-3.223-4-3.773M15 20c0-2.21-2.686-4-6-4s-6 1.79-6 4m12-7a4 4 0 000-8m-6 8a4 4 0 110-8 4 4 0 010 8z"
+        ></path>
+      </g>
+    </svg>
+  )
+}
+
+const PostsIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <path
+          stroke="#a1a1aa"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="3"
+          d="M4 20h16M4 20v-4l8-8M4 20h4l8-8m-4-4l2.869-2.869.001-.001c.395-.395.593-.593.821-.667a1 1 0 01.618 0c.228.074.425.272.82.666l1.74 1.74c.396.396.594.594.668.822a1 1 0 010 .618c-.074.228-.272.426-.668.822h0L16 12.001m-4-4l4 4"
+        ></path>
+      </g>
+    </svg>
+  )
+}
+
+const CommentsIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <path
+          stroke="#a1a1aa"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="3"
+          d="M16 8h4a1 1 0 011 1v11l-3.333-2.769a1.002 1.002 0 00-.64-.231H9a1 1 0 01-1-1v-3m8-5V5a1 1 0 00-1-1H4a1 1 0 00-1 1v11l3.333-2.77c.18-.148.406-.23.64-.23H8m8-5v4a1 1 0 01-1 1H8"
+        ></path>
+      </g>
+    </svg>
+  )
+}
+
+const VotesIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <path
+          stroke="#a1a1aa"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2.5"
+          d="M7 17L17 7m0 0H9m8 0v8"
+        ></path>
+      </g>
+    </svg>
+  )
+}
+3

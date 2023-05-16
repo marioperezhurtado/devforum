@@ -57,6 +57,16 @@ export default function Profile() {
     refetchOnWindowFocus: false,
   })
 
+  const {
+    followers: followerCount,
+    posts: postCount,
+    comments: commentCount,
+    commentReactions: commentReactionCount,
+    postReactions: postReactionCount,
+  } = profile?._count ?? {}
+
+  const reactionCount = (commentReactionCount ?? 0) + (postReactionCount ?? 0)
+
   const { data: trendingPosts, isLoading: trendingLoading } =
     api.post.user.getTrending.useQuery(email, {
       enabled: filter === "trending",
@@ -101,7 +111,9 @@ export default function Profile() {
       }, or find out about his latest posts and comments.`}
       ogImage={`https://devforum.dev/api/og/profile?name=${
         profile?.name ?? ""
-      }&email=${email}&image=${profile?.image ?? ""}`}
+      }&email=${email}&image=${profile?.image ?? ""}
+      &followers=${followerCount ?? 0}&posts=${postCount ?? 0}
+      &comments=${commentCount ?? 0}&votes=${reactionCount ?? 0}`}
     >
       {profile && <ProfileInfo profile={profile} />}
       <Filter filter={filter} baseLink={`/profile/${email}`} />
