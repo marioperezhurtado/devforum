@@ -10,6 +10,7 @@ export const Post: PostType = {
   communityName: "Test Community",
   _count: {
     comments: 69,
+    reactions: 420,
   },
   creator: {
     id: "1",
