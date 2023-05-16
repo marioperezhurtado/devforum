@@ -1,5 +1,7 @@
 import { ImageResponse } from "@vercel/og"
 import type { NextRequest } from "next/server"
+import CommentsIcon from "@/assets/og/CommentsIcon"
+import VotesIcon from "@/assets/og/VotesIcon"
 
 export const config = {
   runtime: "edge",
@@ -134,48 +136,3 @@ const PostsIcon = () => {
     </svg>
   )
 }
-
-const CommentsIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <g>
-        <path
-          stroke="#a1a1aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="3"
-          d="M16 8h4a1 1 0 011 1v11l-3.333-2.769a1.002 1.002 0 00-.64-.231H9a1 1 0 01-1-1v-3m8-5V5a1 1 0 00-1-1H4a1 1 0 00-1 1v11l3.333-2.77c.18-.148.406-.23.64-.23H8m8-5v4a1 1 0 01-1 1H8"
-        ></path>
-      </g>
-    </svg>
-  )
-}
-
-const VotesIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="36"
-      height="36"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <g>
-        <path
-          stroke="#a1a1aa"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2.5"
-          d="M7 17L17 7m0 0H9m8 0v8"
-        ></path>
-      </g>
-    </svg>
-  )
-}
-3

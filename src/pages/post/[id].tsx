@@ -66,7 +66,10 @@ export default function PostPage() {
       } at DevForum.dev ${topics ? `- #${topics}` : ""}`}
       ogImage={`https://devforum.dev/api/og/post?name=${
         post?.creator.name ?? ""
-      }&title=${post?.title ?? ""}`}
+      }&image=${post?.creator.image ?? ""}&title=${
+        post?.title ?? ""
+      }&comments=${comments?.length ?? 0}
+      &votes=${post?._count?.reactions ?? 0}`}
     >
       {post && <PostItem post={post} />}
       {isOpen && post && <AddComment postId={id} onClose={() => close()} />}
@@ -98,7 +101,11 @@ export default function PostPage() {
                 {comments.length} comment{comments.length === 1 ? "" : "s"}
               </p>
             </div>
-            {!isOpen && <Button onClick={() => open()}>Leave a comment</Button>}
+            {!isOpen && (
+              <Button authRequired onClick={() => open()}>
+                Leave a comment
+              </Button>
+            )}
           </div>
           <Comments comments={comments} />
         </>
