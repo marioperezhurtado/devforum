@@ -78,9 +78,22 @@ export default function CommunityInfo({ community }: { community: Community }) {
         )}
       </div>
       <h2 className="mb-2 mt-3 md:mt-5 md:text-xl">{community?.description}</h2>
-      <p className="text-right text-sm">
-        Created on {dayjs(community?.createdAt).format("MM-DD-YYYY")}
-      </p>
+
+      <div className="mt-5 flex flex-wrap gap-x-10 gap-y-4 text-sm text-zinc-500">
+        <div className="flex flex-wrap gap-4">
+          <p>
+            {community?._count.members ?? 0}{" "}
+            {community?._count.members === 1 ? "member" : "members"}
+          </p>
+          <p>
+            {community?._count.posts ?? 0}{" "}
+            {community?._count.posts === 1 ? "post" : "posts"}
+          </p>
+        </div>
+        <p className="ml-auto text-right text-sm">
+          Created on {dayjs(community?.createdAt).format("DD MMMM YYYY")}
+        </p>
+      </div>
     </div>
   )
 }

@@ -99,6 +99,8 @@ export default function CommunityPage() {
       description={community?.description ?? ""}
       ogImage={`https://devforum.dev/api/og/community?name=${name}&description=${
         community?.description ?? ""
+      }&members=${community?._count?.members ?? 0}&posts=${
+        community?._count?.posts ?? 0
       }`}
     >
       {community && <CommunityInfo community={community} />}

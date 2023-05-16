@@ -20,6 +20,14 @@ export const getCommunityByName = ({
     where: {
       name,
     },
+    include: {
+      _count: {
+        select: {
+          members: true,
+          posts: true,
+        },
+      },
+    },
   })
 }
 

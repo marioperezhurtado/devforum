@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import type { RouterOutputs } from "@/utils/api"
-type Community = NonNullable<RouterOutputs["community"]["getByName"]>
+type Community = NonNullable<RouterOutputs["community"]["getTrending"]>[number]
 
 function getTextColor(hexColor: string): string {
   const [r, g, b] = hexColor.match(/\w\w/g)?.map((c) => parseInt(c, 16)) ?? [

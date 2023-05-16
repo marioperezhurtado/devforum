@@ -45,6 +45,10 @@ const community = {
   createdAt: new Date("2077-01-02"),
   creatorId: "1",
   color: "#000000",
+  _count: {
+    members: 100,
+    posts: 100,
+  },
 }
 
 describe("CommunityInfo", () => {
@@ -76,7 +80,7 @@ describe("CommunityInfo", () => {
     expect(screen.getByText(community.description)).toBeTruthy()
 
     expect(screen.getByText("Community")).toBeTruthy()
-    expect(screen.getByText("Created on 01-02-2077")).toBeTruthy()
+    expect(screen.getByText("Created on 02 January 2077")).toBeTruthy()
   })
 
   test("Joins community", async () => {
