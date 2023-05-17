@@ -22,8 +22,6 @@ This project is made using the **[T3 Stack](https://create.t3.gg/)**
 
 **[tRPC](https://trpc.io/)** - End-to-end typesafe APIs made easy
 
-
-
 ## 🔧 Tools / Dependencies
 
 **Client state management:** [Zustand](https://github.com/pmndrs/zustand)
@@ -38,11 +36,11 @@ This project is made using the **[T3 Stack](https://create.t3.gg/)**
 
 **Ratelimit:** [Upstash Rate Limit](https://github.com/upstash/ratelimit)
 
+**File uploads:** [Uploadthing](https://github.com/pingdotgg/uploadthing)
+
 **Code snippet editor:** [react-simple-code-editor](https://github.com/react-simple-code-editor/react-simple-code-editor)
 
 **Markdown:** [markdown-to-jsx](https://github.com/probablyup/markdown-to-jsx)
-
-**Tailwind variants:** [cva](https://cva.style/docs)
 
 **Dates and times:** [Day.js](https://day.js.org/)
 
@@ -80,6 +78,12 @@ To run this project, you will need to add the following environment variables to
 
 `UPSTASH_REDIS_REST_TOKEN='your-upstash-redis-rest-token'`
 
+** UploadThing**
+
+`UPLOADTHING_SECRET=""`
+
+`UPLOADTHING_APP_ID=""`
+
 ## 🚀 Installation
 
 ```bash
@@ -96,4 +100,5 @@ pnpm i
 
 **[Upstash](https://upstash.com/)**
 
+**[UploadThing](https://uploadthing.com/)**
 
