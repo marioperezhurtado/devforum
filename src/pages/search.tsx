@@ -36,14 +36,14 @@ export default function SearchPage({ search }: Props) {
       title="Search results for: - DevForum"
       description="Search results for: - Browse posts, topics and communities and get involved in the conversation - DevForum"
     >
-      <h1 className="mb-5 text-center text-xl font-bold">
+      <h1 className="mb-8 text-center text-xl font-bold">
         Search results for:{" "}
         <span className="text-gray-500">{`"${search}"`}</span>
       </h1>
       {results && <PostPreviews posts={results} />}
-      {!results && (
-        <p className="text-center text-lg font-bold text-gray-500">
-          No results found
+      {!results?.length && (
+        <p className="text-center font-bold text-gray-500">
+          No results found. Try searching for something else.
         </p>
       )}
     </ForumLayout>

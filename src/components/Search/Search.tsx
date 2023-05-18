@@ -48,6 +48,7 @@ export default function Search() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setIsOpen(true)}
+        onBlur={() => setIsOpen(false)}
         name="search"
         id="search"
         type="text"
@@ -57,7 +58,6 @@ export default function Search() {
         className="w-full rounded-full border bg-zinc-50 px-3 py-1 focus:outline-sky-600"
       />
       <button
-        type="button"
         aria-label="search"
         className="absolute right-0 top-1/2 h-full -translate-y-1/2 rounded-r-full !bg-sky-600 pl-2 pr-2.5 transition hover:!bg-sky-500"
       >
