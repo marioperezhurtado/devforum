@@ -85,6 +85,7 @@ export default function PostPage() {
           </p>
           <Button
             type="button"
+            authRequired
             onClick={() => open()}
             className="mx-auto mt-5 block w-fit"
           >

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 
-import ForumLayout from "@/layout/ForumLayout/ForumLayout"
+import Layout from "@/layout/Layout/Layout"
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
@@ -18,7 +18,7 @@ export default function SignIn() {
   }, [session, redirectTo, router])
 
   return (
-    <ForumLayout
+    <Layout
       title="Sign In - DevForum.dev"
       description="Sign in to your DevForum.dev account and connect with other developers"
     >
@@ -28,12 +28,12 @@ export default function SignIn() {
           content="https://devforum.dev/api/og/default"
         />
       </Head>
-      <section className="mx-auto mt-5 mb-10 w-fit p-2 sm:mt-10 md:mt-20">
-        <div className="relative max-w-sm rounded-xl border bg-white py-5 px-6 text-center shadow-md md:py-10">
+      <section className="mx-auto mb-10 mt-5 w-fit p-2 sm:mt-10 md:mt-20">
+        <div className="relative max-w-sm rounded-xl border bg-white px-6 py-5 text-center shadow-md md:py-10">
           <h1 className="mb-5 text-3xl font-semibold">Sign In</h1>
           <button
             onClick={() => void router.push(redirectTo || "/")}
-            className="absolute top-4 left-4 rounded-md border border-white transition hover:border-zinc-200 hover:bg-zinc-50"
+            className="absolute left-4 top-4 rounded-md border border-white transition hover:border-zinc-200 hover:bg-zinc-50"
           >
             <Image
               src="/icons/back.svg"
@@ -51,7 +51,7 @@ export default function SignIn() {
             <li>
               <button
                 onClick={() => void signIn("github")}
-                className="mx-auto flex w-full items-center justify-center gap-2 rounded-full bg-neutral-800 py-2 px-4 text-zinc-100 shadow-md transition hover:bg-neutral-700"
+                className="mx-auto flex w-full items-center justify-center gap-2 rounded-full bg-neutral-800 px-4 py-2 text-zinc-100 shadow-md transition hover:bg-neutral-700"
               >
                 <Image
                   src="/icons/github.svg"
@@ -65,7 +65,7 @@ export default function SignIn() {
             <li>
               <button
                 onClick={() => void signIn("github")}
-                className="mx-auto flex w-full items-center justify-center gap-2 rounded-full bg-[#5766e3] py-2 px-4 text-zinc-100 shadow-md transition hover:bg-[#6a76e0]"
+                className="mx-auto flex w-full items-center justify-center gap-2 rounded-full bg-[#5766e3] px-4 py-2 text-zinc-100 shadow-md transition hover:bg-[#6a76e0]"
               >
                 <Image
                   src="/icons/discord.svg"
@@ -86,6 +86,6 @@ export default function SignIn() {
           Create account
         </Link>
       </p>
-    </ForumLayout>
+    </Layout>
   )
 }

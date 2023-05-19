@@ -6,7 +6,6 @@ import { Toaster } from "react-hot-toast"
 import { api } from "@/utils/api"
 
 import "@/styles/globals.css"
-import "@uploadthing/react/styles.css"
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
