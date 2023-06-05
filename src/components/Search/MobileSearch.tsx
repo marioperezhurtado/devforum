@@ -55,7 +55,7 @@ export default function MobileSearch() {
         placeholder="Start exploring..."
         aria-label="search"
         role="searchbox"
-        className="w-full rounded-full border bg-zinc-50 px-3 py-1 focus:outline-sky-600"
+        className="w-full rounded-full border bg-white px-3 py-1.5 focus:outline-sky-600"
       />
       <button
         aria-label="search"

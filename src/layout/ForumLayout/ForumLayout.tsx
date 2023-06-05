@@ -1,6 +1,7 @@
 import Layout from "@/layout/Layout/Layout"
 
 import Header from "@/layout/Header/Header"
+import MobileSearch from "@/components/Search/MobileSearch"
 import Sidebar from "@/layout/Sidebar/Sidebar"
 
 type Props = {
@@ -23,6 +24,7 @@ export default function ForumLayout({
         <div className="relative flex flex-grow overflow-hidden">
           <Sidebar />
           <div className="w-full overflow-x-hidden overflow-y-scroll">
+            <MobileSearch />
             <div className="mx-auto min-h-screen max-w-screen-md p-3 xs:p-5 sm:p-10">
               {children}
             </div>
