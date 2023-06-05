@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import Image from "next/image"
 import LoadSpinner from "@/ui/LoadSpinner"
 
-export default function Search() {
+export default function MobileSearch() {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState("")
@@ -39,7 +39,7 @@ export default function Search() {
       onSubmit={handleSearch}
       name="searchForm"
       role="searchbox"
-      className="relative mx-auto hidden sm:block sm:w-80 lg:w-96"
+      className="relative m-2 sm:hidden"
     >
       <label htmlFor="search" className="sr-only">
         Search topics, posts, users and more

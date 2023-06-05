@@ -28,7 +28,7 @@ export default function PopularTopics() {
       onMouseUp={() => setIsScrolling(false)}
       onMouseLeave={() => setIsScrolling(false)}
       onMouseMove={handleScroll}
-      className="scrollbar-hide my-5 flex select-none gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10"
+      className="scrollbar-hide my-5 flex cursor-grab select-none gap-2 overflow-x-scroll rounded-md bg-zinc-700 p-1.5 md:my-10"
     >
       {topics?.map((t) => (
         <li key={t.name}>
